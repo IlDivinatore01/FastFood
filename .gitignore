@@ -50,7 +50,6 @@ backend/config/swagger-output.json
 *.fot
 *.cb
 *.cb2
-*.pdf
 *.synctex.gz
 
 # Misc
