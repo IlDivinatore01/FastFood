@@ -1,0 +1,50 @@
+<!--
+Order finalization and payment processing interface.
+
+This page handles the final steps of order placement:
+- Customer information confirmation and delivery details
+- Payment method selection and processing
+- Order timing and delivery scheduling
+- Final order review and confirmation
+- Payment security and validation
+- Order submission and confirmation messaging
+- Integration with payment processing systems
+
+Completes the customer ordering journey with secure payment
+processing and order confirmation.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+</head>
+<body data-bs-theme="dark">
+<div id="content">
+    <div class="col-12">
+        <h2 class="mb-1">Confirm your order</h2>
+        <div class="input-group">
+            <div id="total" class="input-group-text"></div>
+            <button class="btn btn-primary" id="confirm-order-btn">Confirm</button>
+        </div>
+        <h4 class="mb-1">Select a payment method</h4>
+        <div id="cards" class="row overflow-x-scroll flex-nowrap py-2">
+
+        </div>
+        <div id="no-cards-message" class="alert alert-warning" hidden>
+            You have no payment methods saved. Please <a href="/profile/edit">add a card</a> to your profile before proceeding.
+        </div>
+    </div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/errorManager.js"></script>
+<script type="module" src="/js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!--
+User profile display and account information interface.
+
+This page shows comprehensive user account details:
+- Personal information display (name, contact details, profile picture)
+- Account settings and preferences
+- Order history and past transactions
+- Favorite restaurants and saved items
+- Account security and privacy settings
+- Profile editing navigation and tools
+- User type-specific information and features
+
+Central location for users to view and manage their account
+information and application preferences.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+</head>
+<body data-bs-theme="dark">
+<div id="content">
+    <div class="col-12">
+        <div id="loader" class="text-center my-5">
+            <output class="spinner-border">
+                <span class="visually-hidden">Loading...</span>
+            </output>
+        </div>
+
+        <div id="profile-content" hidden>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="section-card h-100">
+                        <h2>Profile</h2>
+                        <div class="border-start border-secondary ms-2 ps-3">
+                            <h5 class="mb-0">Username</h5>
+                            <div id="username" class="text-body-secondary"></div>
+                            <h5 class="mb-0 mt-3">First name</h5>
+                            <div id="firstname" class="text-body-secondary"></div>
+                            <h5 class="mb-0 mt-3">Last name</h5>
+                            <div id="lastname" class="text-body-secondary"></div>
+                            <h5 class="mb-0 mt-3">E-mail address</h5>
+                            <div id="email" class="text-body-secondary"></div>
+                            <h5 class="mb-0 mt-3">Account type</h5>
+                            <div id="type" class="text-body-secondary"></div>
+                            <div id="usraddress" hidden>
+                                <h4 class="mt-4">Address</h4>
+                                <div class="border-start border-secondary ms-2 ps-3">
+                                    <h5 class="mb-0 mt-2">Street address</h5>
+                                    <div id="usrstraddress" class="text-body-secondary"></div>
+                                    <h5 class="mb-0 mt-2">City</h5>
+                                    <div id="usrcity" class="text-body-secondary"></div>
+                                    <h5 class="mb-0 mt-2">Province</h5>
+                                    <div id="usrprov" class="text-body-secondary"></div>
+                                    <h5 class="mb-0 mt-2">ZIP code</h5>
+                                    <div id="usrzip" class="text-body-secondary"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="restaurant" class="col-lg-6 mb-4">
+                    <div class="section-card h-100">
+                        <h2>Restaurant</h2>
+                        <div class="border-start border-secondary ms-2 ps-3">
+                            <h5 class="mb-0">Name</h5>
+                            <div id="restname" class="text-body-secondary"></div>
+                            <h5 class="mb-0 mt-3">Phone</h5>
+                            <div id="restphone" class="text-body-secondary"></div>
+                            <h4 class="mt-4">Address</h4>
+                            <div class="border-start border-secondary ms-2 ps-3">
+                                <h5 class="mb-0 mt-2">Street address</h5>
+                                <div id="reststraddress" class="text-body-secondary"></div>
+                                <h5 class="mb-0 mt-2">City</h5>
+                                <div id="restcity" class="text-body-secondary"></div>
+                                <h5 class="mb-0 mt-2">Province</h5>
+                                <div id="restprov" class="text-body-secondary"></div>
+                                <h5 class="mb-0 mt-2">ZIP code</h5>
+                                <div id="restzip" class="text-body-secondary"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="button" id="edit-profile-btn" class="btn btn-primary">Edit profile</button>
+                    <button type="button" id="deactivate-btn" class="btn btn-outline-danger">Deactivate account</button>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h2>Your orders</h2>
+                <div id="orders" class="row g-4 mt-1"></div>
+                <nav id="pag-nav" class="d-flex justify-content-center mt-4"></nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deactivate-modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Are you sure?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div id="dishModalBody" class="modal-body">
+                <h3>Your account will be deactivated!</h3>
+                <div>We will keep storing your name and order history, everything else will be deleted and your account will become inaccesible.</div>
+            </div>
+            <div class="modal-footer justify-content-start">
+                <div class="mb-1">Insert your password to confirm.</div>
+                <div class="input-group">
+                    <input type="password" id="deactivate-password" class="form-control rounded-end-0" placeholder="Password" required>
+                    <button type="button" id="deactivate-confirm-btn" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/errorManager.js"></script>
+<script type="module" src="/js/profile.js"></script>
+</body>
+</html>

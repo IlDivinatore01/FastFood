@@ -1,0 +1,59 @@
+<!--
+Business analytics and reporting dashboard for restaurant owners.
+
+This page provides comprehensive business insights:
+- Sales performance metrics and revenue tracking
+- Order volume and customer behavior analytics
+- Popular menu items and performance analysis
+- Customer demographics and ordering patterns
+- Time-based sales trends and seasonal analysis
+- Comparative performance metrics and benchmarks
+- Export capabilities for detailed reporting
+
+Data-driven business intelligence tool helping restaurant owners
+make informed decisions and optimize operations.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+</head>
+<body data-bs-theme="dark">
+<div id="content">
+    <div class="col-12">
+        <div class="section-card mb-4">
+            <h1 class="my-2">Analytics</h1>
+            <h5>Period</h5>
+            <div class="input-group">
+                <div class="input-group-text rounded-end-0">Start</div>
+                <input id="start" type="date" class="form-control rounded-0">
+                <div class="input-group-text rounded-0">End</div>
+                <input id="end" type="date" class="form-control rounded-0">
+                <button type="button" id="submit-analytics-btn" class="btn btn-primary rounded-start-0">Submit</button>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h4 class="mt-4">Data</h4>
+            <div id="total-orders"></div>
+            <div id="total-earned"></div>
+            <div id="avg-earned"></div>
+            <div id="best-selling-name"></div>
+            <div id="best-selling-amount"></div>
+            <div id="best-selling-earned"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/errorManager.js"></script>
+<script type="module" src="/js/analytics.js"></script>
+</body>
+</html>

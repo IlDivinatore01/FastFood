@@ -1,0 +1,58 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+
+# Build and coverage
+coverage/
+dist/
+build/
+
+# Logs
+*.log
+logs/
+*.out
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+# Static assets generated/uploaded at runtime
+frontend/public/images/uploads/
+frontend/public/images/tmp/
+frontend/public/images/*.tmp.*
+
+# Test output
+jest-output.json
+
+# Swagger generated files
+backend/config/swagger-output.json
+
+# PDF and LaTeX build artifacts
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.pdf
+*.synctex.gz
+
+# Misc
+*.bak
+*.tmp

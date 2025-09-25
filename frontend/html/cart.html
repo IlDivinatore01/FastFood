@@ -1,0 +1,46 @@
+<!--
+Shopping cart page for order review and modification.
+
+This page manages the customer's order with:
+- Detailed cart contents with item quantities and prices
+- Order modification capabilities (add, remove, edit quantities)
+- Real-time total calculation with taxes and fees
+- Delivery information and special instructions
+- Promotional code and discount application
+- Order summary and cost breakdown
+- Checkout process initiation
+
+Critical component of the ordering workflow allowing customers
+to review and finalize their food orders.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+</head>
+<body data-bs-theme="dark">
+<div id="content">
+    <div class="col-12">
+        <h2>Your cart</h2>
+        <div id="confirm" class="input-group mb-3">
+            <div id="total" class="input-group-text"></div>
+            <button type="button" id="checkout-btn" class="btn btn-primary">Checkout</button>
+        </div>
+        <div id="items">
+
+        </div>
+    </div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/errorManager.js"></script>
+<script type="module" src="/js/cart.js"></script>
+</body>
+</html>
