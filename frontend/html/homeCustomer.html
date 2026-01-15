@@ -1,0 +1,126 @@
+<!--
+Customer dashboard and restaurant discovery interface.
+
+This page provides the main customer experience with:
+- Restaurant browsing and search functionality
+- Featured restaurants and promotional content display
+- Category-based filtering and sorting options
+- Interactive restaurant cards with ratings and information
+- Shopping cart integration and order management
+- User navigation and profile access
+- Responsive design for mobile and desktop users
+
+Central hub for customers to discover restaurants and place orders
+through an intuitive and engaging interface.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+</head>
+
+<body data-bs-theme="dark">
+    <div id="content">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-3">Search Dishes</h2>
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input id="dish-name" type="text" class="form-control" placeholder="Dish name">
+                            <label for="dish-name">Dish name</label>
+                        </div>
+                        <div class="form-floating">
+                            <input id="dish-category" type="text" class="form-control" placeholder="Category">
+                            <label for="dish-category">Category</label>
+                        </div>
+                        <div class="form-floating">
+                            <input id="dish-price" type="number" class="form-control" min="0.01" step="0.01"
+                                placeholder="Max price">
+                            <label for="dish-price">Max price</label>
+                        </div>
+                        <button id="search-dish-btn" type="button" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dish-results" class="row g-4"></div>
+
+            <nav id="dish-pag-nav" class="my-4" aria-label="Dish pagination navigation"></nav>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-3">Search Restaurants</h2>
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input id="restaurant-name" type="text" class="form-control" placeholder="Restaurant name">
+                            <label for="restaurant-name">Restaurant name</label>
+                        </div>
+                        <div class="form-floating">
+                            <input id="restaurant-street" type="text" class="form-control" placeholder="Street Address">
+                            <label for="restaurant-street">Street Address</label>
+                        </div>
+                        <div class="form-floating">
+                            <input id="restaurant-city" type="text" class="form-control" placeholder="City">
+                            <label for="restaurant-city">City</label>
+                        </div>
+                        <button id="search-restaurant-btn" type="button" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="restaurant-results" class="row g-4"></div>
+
+            <nav id="restaurant-pag-nav" class="my-4" aria-label="Restaurant pagination navigation"></nav>
+
+            <h2 class="mt-5">Restaurants Nearby</h2>
+            <div id="nearby" class="row g-4"></div>
+        </div>
+    </div>
+
+    <div id="dish-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="dish-modal-title fs-5" id="dish-modal-title">Dish name</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div id="dish-modal-body" class="modal-body">
+                    <img id="dish-modal-img" src="" class="img-fluid" alt="Dish">
+                    <h3 class="mb-0">Restaurant</h3>
+                    <div class="mb-0" id="dish-modal-restaurant"></div>
+                    <h3 class="mb-0">Category</h3>
+                    <div class="mb-2" id="dish-modal-category"></div>
+                    <h3 class="mb-0">Price</h3>
+                    <div class="mb-2" id="dish-modal-price"></div>
+                    <h3>Ingredients</h3>
+                    <ul id="dish-modal-ingredients">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <div class="input-group">
+                        <div class="input-group-text">Amount</div>
+                        <input id="dish-modal-amount" class="form-control" type="number" required min="1" step="1"
+                            value="1" placeholder="Amount">
+                        <button type="button" id="add-to-cart-btn" class="btn btn-primary">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/layout.js"></script>
+    <script type="module" src="/js/errorManager.js"></script>
+    <script type="module" src="/js/homeCustomer.js"></script>
+</body>
+
+</html>

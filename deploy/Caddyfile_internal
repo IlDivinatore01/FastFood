@@ -1,0 +1,32 @@
+# Internal Caddyfile for FastFood Pod
+# Serves static assets directly and proxies logic to Backend
+
+:5000 {
+    # Valid for internal Pod network
+    root * /usr/share/caddy
+    encode zstd gzip
+
+    # Static Assets Handlers (Served by Caddy)
+    handle /css/* {
+        file_server
+    }
+    handle /js/* {
+        file_server
+    }
+    handle /images/* {
+        file_server
+    }
+    handle /bootstrap/* {
+        file_server
+    }
+
+    # Everything else (HTML, API, Auth) -> Proxy to Node Backend
+    handle {
+        reverse_proxy localhost:3000
+    }
+    
+    log {
+        output stdout
+        format console
+    }
+}

@@ -1,0 +1,28 @@
+# Backend Container
+FROM docker.io/node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies (Production only)
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
+
+# Copy backend source code
+COPY backend ./backend
+
+# Copy frontend source (needed because the backend serves HTML pages/views)
+COPY frontend ./frontend
+
+# Copy .env.example as fallback (Runtime env vars should be injected via Pod/Kubernetes)
+COPY .env.example ./.env
+
+# Create uploads directory
+RUN mkdir -p frontend/public/images
+
+ENV NODE_ENV=production
+# Default port internal to the Pod
+ENV PORT=3000
+
+EXPOSE 3000
+
+CMD ["node", "backend/server.js"]

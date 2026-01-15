@@ -1,0 +1,167 @@
+<!--
+User profile display and account information interface.
+
+This page shows comprehensive user account details:
+- Personal information display (name, contact details, profile picture)
+- Account settings and preferences
+- Order history and past transactions
+- Favorite restaurants and saved items
+- Account security and privacy settings
+- Profile editing navigation and tools
+- User type-specific information and features
+
+Central location for users to view and manage their account
+information and application preferences.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+</head>
+
+<body data-bs-theme="dark">
+    <div id="content">
+        <div class="col-12">
+            <div id="loader" class="text-center my-5">
+                <output class="spinner-border">
+                    <span class="visually-hidden">Loading...</span>
+                </output>
+            </div>
+
+            <div id="profile-content" hidden>
+                <div class="row g-4">
+                    <!-- Profile Info Column -->
+                    <div class="col-lg-4">
+                        <!-- User Card -->
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-body text-center pt-5 pb-4">
+                                <img id="profile-picture" src="" alt="Profile" class="rounded-circle mb-3 shadow-sm"
+                                    style="width: 120px; height: 120px; object-fit: cover;">
+                                <h3 id="username-display" class="card-title mb-1"></h3>
+                                <p id="type-display" class="text-secondary small text-uppercase fw-bold mb-4"></p>
+
+                                <div class="d-grid gap-2">
+                                    <button type="button" id="edit-profile-btn" class="btn btn-primary">Edit
+                                        Profile</button>
+                                    <button type="button" id="deactivate-btn" class="btn btn-outline-danger">Deactivate
+                                        Account</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address/Details Card -->
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-transparent py-3">
+                                <h5 class="card-title mb-0">Contact & Address</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="text-secondary small text-uppercase fw-bold">Full Name</label>
+                                    <div class="fs-6" id="fullname-display"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="text-secondary small text-uppercase fw-bold">Email</label>
+                                    <div class="fs-6" id="email-display"></div>
+                                </div>
+
+                                <div id="usraddress" hidden>
+                                    <hr class="my-3">
+                                    <div class="mb-3">
+                                        <label class="text-secondary small text-uppercase fw-bold">Address</label>
+                                        <div class="fs-6">
+                                            <span id="usrstraddress"></span><br>
+                                            <span id="usrcity"></span>, <span id="usrprov"></span> <span
+                                                id="usrzip"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Restaurant Card (Hidden by default, shown for owners) -->
+                        <div id="restaurant" class="card shadow-sm border-0 mt-4" hidden>
+                            <div class="card-header bg-transparent py-3">
+                                <h5 class="card-title mb-0">Restaurant Details</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="text-secondary small text-uppercase fw-bold">Restaurant Name</label>
+                                    <div class="fs-6 fw-bold" id="restname"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="text-secondary small text-uppercase fw-bold">Phone</label>
+                                    <div class="fs-6" id="restphone"></div>
+                                </div>
+                                <hr class="my-3">
+                                <div class="mb-3">
+                                    <label class="text-secondary small text-uppercase fw-bold">Location</label>
+                                    <div class="fs-6">
+                                        <span id="reststraddress"></span><br>
+                                        <span id="restcity"></span>, <span id="restprov"></span> <span
+                                            id="restzip"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orders Column -->
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div
+                                class="card-header bg-transparent py-3 d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">Order History</h5>
+                            </div>
+                            <div class="card-body p-0"> <!-- p-0 for flush list look if we change to list -->
+                                <div id="orders" class="row g-3 p-3"></div> <!-- Keeping grid for orders -->
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <nav id="pag-nav" class="d-flex justify-content-center"></nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duplicate sections removed -->
+            </div>
+        </div>
+    </div>
+
+    <div id="deactivate-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Are you sure?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div id="dishModalBody" class="modal-body">
+                    <h3>Your account will be deactivated!</h3>
+                    <div>We will keep storing your name and order history, everything else will be deleted and your
+                        account will become inaccesible.</div>
+                </div>
+                <div class="modal-footer justify-content-start">
+                    <div class="mb-1">Insert your password to confirm.</div>
+                    <div class="input-group">
+                        <input type="password" id="deactivate-password" class="form-control rounded-end-0"
+                            placeholder="Password" required>
+                        <button type="button" id="deactivate-confirm-btn" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/layout.js"></script>
+    <script type="module" src="/js/errorManager.js"></script>
+    <script type="module" src="/js/profile.js"></script>
+</body>
+
+</html>

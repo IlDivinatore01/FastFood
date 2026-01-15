@@ -1,0 +1,148 @@
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        streetAddress:
+          type: string
+          example: "Via Mario Rossi, 1"
+        city:
+          type: string
+          example: "Milano"
+        province:
+          type: string
+          example: "MI"
+        zipCode:
+          type: string
+          example: "20000"
+    Card:
+      type: object
+      properties:
+        cardOwner:
+          type: string
+          example: "Mario Rossi"
+        cardNumber:
+          type: string
+          example: "1234123412341234"
+        expiryDate:
+          type: string
+          example: "01/30"
+        cvc:
+          type: string
+          example: "123"
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "682f252b2bfba60237b8df61"
+        username:
+          type: string
+          example: "mariorossi"
+        firstName:
+          type: string
+          example: "Mario"
+        lastName:
+          type: string
+          example: "Rossi"
+        email:
+          type: string
+          example: "mario.rossi@gmail.com"
+        type:
+          type: string
+          enum: [customer, owner]
+          example: "customer"
+    Dish:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "682f252b2bfba60237b8df61"
+        name:
+          type: string
+          example: "Pizza margherita"
+        category:
+          type: string
+          example: "Pizza"
+        ingredients:
+          type: array
+          items:
+            type: string
+          example: ["Tomato", "Mozzarella"]
+        image:
+          type: string
+          example: "/images/1748440295971-pizza.png"
+    MenuItem:
+      type: object
+      properties:
+        dish:
+          $ref: '#/components/schemas/Dish'
+        price:
+          type: number
+          example: 850
+        preparationTime:
+          type: number
+          example: 10
+    Restaurant:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "682f252b2bfba60237b8df61"
+        owner:
+          type: string
+          example: "682f25215bf4a60537b8df61"
+        name:
+          type: string
+          example: "Da Mario"
+        address:
+          $ref: '#/components/schemas/Address'
+        vatNumber:
+          type: string
+          example: "12345678901"
+        phoneNumber:
+          type: string
+          example: "3450124321"
+        menu:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuItem'
+        active:
+          type: boolean
+          example: true
+    Order:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "682f252b2bfba60237b8df61"
+        customer:
+          $ref: '#/components/schemas/User'
+        restaurant:
+          $ref: '#/components/schemas/Restaurant'
+        dish:
+          $ref: '#/components/schemas/Dish'
+        amount:
+          type: number
+          example: 2
+        price:
+          type: number
+          example: 1700
+        state:
+          type: string
+          enum: [received, preparing, ready, completed]
+          example: "received"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-06-01T12:00:00Z"
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+      description: Token JWT saved in an HttpOnly cookie.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

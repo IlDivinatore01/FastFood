@@ -1,0 +1,128 @@
+<!--
+Business analytics and reporting dashboard for restaurant owners.
+
+This page provides comprehensive business insights:
+- Sales performance metrics and revenue tracking
+- Order volume and customer behavior analytics
+- Popular menu items and performance analysis
+- Customer demographics and ordering patterns
+- Time-based sales trends and seasonal analysis
+- Comparative performance metrics and benchmarks
+- Export capabilities for detailed reporting
+
+Data-driven business intelligence tool helping restaurant owners
+make informed decisions and optimize operations.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+</head>
+
+<body data-bs-theme="dark">
+    <div id="content">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h1 class="card-title my-2">Analytics</h1>
+                    <h5 class="mb-3">Period</h5>
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input id="start" type="date" class="form-control" placeholder="Start Date">
+                            <label for="start">Start Date</label>
+                        </div>
+                        <div class="form-floating">
+                            <input id="end" type="date" class="form-control" placeholder="End Date">
+                            <label for="end">End Date</label>
+                        </div>
+                        <button type="button" id="submit-analytics-btn" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-4 fw-bold">Performance Overview</h4>
+
+                    <!-- Metrics Row -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-12 col-md-4">
+                            <div
+                                class="p-4 rounded-4 bg-primary-subtle bg-opacity-10 border border-primary-subtle h-100">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-square bg-primary text-white rounded-3 p-2 me-3">
+                                        <i class="bi bi-basket2-fill fs-4"></i>
+                                    </div>
+                                    <h6 class="text-secondary fw-bold text-uppercase mb-0">Total Orders</h6>
+                                </div>
+                                <div id="total-orders" class="display-6 fw-bold text-white">0</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div
+                                class="p-4 rounded-4 bg-success-subtle bg-opacity-10 border border-success-subtle h-100">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-square bg-success text-white rounded-3 p-2 me-3">
+                                        <i class="bi bi-cash-stack fs-4"></i>
+                                    </div>
+                                    <h6 class="text-secondary fw-bold text-uppercase mb-0">Total Revenue</h6>
+                                </div>
+                                <div id="total-earned" class="display-6 fw-bold text-white">0.00€</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="p-4 rounded-4 bg-info-subtle bg-opacity-10 border border-info-subtle h-100">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-square bg-info text-white rounded-3 p-2 me-3">
+                                        <i class="bi bi-graph-up-arrow fs-4"></i>
+                                    </div>
+                                    <h6 class="text-secondary fw-bold text-uppercase mb-0">Avg. Order Value</h6>
+                                </div>
+                                <div id="avg-earned" class="display-6 fw-bold text-white">0.00€</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Best Seller Row -->
+                    <div class="card border-0 bg-dark-subtle rounded-4 overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h6 class="text-secondary fw-bold text-uppercase mb-2">Top Performing Dish</h6>
+                                    <div id="best-selling-name" class="fs-3 fw-bold text-primary">No Data</div>
+                                </div>
+                                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                                    <div class="d-inline-flex gap-3">
+                                        <div class="text-center px-4 py-2 bg-white rounded-3 shadow-sm">
+                                            <div class="small text-muted text-uppercase fw-bold">Sold</div>
+                                            <div id="best-selling-amount" class="fs-4 fw-bold">0</div>
+                                        </div>
+                                        <div class="text-center px-4 py-2 bg-white rounded-3 shadow-sm">
+                                            <div class="small text-muted text-uppercase fw-bold">Earned</div>
+                                            <div id="best-selling-earned" class="fs-4 fw-bold text-success">0.00€</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/layout.js"></script>
+    <script type="module" src="/js/errorManager.js"></script>
+    <script type="module" src="/js/analytics.js"></script>
+</body>
+
+</html>
