@@ -87,7 +87,7 @@ export const finalizeSetup = async (req, res, next) => {
             address: address
         });
 
-        await User.findByIdAndUpdate(req.user.userId, { isSetupComplete: true });
+        // Note: Setup completion is determined by existence of CustomerData, not a flag
 
         const token = jwt.sign({
             userId: req.user.userId,
@@ -260,7 +260,7 @@ export const editProfile = async (req, res, next) => {
         profile.email = newProfile.email || profile.email;
 
         if (req.file) {
-            profile.image = `/images/${req.file.filename}`;
+            profile.image = `/images/uploads/${req.file.filename}`;
         }
 
         await profile.save();

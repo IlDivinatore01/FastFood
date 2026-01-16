@@ -29,7 +29,7 @@ let dishElements = {
 }
 
 let dishModal = {
-    modal: new bootstrap.Modal(document.getElementById('dish-modal')),
+    modal: null, // Initialized in window.onload
     title: document.getElementById('dish-modal-title'),
     body: document.getElementById('dish-modal-body'),
     img: document.getElementById('dish-modal-img'),
@@ -60,6 +60,10 @@ let shownDishData = {};
 let currentCart;
 
 window.onload = () => {
+    // Initialize Bootstrap modal if available
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        dishModal.modal = new bootstrap.Modal(document.getElementById('dish-modal'));
+    }
     currentCart = JSON.parse(localStorage.getItem('cart')) || {};
     attachEventListeners();
     searchDishes();

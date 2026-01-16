@@ -205,10 +205,10 @@ Full interactive docs available at `/api-docs` (Swagger UI).
 |--------|----------|-------------|
 | `POST` | `/auth/register` | Create new user |
 | `POST` | `/auth/login` | Login (returns JWT) |
-| `GET` | `/api/restaurants` | List restaurants |
-| `GET` | `/api/dishes` | List dishes |
-| `POST` | `/api/orders` | Place order |
-| `PUT` | `/api/orders/:id/status` | Update order status |
+| `GET` | `/api/nearby` | List nearby restaurants |
+| `GET` | `/api/dishes` | List dishes for menu |
+| `POST` | `/api/order` | Place order |
+| `PUT` | `/api/order/update` | Advance order in queue |
 
 ### Authentication
 

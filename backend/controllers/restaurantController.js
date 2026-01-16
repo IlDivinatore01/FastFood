@@ -28,7 +28,7 @@ export const addRestaurant = async (req, res, next) => {
             address: restaurant.address,
             vatNumber: restaurant.vatNumber,
             phoneNumber: restaurant.phoneNumber,
-            image: req.file ? `/images/${req.file.filename}` : undefined
+            image: req.file ? `/images/uploads/${req.file.filename}` : undefined
         });
 
         await newRestaurant.save();
@@ -143,7 +143,7 @@ export const editRestaurant = async (req, res, next) => {
 
         // Update image
         if (req.file) {
-            restaurant.image = `/images/${req.file.filename}`;
+            restaurant.image = `/images/uploads/${req.file.filename}`;
         }
 
         await restaurant.save();

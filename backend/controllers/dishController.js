@@ -61,7 +61,7 @@ export const getDishes = async (req, res, next) => {
 export const addDish = async (req, res, next) => {
     try {
         const { name, category, ingredients, restaurant } = req.body;
-        const image = `/images/${req.file.filename}`;
+        const image = `/images/uploads/${req.file.filename}`;
 
         const newDish = new Dish({
             name,

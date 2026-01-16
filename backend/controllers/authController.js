@@ -33,8 +33,9 @@ export const registerUser = async (req, res, next) => {
             lastName,
             email,
             password,
+            confirmPassword, // Required for schema validation
             type,
-            image: req.file ? `/images/${req.file.filename}` : undefined
+            image: req.file ? `/images/uploads/${req.file.filename}` : undefined
         });
 
         await newUser.save();

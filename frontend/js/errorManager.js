@@ -13,9 +13,18 @@
  * Provides consistent and user-friendly error communication throughout the application.
  */
 
-let notificationToast = initToast();
+let notificationToast = null;
 
 function showToast(isError) {
+    if (!notificationToast) {
+        notificationToast = initToast();
+        if (!notificationToast) {
+            // Fallback: just alert if Bootstrap isn't available
+            alert(notificationToast?.messages?.join('\n') || 'An error occurred');
+            return;
+        }
+    }
+
     const toastHeader = notificationToast.toastEl.querySelector('.toast-header');
     if (isError) {
         toastHeader.classList.remove('bg-success', 'text-white');
@@ -33,6 +42,12 @@ function showToast(isError) {
 }
 
 function initToast() {
+    // Check if Bootstrap is available
+    if (typeof bootstrap === 'undefined' || !bootstrap.Toast) {
+        console.warn('Bootstrap not loaded, toast notifications unavailable');
+        return null;
+    }
+
     const toastContainer = document.createElement('div');
     toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
 
@@ -67,6 +82,15 @@ function initToast() {
 }
 
 export function addMessage(message, isError = true) {
-    notificationToast.messages.push(message);
-    showToast(isError);
+    if (!notificationToast) {
+        notificationToast = initToast();
+    }
+    if (notificationToast) {
+        notificationToast.messages.push(message);
+        showToast(isError);
+    } else {
+        // Fallback when Bootstrap isn't available
+        console.error('Toast message:', message);
+        alert(message);
+    }
 }

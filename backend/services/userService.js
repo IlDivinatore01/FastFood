@@ -18,8 +18,7 @@ class UserService {
             address: addressData
         });
 
-        // 3. Update User State
-        await User.findByIdAndUpdate(userId, { isSetupComplete: true });
+        // Note: Setup completion is determined by existence of CustomerData, not a flag
 
         return customerData;
     }

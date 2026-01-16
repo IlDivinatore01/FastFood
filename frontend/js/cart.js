@@ -14,6 +14,7 @@
  */
 
 import { fetchApi } from './api.js';
+import { addMessage } from './errorManager.js';
 
 const items = document.getElementById('items');
 const total = document.getElementById('total');
@@ -137,17 +138,16 @@ function makeCards(order, menus) {
         amountInput.append(amount, label);
 
         amount.onchange = () => {
-            // ... existing logic ...
             if (!amount.checkValidity()) {
                 addMessage('Invalid amount.');
-                amount.value = currentOrder[restId + dishId].amount;
+                amount.value = currentOrder[key].amount;
                 return;
             }
             if (amount.value === '0') {
                 card.remove();
-                delete currentOrder[restId + dishId];
+                delete currentOrder[key];
             } else {
-                currentOrder[restId + dishId].amount = parseInt(amount.value, 10);
+                currentOrder[key].amount = parseInt(amount.value, 10);
             }
             localStorage.setItem('cart', JSON.stringify(currentOrder));
             confirmArea();

@@ -29,7 +29,7 @@ const restaurantInfo = {
 };
 const menuElement = document.getElementById('menu');
 const dishModal = {
-    modal: new bootstrap.Modal(document.getElementById('dishModal')),
+    modal: null, // Initialized in window.onload
     name: document.getElementById('dishModalTitle'),
     category: document.getElementById('dishModalCategory'),
     price: document.getElementById('dishPrice'),
@@ -43,6 +43,11 @@ let restId;
 let currentCart;
 
 window.onload = async () => {
+    // Initialize Bootstrap modal if available
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        dishModal.modal = new bootstrap.Modal(document.getElementById('dishModal'));
+    }
+
     // Initialize currentCart from localStorage using the imported function
     currentCart = getCart();
 
@@ -84,7 +89,7 @@ async function getMenu() {
             restaurant: restId // Add the restaurant ID to each dish object
         }
     });
-    makeDishesCards(menu).forEach((dish) => { menuElement.append(dish)});
+    makeDishesCards(menu).forEach((dish) => { menuElement.append(dish) });
 }
 
 function makeDishesCards(dishes) {

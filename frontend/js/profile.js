@@ -76,7 +76,12 @@ window.onload = async () => {
 
     fetchedProfile = await getProfile();
     if (fetchedProfile) {
-        deactivateModal.modal = new bootstrap.Modal(deactivateModal.modalhtml);
+        // Check if Bootstrap is available before creating modal
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            deactivateModal.modal = new bootstrap.Modal(deactivateModal.modalhtml);
+        } else {
+            console.warn('Bootstrap not loaded, modal functionality unavailable');
+        }
         showOrders();
         attachEventListeners();
     }
@@ -223,8 +228,8 @@ async function showOrders() {
 function createOrderCard(order) {
     const bodyText = `Status: ${order.state}\nAmount: ${order.amount}\nTotal: ${(order.price / 100).toFixed(2)}€`;
     const cardCol = createCard({
-        imageSrc: order.dish.image,
-        title: order.dish.name,
+        imageSrc: order.dish?.image || '/images/default-dish.png',
+        title: order.dish?.name || 'Unknown Dish',
         bodyText: bodyText,
         colClass: 'col-12 col-md-6 col-lg-4'
     });
@@ -252,10 +257,19 @@ function addRestaurantInfo(cardBody, order) {
     const restaurantText = document.createElement('p');
     restaurantText.className = 'card-text small';
     restaurantText.innerText = 'Restaurant: ';
-    const restaurantLink = document.createElement('a');
-    restaurantLink.href = `/restaurant/${order.restaurant._id}`;
-    restaurantLink.innerText = order.restaurant.name;
-    restaurantText.appendChild(restaurantLink);
+
+    // Handle deleted restaurants
+    if (!order.restaurant) {
+        const deletedText = document.createElement('span');
+        deletedText.className = 'text-muted';
+        deletedText.innerText = 'Restaurant no longer available';
+        restaurantText.appendChild(deletedText);
+    } else {
+        const restaurantLink = document.createElement('a');
+        restaurantLink.href = `/restaurant/${order.restaurant._id}`;
+        restaurantLink.innerText = order.restaurant.name;
+        restaurantText.appendChild(restaurantLink);
+    }
     cardBody.appendChild(restaurantText);
 }
 

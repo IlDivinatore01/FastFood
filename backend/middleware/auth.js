@@ -35,7 +35,7 @@ export default function authMiddleware(req, res, next) {
     try {
         const token = req.cookies?.token;
         if (!token) {
-            return res.status(401).json({ error: 'Not authenticated.' });
+            return res.status(401).json({ error: 'Not authenticated. Please log in.' });
         }
         const payload = jwt.verify(token, getJwtSecret());
         req.user = {
@@ -44,8 +44,18 @@ export default function authMiddleware(req, res, next) {
             setupComplete: payload.setupComplete
         };
         next();
-    } catch {
-        return res.status(401).json({ error: 'Invalid or expired token.' });
+    } catch (err) {
+        // Specific JWT error messages
+        if (err.name === 'TokenExpiredError') {
+            return res.status(401).json({ error: 'Session expired. Please log in again.' });
+        }
+        if (err.name === 'JsonWebTokenError') {
+            return res.status(401).json({ error: 'Invalid session. Please log in again.' });
+        }
+        if (err.name === 'NotBeforeError') {
+            return res.status(401).json({ error: 'Session not yet valid. Please try again.' });
+        }
+        return res.status(401).json({ error: 'Authentication failed. Please log in again.' });
     }
 }
 

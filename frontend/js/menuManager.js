@@ -43,7 +43,7 @@ const shownDish = {
     price: document.getElementById('price'),
     prepTime: document.getElementById('prepTime'),
 }
-const dishModal = new bootstrap.Modal(shownDish.modal);
+let dishModal = null; // Initialized in window.onload
 const restId = localStorage.getItem('extraData');
 let shownDishData = {
     data: null,
@@ -56,6 +56,10 @@ let currentPage = 1;
 let maxPage = 1;
 
 window.onload = () => {
+    // Initialize Bootstrap modal if available
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        dishModal = new bootstrap.Modal(shownDish.modal);
+    }
     getCurrentMenu();
     getDishes();
     attachEventListeners();
