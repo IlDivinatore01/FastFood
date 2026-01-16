@@ -1,0 +1,36 @@
+# Frontend Asset Builder
+# This container's sole purpose is to assemble the static assets
+# so they can be copied to the host and mounted into Caddy.
+
+FROM docker.io/node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install all dependencies (including dev) to get Bootstrap
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Copy source
+COPY frontend ./frontend
+
+# Create Distribution Directory mimicking the server structure
+# /css -> frontend/css
+# /js -> frontend/js
+# /images -> frontend/public/images
+# /bootstrap -> node_modules/bootstrap/dist
+
+RUN mkdir -p /app/dist/css && \
+    mkdir -p /app/dist/js && \
+    mkdir -p /app/dist/images && \
+    mkdir -p /app/dist/bootstrap
+
+RUN cp -r frontend/css/* /app/dist/css/ && \
+    cp -r frontend/js/* /app/dist/js/ && \
+    cp -r frontend/public/images/* /app/dist/images/ && \
+    cp -r node_modules/bootstrap/dist/* /app/dist/bootstrap/
+
+# Copy public HTML files (landing, etc) to root of dist in case Caddy needs them
+# (Though our plan is to reverse-proxy HTML to backend, it doesn't hurt to have them)
+RUN cp -r frontend/public/*.html /app/dist/
+
+# No CMD needed, will be used via `podman run ... cp`

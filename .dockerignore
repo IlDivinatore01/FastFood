@@ -1,0 +1,38 @@
+# Version Control
+.git
+.gitignore
+.dockerignore
+
+# Environment & Config
+.env
+#.env.*
+#docker-compose.yml
+#jest.config.js
+
+# Dependencies & Build
+node_modules
+# Logs & Debug
+*.log
+npm-debug.log
+backend_lifecycle*.log
+backend_output*.log
+
+# Design Docs & Reports
+
+
+# Local Data
+data/
+uploads/
+
+# Deployment Artifacts (Not needed in the container itself)
+deploy/
+docker-compose.yml
+
+# Testing
+backend/__tests__
+jest.config.js
+coverage/
+
+# Documentation
+docs/
+

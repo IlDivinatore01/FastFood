@@ -1,0 +1,83 @@
+<!--
+Order finalization and payment processing interface.
+
+This page handles the final steps of order placement:
+- Customer information confirmation and delivery details
+- Payment method selection and processing
+- Order timing and delivery scheduling
+- Final order review and confirmation
+- Payment security and validation
+- Order submission and confirmation messaging
+- Integration with payment processing systems
+
+Completes the customer ordering journey with secure payment
+processing and order confirmation.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+</head>
+
+<body data-bs-theme="dark">
+    <div id="content">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="mb-4 fw-bold">Checkout</h2>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-transparent py-3">
+                        <h5 class="card-title mb-0">Payment Method</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-secondary small mb-3">Select a saved card to pay.</p>
+
+                        <div id="no-cards-message" class="alert alert-warning" hidden>
+                            <i class="bi bi-exclamation-circle me-2"></i>
+                            You have no payment methods saved. Please <a href="/profile/edit" class="alert-link">add a
+                                card</a> to your profile.
+                        </div>
+
+                        <div id="cards" class="row g-3">
+                            <!-- Cards injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 sticky-top" style="top: 2rem;">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Confirm Order</h5>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="text-secondary">Total Amount</span>
+                            <span id="total" class="fs-4 fw-bold text-primary"></span>
+                        </div>
+
+                        <button class="btn btn-primary w-100 py-3 rounded-3 shadow-sm fw-bold" id="confirm-order-btn">
+                            <i class="bi bi-check2-circle me-2"></i> Place Order
+                        </button>
+                        <p class="text-center mt-3 small text-muted">
+                            <i class="bi bi-shield-lock me-1"></i> Secure Payment
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/layout.js"></script>
+    <script type="module" src="/js/errorManager.js"></script>
+    <script type="module" src="/js/checkout.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+services:
+  fastfood:
+    build: .
+    container_name: fastfood-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/fastfood
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:5000}
+    depends_on:
+      - mongo
+    networks:
+      - web
+      - internal
+
+  mongo:
+    image: mongo:6
+    container_name: fastfood-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - internal
+
+networks:
+  web:
+    external: true # Assumes 'web' network exists from your main Caddy stack
+  internal:
+    driver: bridge
+
+volumes:
+  mongo_data:

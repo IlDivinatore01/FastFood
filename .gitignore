@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment files (NEVER commit secrets!)
+.env
+.env.local
+.env.*.local
+
+# User uploaded images (timestamped)
+frontend/public/images/17*
+frontend/public/images/18*
+frontend/public/images/19*
+frontend/public/images/20*
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Generated images (from MealDB API)
+frontend/public/images/meals/
+
+# Build cache
+.cache/

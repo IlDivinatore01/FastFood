@@ -1,0 +1,101 @@
+/*
+Main stylesheet for the FastFood application interface.
+
+This stylesheet provides comprehensive styling including:
+- Custom color scheme and branding for the FastFood platform
+- Responsive design utilities and mobile-first approach
+- Component-specific styling for cards, forms, and interactive elements
+- Typography and spacing consistency throughout the application
+- Bootstrap theme customization and override styles
+- Loading states and animation effects
+- Dark theme support and accessibility features
+- Print-friendly styles for receipts and reports
+
+Ensures consistent visual design and optimal user experience
+across all devices and screen sizes.
+*/
+
+:root {
+    --bs-body-bg: #1e1e1e;
+    --bs-body-color: #ffffff;
+    --bs-dark-rgb: 30, 30, 30;
+    --bs-tertiary-bg: #333333;
+    --bs-primary: #bb86fc;
+    --bs-primary-rgb: 187, 134, 252;
+    --bs-secondary: #03dac6;
+    --bs-secondary-rgb: 3, 218, 198;
+    --bs-border-color: rgba(255, 255, 255, 0.12);
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    font-family: 'Roboto', sans-serif;
+}
+
+.my-navbar {
+    height: 64px;
+    background-color: #2c2c2c !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.main-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+}
+
+.card {
+    background-color: rgba(33, 37, 41, 0.95);
+    /* Semi-transparent dark bg */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.text-border {
+    text-shadow: 2px 0 #101010, -2px 0 #101010, 0 2px #101010, 0 -2px #101010,
+        1px 1px #101010, -1px -1px #101010, 1px -1px #101010, -1px 1px #101010;
+}
+
+.image-clip {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.order-list {
+    height: 70vh !important;
+}
+
+.menu-results {
+    max-height: 40vh !important;
+}
+
+
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+    display: none;
+    /* Hidden by default */
+}
+
+.error-message.visible {
+    display: block;
+}
+
+/* Card styling merged above */
