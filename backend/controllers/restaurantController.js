@@ -92,32 +92,56 @@ export const editMenu = async (req, res, next) => {
 export const editRestaurant = async (req, res, next) => {
     try {
         const user = req.user;
-        const newRestaurantData = req.body;
+        const body = req.body;
 
         const restaurant = await Restaurant.findOne({ owner: user.userId });
         if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
 
-        restaurant.name = newRestaurantData['newRestaurant[name]'] || restaurant.name;
+        // Helper to get value from either bracket format or nested JSON
+        const getValue = (bracketKey, nestedPath) => {
+            // Try bracket format first (legacy: 'newRestaurant[name]')
+            if (body[bracketKey] !== undefined) return body[bracketKey];
 
-        const address = {};
-        if (newRestaurantData['newRestaurant[address][streetAddress]']) address.streetAddress = newRestaurantData['newRestaurant[address][streetAddress]'];
-        if (newRestaurantData['newRestaurant[address][city]']) address.city = newRestaurantData['newRestaurant[address][city]'];
-        if (newRestaurantData['newRestaurant[address][province]']) address.province = newRestaurantData['newRestaurant[address][province]'];
-        if (newRestaurantData['newRestaurant[address][zipCode]']) address.zipCode = newRestaurantData['newRestaurant[address][zipCode]'];
+            // Try nested JSON format (clean: body.newRestaurant.name)
+            if (nestedPath && body.newRestaurant) {
+                const keys = nestedPath.split('.');
+                let val = body.newRestaurant;
+                for (const k of keys) {
+                    if (val && val[k] !== undefined) val = val[k];
+                    else return undefined;
+                }
+                return val;
+            }
+            return undefined;
+        };
 
-        if (Object.keys(address).length > 0) {
-            restaurant.address.streetAddress = address.streetAddress || restaurant.address.streetAddress;
-            restaurant.address.city = address.city || restaurant.address.city;
-            restaurant.address.province = address.province || restaurant.address.province;
-            restaurant.address.zipCode = address.zipCode || restaurant.address.zipCode;
-        }
+        // Update name
+        const newName = getValue('newRestaurant[name]', 'name');
+        if (newName) restaurant.name = newName;
 
-        const inputPhone = newRestaurantData['newRestaurant[phoneNumber]'];
-        if (inputPhone != null) restaurant.phoneNumber = inputPhone;
+        // Update address fields
+        const streetAddress = getValue('newRestaurant[address][streetAddress]', 'address.streetAddress');
+        const city = getValue('newRestaurant[address][city]', 'address.city');
+        const province = getValue('newRestaurant[address][province]', 'address.province');
+        const zipCode = getValue('newRestaurant[address][zipCode]', 'address.zipCode');
 
-        restaurant.vatNumber = newRestaurantData['newRestaurant[vatNumber]'] || restaurant.vatNumber;
-        restaurant.active = newRestaurantData.active !== undefined ? newRestaurantData.active : restaurant.active;
+        if (streetAddress) restaurant.address.streetAddress = streetAddress;
+        if (city) restaurant.address.city = city;
+        if (province) restaurant.address.province = province;
+        if (zipCode) restaurant.address.zipCode = zipCode;
 
+        // Update phone and VAT
+        const phone = getValue('newRestaurant[phoneNumber]', 'phoneNumber');
+        if (phone != null) restaurant.phoneNumber = phone;
+
+        const vat = getValue('newRestaurant[vatNumber]', 'vatNumber');
+        if (vat) restaurant.vatNumber = vat;
+
+        // Update active status
+        if (body.active !== undefined) restaurant.active = body.active;
+        if (body.newRestaurant?.active !== undefined) restaurant.active = body.newRestaurant.active;
+
+        // Update image
         if (req.file) {
             restaurant.image = `/images/${req.file.filename}`;
         }

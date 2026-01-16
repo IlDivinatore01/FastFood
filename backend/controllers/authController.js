@@ -21,13 +21,18 @@ import jwt from 'jsonwebtoken';
 export const registerUser = async (req, res, next) => {
     try {
         const { username, firstName, lastName, email, password, confirmPassword, type } = req.body;
+
+        // Validate password confirmation
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: 'Passwords do not match.' });
+        }
+
         const newUser = new User({
             username,
             firstName,
             lastName,
             email,
             password,
-            confirmPassword,
             type,
             image: req.file ? `/images/${req.file.filename}` : undefined
         });
@@ -58,7 +63,7 @@ export const loginUser = async (req, res, next) => {
                 setupComplete = true;
                 extraData = customerData._id;
             }
-        } else { 
+        } else {
             const restaurant = await Restaurant.findOne({ owner: user._id });
             if (restaurant) {
                 setupComplete = true;
@@ -82,7 +87,7 @@ export const loginUser = async (req, res, next) => {
         res.json({
             message: 'User logged in successfully.',
             username: user.username,
-            userId: user._id, 
+            userId: user._id,
             extraData: extraData
         });
     } catch (err) {

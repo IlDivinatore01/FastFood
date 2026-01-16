@@ -24,14 +24,29 @@ export const getDishes = async (req, res, next) => {
         const skip = (page - 1) * limit;
 
         const restaurant = await Restaurant.findById(restaurantId);
+        if (!restaurant) {
+            return res.status(404).json({ error: 'Restaurant not found.' });
+        }
         const menuDishes = restaurant.menu.map(item => item.dish);
 
-        const filter = { _id: { $nin: menuDishes } };
+        // FIX: Only show global dishes (no restaurant) or own dishes
+        // This prevents seeing competitors' custom dishes
+        const filter = {
+            _id: { $nin: menuDishes },
+            $or: [
+                { restaurant: null },              // Global dishes (from meals.json)
+                { restaurant: { $exists: false } }, // Dishes without restaurant field
+                { restaurant: restaurantId }        // Own custom dishes
+            ]
+        };
+
         if (query) {
-            filter.$or = [
-                { name: { $regex: query, $options: 'i' } },
-                { category: { $regex: query, $options: 'i' } }
-            ];
+            filter.$and = [{
+                $or: [
+                    { name: { $regex: query, $options: 'i' } },
+                    { category: { $regex: query, $options: 'i' } }
+                ]
+            }];
         }
 
         const total = await Dish.countDocuments(filter);
@@ -73,10 +88,12 @@ export const searchDishes = async (req, res, next) => {
             { $unwind: '$menu' },
             { $lookup: { from: 'dishes', localField: 'menu.dish', foreignField: '_id', as: 'menu.dish' } },
             { $unwind: '$menu.dish' },
-            { $addFields: { 
-                'menu.restaurantName': '$name', 
-                'menu.restaurantId': '$_id' 
-            }},
+            {
+                $addFields: {
+                    'menu.restaurantName': '$name',
+                    'menu.restaurantId': '$_id'
+                }
+            },
             { $replaceRoot: { newRoot: '$menu' } }
         ];
 

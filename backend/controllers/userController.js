@@ -199,7 +199,22 @@ export const deactivateAccount = async (req, res, next) => {
         if (!isMatch) return res.status(400).json({ error: 'Wrong password.' });
 
         if (profile.type === USER_TYPES.CUSTOMER) {
-            await Order.deleteMany({ customer: profile._id, state: { $ne: 'completed' } });
+            // FIX: Get order IDs first, then clean restaurant queues
+            const ordersToDelete = await Order.find({
+                customer: profile._id,
+                state: { $ne: 'completed' }
+            }).select('_id');
+            const orderIds = ordersToDelete.map(o => o._id);
+
+            // Remove order IDs from ALL restaurant queues before deleting
+            if (orderIds.length > 0) {
+                await Restaurant.updateMany(
+                    { queue: { $in: orderIds } },
+                    { $pull: { queue: { $in: orderIds } } }
+                );
+            }
+
+            await Order.deleteMany({ _id: { $in: orderIds } });
             await CustomerData.deleteOne({ user: profile._id });
             await User.deleteOne({ _id: profile._id });
         } else if (profile.type === USER_TYPES.OWNER) {

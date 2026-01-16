@@ -65,12 +65,30 @@ export const newOrder = async (req, res, next) => {
         const user = req.user;
         for (const key in req.body) {
             const order = req.body[key];
+
+            // SECURITY FIX: Calculate price server-side, never trust client
+            const restaurant = await Restaurant.findById(order.restaurant);
+            if (!restaurant) {
+                throw new Error(`Restaurant not found: ${order.restaurant}`);
+            }
+
+            // Find the dish price from restaurant menu
+            const menuItem = restaurant.menu.find(
+                item => item.dish.toString() === order.dish
+            );
+            if (!menuItem) {
+                throw new Error(`Dish ${order.dish} not found in restaurant menu`);
+            }
+
+            // Calculate total price server-side (price is in cents)
+            const serverCalculatedPrice = menuItem.price * order.amount;
+
             const newOrder = new Order({
                 customer: user.userId,
                 restaurant: order.restaurant,
                 dish: order.dish,
                 amount: order.amount,
-                price: order.price,
+                price: serverCalculatedPrice, // Use server-calculated price
                 state: 'received',
                 createdAt: Date.now()
             });

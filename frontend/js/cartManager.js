@@ -30,23 +30,40 @@ export function addToCart(item, amount) {
 
     if (!restaurantId || !dishId) {
         console.warn('addToCart: missing restaurant/dish id', { item });
-        return;
+        return false;
     }
 
+    // Check if adding from different restaurant
+    const existingRestaurants = [...new Set(Object.values(cart).map(i => i.restaurant))];
+    if (existingRestaurants.length > 0 && !existingRestaurants.includes(restaurantId)) {
+        const confirmed = confirm(
+            'Your cart contains items from another restaurant. ' +
+            'Do you want to clear the cart and add this item?'
+        );
+        if (!confirmed) {
+            return false;
+        }
+        // Clear cart before adding new item
+        localStorage.removeItem('cart');
+    }
+
+    // Re-get cart (might have been cleared)
+    const currentCart = getCart();
     const key = `${restaurantId}:${dishId}`;
 
     const qty = parseInt(amount, 10);
     if (qty > 0) {
-        cart[key] = {
+        currentCart[key] = {
             restaurant: restaurantId,
             dish: dishId,
             amount: qty
         };
     } else {
-        delete cart[key];
+        delete currentCart[key];
     }
 
-    saveCart(cart);
+    saveCart(currentCart);
+    return true;
 }
 
 export function showCartButton() {
