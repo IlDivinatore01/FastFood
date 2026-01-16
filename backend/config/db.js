@@ -1,14 +1,7 @@
 /**
- * Database connection configuration for MongoDB using Mongoose ODM.
+ * Database Configuration
  * 
- * This module establishes and manages the connection to MongoDB database
- * with proper error handling and connection state logging. It handles:
- * - MongoDB connection string from environment variables
- * - Connection error handling and retries
- * - Database connection state logging
- * - Graceful connection closing on application shutdown
- * 
- * Exports the connectDB function used by the main server application.
+ * MongoDB connection using Mongoose. Reads URI from environment variables.
  */
 
 import mongoose from 'mongoose';
@@ -20,8 +13,6 @@ const connectDB = async () => {
     try {
         let mongoURI = process.env.MONGO_URI || `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}`;
 
-        // Disable retryable writes for standalone MongoDB (not a replica set)
-        // Must be in connection string, not options
         if (!mongoURI.includes('retryWrites')) {
             const separator = mongoURI.includes('?') ? '&' : '?';
             mongoURI = `${mongoURI}${separator}retryWrites=false`;

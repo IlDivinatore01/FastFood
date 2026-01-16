@@ -1,14 +1,8 @@
 /**
- * Data import utility for populating the database with sample meal data.
+ * Meals Importer
  * 
- * This utility module handles data seeding operations:
- * - JSON meal data parsing and validation
- * - Database insertion with error handling
- * - Data transformation for application schema compliance
- * - Bulk import operations for efficient seeding
- * - Development and testing data setup
- * 
- * Used for initial application setup and test data generation.
+ * Seeds the database with dish data from meals.json on startup.
+ * Skips dishes that already exist.
  */
 
 import dotenv from 'dotenv';
@@ -35,11 +29,11 @@ export async function importMeals() {
                     name: meal.strMeal,
                     category: meal.strCategory,
                     image: meal.strMealThumb,
-                    ingredients: meal.ingredients.filter(i => i && i.trim() !== ''), // Filter out empty ingredients
+                    ingredients: meal.ingredients.filter(i => i && i.trim() !== ''),
                 });
                 await newDish.save();
                 console.log(`Imported: ${meal.strMeal}`);
-            } // Else: silently skip or log debug
+            }
         }
 
         console.log('Meal import process finished.');

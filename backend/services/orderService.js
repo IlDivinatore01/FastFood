@@ -1,15 +1,7 @@
 /**
- * Order processing service containing business logic for order management.
+ * Order Service
  * 
- * This service module encapsulates complex order processing logic:
- * - Order validation and business rule enforcement
- * - Price calculation with taxes and fees
- * - Inventory checking and availability validation
- * - Order status transition logic and workflows
- * - Integration with external payment and delivery services
- * - Order analytics and reporting functions
- * 
- * Provides reusable business logic for order-related operations across controllers.
+ * Business logic for order operations including wait time calculation.
  */
 
 import Order from '../models/Order.js';
@@ -33,7 +25,7 @@ export const calculateWaitTime = async (orderId) => {
         const menuItem = restaurant.menu.find(item => item.dish.toString() === queuedOrder.dish.toString());
         if (!menuItem) continue;
         if (index === 0 && queuedOrder.state === 'preparing' && restaurant.lastPreparationStart) {
-            const timeElapsed = (Date.now() - restaurant.lastPreparationStart) / (60 * 1000); 
+            const timeElapsed = (Date.now() - restaurant.lastPreparationStart) / (60 * 1000);
             waitingTime += Math.max(menuItem.preparationTime * queuedOrder.amount - timeElapsed, 0);
         } else {
             waitingTime += menuItem.preparationTime * queuedOrder.amount;

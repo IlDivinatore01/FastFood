@@ -1,17 +1,10 @@
 /**
- * Customer dashboard functionality and restaurant discovery interface.
+ * Customer Home Script
  * 
- * This module powers the customer home page with:
- * - Restaurant listing and search functionality
- * - Category-based filtering and sorting options
- * - Restaurant card rendering and interaction handling
- * - Pagination for large restaurant lists
- * - Featured restaurants and promotional content
- * - Search autocomplete and suggestion features
- * - Responsive grid layout for restaurant display
- * 
- * Main interface for customers to discover and select restaurants for ordering.
+ * Handles dish/restaurant search, displays nearby restaurants.
+ * Opens dish modal for adding items to cart.
  */
+
 
 import { fetchApi } from './api.js';
 import { addToCart } from './cartManager.js';
@@ -60,7 +53,7 @@ let shownDishData = {};
 let currentCart;
 
 window.onload = () => {
-    // Initialize Bootstrap modal if available
+
     if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
         dishModal.modal = new bootstrap.Modal(document.getElementById('dish-modal'));
     }

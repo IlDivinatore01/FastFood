@@ -1,14 +1,10 @@
 /**
- * File upload middleware for handling image uploads with validation.
+ * Image Upload Middleware
  * 
- * This middleware manages file upload operations:
- * - Multer configuration for multipart form data
- * - File type validation (images only)
- * - File size limits and storage configuration
- * - Filename sanitization and collision prevention
- * - Upload error handling and validation
- * 
- * Used for profile pictures, restaurant images, and dish photos.
+ * Configures Multer for handling image file uploads.
+ * Saves files to /images/uploads/ (persistent volume in production).
+ * Validates file types (jpeg, jpg, png, webp, gif) and enforces 5MB size limit.
+ * Sanitizes filenames to prevent security issues.
  */
 
 import multer from 'multer';
@@ -16,20 +12,17 @@ import path from 'path';
 
 const __dirname = path.resolve();
 
-// Maximum file size: 5MB
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        // Use /uploads/ subfolder which is mounted as a persistent volume
         callback(null, __dirname + `/frontend/public/images/uploads`);
     },
     filename: (req, file, callback) => {
-        // Sanitize filename: remove special characters, keep extension
         const ext = path.extname(file.originalname).toLowerCase();
         const baseName = path.basename(file.originalname, ext)
             .replace(/[^a-zA-Z0-9]/g, '_')
-            .substring(0, 50); // Limit length
+            .substring(0, 50);
         const name = `${Date.now()}-${baseName}${ext}`;
         callback(null, name);
     }
@@ -41,7 +34,6 @@ const imgUpload = multer({
         fileSize: MAX_FILE_SIZE
     },
     fileFilter: (req, file, cb) => {
-        // If no file provided, allow the request to continue
         if (!file) {
             return cb(null, true);
         }
@@ -57,7 +49,6 @@ const imgUpload = multer({
     }
 });
 
-// Custom error handler for multer errors
 export function handleUploadError(err, req, res, next) {
     if (err instanceof multer.MulterError) {
         if (err.code === 'LIMIT_FILE_SIZE') {

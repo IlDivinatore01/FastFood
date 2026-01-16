@@ -1,17 +1,10 @@
 /**
- * User profile editing and account modification functionality.
+ * Edit Profile Script
  * 
- * This module provides profile editing capabilities with:
- * - Personal information update forms and validation
- * - Profile picture upload and image management
- * - Password change functionality with security validation
- * - Contact information and preference updates
- * - Form validation and real-time feedback
- * - Changes confirmation and save processing
- * - Account deletion and data management options
- * 
- * Complete profile management tool for user account maintenance.
+ * Handles profile form submission, password change, image upload.
+ * Manages address editing and card management.
  */
+
 
 import { fetchApi } from './api.js';
 import { setLoadingState } from './uiUtils.js';

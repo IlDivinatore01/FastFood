@@ -1,14 +1,7 @@
 /**
- * Application constants and configuration values.
+ * Application Constants
  * 
- * This module defines global constants used throughout the application:
- * - User type enumerations (CUSTOMER, OWNER)
- * - Order status constants and state definitions
- * - Validation patterns and limits
- * - Error message templates
- * - Application configuration defaults
- * 
- * Centralizes constant definitions for consistent usage across the application.
+ * User types, order states, and pagination defaults.
  */
 
 export const USER_TYPES = Object.freeze({

@@ -1,24 +1,18 @@
 /**
- * Authentication middleware for protecting routes and verifying user sessions.
+ * Authentication Middleware
  * 
- * This middleware provides authentication verification:
- * - JWT token validation from HTTP-only cookies
- * - User session verification and token expiry checking
- * - User information extraction and request enrichment
- * - Authentication error handling and responses
- * - Token refresh logic for extended sessions
- * 
- * Applied to all protected routes requiring user authentication.
+ * Verifies JWT tokens from HTTP-only cookies for protected routes.
+ * Extracts user information (userId, type, setupComplete) and attaches to request.
+ * Returns specific error messages for different JWT failure types.
  */
 
 import jwt from 'jsonwebtoken';
 
-// SECURITY CHECK: Run immediately on load
 const JWT_SECRET = process.env.JWT_SECRET;
 if (process.env.NODE_ENV === 'production' && (!JWT_SECRET || JWT_SECRET === 'dev_secret_replace_in_prod')) {
     console.error('FATAL ERROR: You are running in production mode with an insecure or default JWT_SECRET.');
     console.error('Please update your docker-compose.yml or environment variables.');
-    process.exit(1); // Kill the server to prevent insecure deployment
+    process.exit(1);
 }
 
 const getJwtSecret = () => {
@@ -45,7 +39,6 @@ export default function authMiddleware(req, res, next) {
         };
         next();
     } catch (err) {
-        // Specific JWT error messages
         if (err.name === 'TokenExpiredError') {
             return res.status(401).json({ error: 'Session expired. Please log in again.' });
         }
@@ -59,7 +52,6 @@ export default function authMiddleware(req, res, next) {
     }
 }
 
-// Named exports for JWT configuration
 export const jwtSecret = getJwtSecret;
 export const jwtExpire = process.env.JWT_EXPIRE || '30d';
 export const cookieExpire = process.env.JWT_COOKIE_EXPIRE || 30;

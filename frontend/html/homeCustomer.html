@@ -1,18 +1,9 @@
 <!--
-Customer dashboard and restaurant discovery interface.
-
-This page provides the main customer experience with:
-- Restaurant browsing and search functionality
-- Featured restaurants and promotional content display
-- Category-based filtering and sorting options
-- Interactive restaurant cards with ratings and information
-- Shopping cart integration and order management
-- User navigation and profile access
-- Responsive design for mobile and desktop users
-
-Central hub for customers to discover restaurants and place orders
-through an intuitive and engaging interface.
+  Customer Home Page
+  
+  Main dashboard for customers to search dishes/restaurants and browse nearby options.
 -->
+
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -23,15 +14,20 @@ through an intuitive and engaging interface.
     <title>FastFood</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/bootstrap/bootstrap-icons.min.css">
 </head>
 
 <body data-bs-theme="dark">
     <div id="content">
         <div class="col-12">
-            <div class="card shadow-sm mb-4">
+            <div class="welcome-banner">
+                <h1><i class="bi bi-emoji-smile me-2"></i>Welcome back!</h1>
+                <p>Discover delicious meals from restaurants near you.</p>
+            </div>
+
+            <div class="card shadow-sm mb-4 search-card no-hover">
                 <div class="card-body">
-                    <h2 class="card-title mb-3">Search Dishes</h2>
+                    <h2 class="card-title mb-3"><i class="bi bi-search me-2"></i>Search Dishes</h2>
                     <div class="input-group">
                         <div class="form-floating">
                             <input id="dish-name" type="text" class="form-control" placeholder="Dish name">
@@ -46,7 +42,7 @@ through an intuitive and engaging interface.
                                 placeholder="Max price">
                             <label for="dish-price">Max price</label>
                         </div>
-                        <button id="search-dish-btn" type="button" class="btn btn-primary">Search</button>
+                        <button id="search-dish-btn" type="button" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
                     </div>
                 </div>
             </div>
@@ -55,9 +51,9 @@ through an intuitive and engaging interface.
 
             <nav id="dish-pag-nav" class="my-4" aria-label="Dish pagination navigation"></nav>
 
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm mb-4 search-card no-hover">
                 <div class="card-body">
-                    <h2 class="card-title mb-3">Search Restaurants</h2>
+                    <h2 class="card-title mb-3"><i class="bi bi-shop me-2"></i>Search Restaurants</h2>
                     <div class="input-group">
                         <div class="form-floating">
                             <input id="restaurant-name" type="text" class="form-control" placeholder="Restaurant name">
@@ -71,7 +67,7 @@ through an intuitive and engaging interface.
                             <input id="restaurant-city" type="text" class="form-control" placeholder="City">
                             <label for="restaurant-city">City</label>
                         </div>
-                        <button id="search-restaurant-btn" type="button" class="btn btn-primary">Search</button>
+                        <button id="search-restaurant-btn" type="button" class="btn btn-primary"><i class="bi bi-geo-alt"></i> Search</button>
                     </div>
                 </div>
             </div>
@@ -80,7 +76,7 @@ through an intuitive and engaging interface.
 
             <nav id="restaurant-pag-nav" class="my-4" aria-label="Restaurant pagination navigation"></nav>
 
-            <h2 class="mt-5">Restaurants Nearby</h2>
+            <h2 class="mt-5"><i class="bi bi-geo-alt-fill me-2 text-primary"></i>Restaurants Nearby</h2>
             <div id="nearby" class="row g-4"></div>
         </div>
     </div>

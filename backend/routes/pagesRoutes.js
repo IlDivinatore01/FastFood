@@ -1,21 +1,14 @@
 /**
- * Frontend page routing module for serving HTML pages and SPA routing.
+ * Page Routes
  * 
- * This module handles client-side navigation and page serving:
- * - Home page and dashboard routing
- * - User profile and settings pages
- * - Restaurant management interface pages
- * - Order tracking and history pages
- * - Protected route middleware for authenticated pages
- * - Fallback routing for single-page application
- * 
- * Coordinates frontend navigation with backend authentication state.
+ * Serves HTML pages for authenticated and public routes.
+ * Routes users to appropriate pages based on auth state and user type.
  */
 
 import express from 'express';
 import path from 'path';
 import authMiddleware from '../middleware/auth.js';
-import { setupCheckMiddleware } from "../middleware/setupCheck.js";
+import setupCheckMiddleware from "../middleware/setupCheck.js";
 import onlyOwners from "../middleware/onlyOwners.js";
 import onlyCustomers from "../middleware/onlyCustomers.js";
 

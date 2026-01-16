@@ -1,17 +1,9 @@
 /**
- * User interface utility functions for common UI operations.
+ * UI Utilities Module
  * 
- * This module provides helper functions for:
- * - Loading state management for buttons and forms
- * - Element visibility and display control
- * - Form validation and input handling
- * - CSS class management and styling utilities
- * - DOM manipulation helpers and shortcuts
- * - Animation and transition effects
- * - Responsive design utilities and breakpoint handling
- * 
- * Collection of utility functions that enhance user interface interactions.
+ * Helper functions for loading states, form handling, formatting.
  */
+
 
 export function setLoadingState(button, isLoading) {
     if (isLoading) {

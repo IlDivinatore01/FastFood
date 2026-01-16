@@ -1,16 +1,9 @@
 /**
- * Cart state management and persistence utility module.
+ * Cart Manager Module
  * 
- * This module provides cart data management with:
- * - Local storage integration for cart persistence
- * - Cart state synchronization across application pages
- * - Item addition and removal state management
- * - Cart total calculation and tax computation
- * - Cart validation and error handling
- * - Session management and cart recovery
- * - Cross-tab cart synchronization
- * 
- * Backend service for maintaining consistent cart state throughout the user session.
+ * Manages shopping cart state in localStorage.
+ * Handles adding/removing items, enforces single-restaurant cart rule.
+ * Cart keys use format: "restaurantId:dishId".
  */
 
 export function getCart() {
@@ -33,7 +26,6 @@ export function addToCart(item, amount) {
         return false;
     }
 
-    // Check if adding from different restaurant
     const existingRestaurants = [...new Set(Object.values(cart).map(i => i.restaurant))];
     if (existingRestaurants.length > 0 && !existingRestaurants.includes(restaurantId)) {
         const confirmed = confirm(
@@ -43,11 +35,9 @@ export function addToCart(item, amount) {
         if (!confirmed) {
             return false;
         }
-        // Clear cart before adding new item
         localStorage.removeItem('cart');
     }
 
-    // Re-get cart (might have been cleared)
     const currentCart = getCart();
     const key = `${restaurantId}:${dishId}`;
 

@@ -1,18 +1,9 @@
 <!--
-User profile display and account information interface.
-
-This page shows comprehensive user account details:
-- Personal information display (name, contact details, profile picture)
-- Account settings and preferences
-- Order history and past transactions
-- Favorite restaurants and saved items
-- Account security and privacy settings
-- Profile editing navigation and tools
-- User type-specific information and features
-
-Central location for users to view and manage their account
-information and application preferences.
+  Profile Page
+  
+  Displays user profile, order history, and account management options.
 -->
+
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -23,7 +14,7 @@ information and application preferences.
     <title>FastFood</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/bootstrap/bootstrap-icons.min.css">
 </head>
 
 <body data-bs-theme="dark">
@@ -37,10 +28,8 @@ information and application preferences.
 
             <div id="profile-content" hidden>
                 <div class="row g-4">
-                    <!-- Profile Info Column -->
                     <div class="col-lg-4">
-                        <!-- User Card -->
-                        <div class="card shadow-sm border-0 mb-4">
+                        <div class="card shadow-sm border-0 mb-4 no-hover">
                             <div class="card-body text-center pt-5 pb-4">
                                 <img id="profile-picture" src="" alt="Profile" class="rounded-circle mb-3 shadow-sm"
                                     style="width: 120px; height: 120px; object-fit: cover;">
@@ -48,15 +37,16 @@ information and application preferences.
                                 <p id="type-display" class="text-secondary small text-uppercase fw-bold mb-4"></p>
 
                                 <div class="d-grid gap-2">
-                                    <button type="button" id="edit-profile-btn" class="btn btn-primary">Edit
+                                    <button type="button" id="edit-profile-btn" class="btn btn-primary"><i
+                                            class="bi bi-pencil-square"></i> Edit
                                         Profile</button>
-                                    <button type="button" id="deactivate-btn" class="btn btn-outline-danger">Deactivate
+                                    <button type="button" id="deactivate-btn" class="btn btn-outline-danger"><i
+                                            class="bi bi-exclamation-triangle"></i> Deactivate
                                         Account</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Address/Details Card -->
                         <div class="card shadow-sm border-0">
                             <div class="card-header bg-transparent py-3">
                                 <h5 class="card-title mb-0">Contact & Address</h5>
@@ -85,7 +75,6 @@ information and application preferences.
                             </div>
                         </div>
 
-                        <!-- Restaurant Card (Hidden by default, shown for owners) -->
                         <div id="restaurant" class="card shadow-sm border-0 mt-4" hidden>
                             <div class="card-header bg-transparent py-3">
                                 <h5 class="card-title mb-0">Restaurant Details</h5>
@@ -112,15 +101,12 @@ information and application preferences.
                         </div>
                     </div>
 
-                    <!-- Orders Column -->
                     <div class="col-lg-8">
                         <div class="card shadow-sm border-0 h-100">
                             <div
                                 class="card-header bg-transparent py-3 d-flex justify-content-between align-items-center">
                                 <h5 class="card-title mb-0">Order History</h5>
                             </div>
-                            <div class="card-body p-0"> <!-- p-0 for flush list look if we change to list -->
-                                <div id="orders" class="row g-3 p-3"></div> <!-- Keeping grid for orders -->
                             </div>
                             <div class="card-footer bg-transparent border-0">
                                 <nav id="pag-nav" class="d-flex justify-content-center"></nav>
@@ -129,7 +115,6 @@ information and application preferences.
                     </div>
                 </div>
 
-                <!-- Duplicate sections removed -->
             </div>
         </div>
     </div>

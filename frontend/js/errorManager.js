@@ -1,16 +1,9 @@
 /**
- * Centralized error handling and user notification system.
+ * Error Manager Module
  * 
- * This module manages application-wide error display with:
- * - Toast notification system for user feedback
- * - Error message formatting and display
- * - Success message handling and confirmation
- * - Validation error presentation
- * - Network error handling and retry mechanisms
- * - User-friendly error message translation
- * - Notification timing and auto-dismissal
- * 
- * Provides consistent and user-friendly error communication throughout the application.
+ * Provides toast notifications for user feedback (errors and success messages).
+ * Uses Bootstrap Toast component with fallback to alert() if Bootstrap unavailable.
+ * Supports both error (red) and success (green) message types.
  */
 
 let notificationToast = null;
@@ -19,7 +12,6 @@ function showToast(isError) {
     if (!notificationToast) {
         notificationToast = initToast();
         if (!notificationToast) {
-            // Fallback: just alert if Bootstrap isn't available
             alert(notificationToast?.messages?.join('\n') || 'An error occurred');
             return;
         }
@@ -42,7 +34,6 @@ function showToast(isError) {
 }
 
 function initToast() {
-    // Check if Bootstrap is available
     if (typeof bootstrap === 'undefined' || !bootstrap.Toast) {
         console.warn('Bootstrap not loaded, toast notifications unavailable');
         return null;
@@ -89,7 +80,6 @@ export function addMessage(message, isError = true) {
         notificationToast.messages.push(message);
         showToast(isError);
     } else {
-        // Fallback when Bootstrap isn't available
         console.error('Toast message:', message);
         alert(message);
     }

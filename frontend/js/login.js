@@ -1,17 +1,9 @@
 /**
- * Authentication form handling and user login functionality.
+ * Login Script
  * 
- * This module manages the login process with:
- * - Login form validation and submission
- * - User credential verification with backend API
- * - Authentication token handling and storage
- * - Login error handling and user feedback
- * - Redirect logic based on user type and setup status
- * - Remember me functionality and session management
- * - Form security and input sanitization
- * 
- * Core authentication module enabling secure user access to the platform.
+ * Handles login form submission and redirects on success.
  */
+
 
 import { fetchApi } from './api.js';
 import { addMessage } from './errorManager.js';
@@ -28,7 +20,7 @@ window.onload = async () => {
     });
 }
 
-// Attach listeners immediately (Module is deferred)
+
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
 

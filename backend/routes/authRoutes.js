@@ -1,15 +1,8 @@
 /**
- * Authentication routing module defining auth-related API endpoints.
+ * Auth Routes
  * 
- * This module defines all authentication-related routes:
- * - POST /register - User registration with validation
- * - POST /login - User authentication and session creation
- * - POST /logout - Session termination and cleanup
- * - GET /check - Authentication status verification
- * - Password reset and recovery endpoints
- * 
- * Includes rate limiting middleware for security and input validation
- * for all authentication operations.
+ * Authentication endpoints: register, login, logout, check.
+ * Includes image upload for profile pictures during registration.
  */
 
 import express from 'express';

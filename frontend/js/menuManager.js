@@ -1,17 +1,9 @@
 /**
- * Restaurant menu management interface for owners.
+ * Menu Manager Script
  * 
- * This module provides comprehensive menu management with:
- * - Menu item creation, editing, and deletion functionality
- * - Category management and menu organization
- * - Dish image upload and description editing
- * - Pricing management and promotional offer setup
- * - Item availability and inventory control
- * - Bulk menu operations and data import/export
- * - Menu preview and customer view simulation
- * 
- * Core business tool for restaurant owners to maintain their menu offerings.
+ * Owner interface for managing menu: add/remove dishes, set prices.
  */
+
 
 import { fetchApi } from './api.js';
 import { addMessage } from './errorManager.js';
@@ -56,7 +48,7 @@ let currentPage = 1;
 let maxPage = 1;
 
 window.onload = () => {
-    // Initialize Bootstrap modal if available
+
     if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
         dishModal = new bootstrap.Modal(shownDish.modal);
     }
@@ -207,7 +199,7 @@ function makeDishesCards(dishes, indexed) {
         cardCategory.className = 'card-text small text-secondary mb-2';
         cardCategory.innerText = dishes[i].category;
 
-        // Show price if available (for current menu items)
+
         if (dishes[i].price !== undefined) {
             const price = document.createElement('div');
             price.className = 'fw-bold text-primary';

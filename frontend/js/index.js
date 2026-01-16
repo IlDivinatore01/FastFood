@@ -1,17 +1,9 @@
 /**
- * Application entry point and initialization module.
+ * Index Script
  * 
- * This minimal module handles:
- * - Application startup and initialization
- * - Initial routing and page load handling
- * - Global application state setup
- * - Error boundary and global error handling
- * - Service worker registration (if applicable)
- * - Performance monitoring initialization
- * - Feature detection and browser compatibility
- * 
- * Foundation module that bootstraps the entire frontend application.
+ * Entry point: checks auth and redirects to login or home.
  */
+
 
 import { fetchApi } from './api.js';
 

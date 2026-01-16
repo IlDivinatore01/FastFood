@@ -1,18 +1,9 @@
 <!--
-Order finalization and payment processing interface.
-
-This page handles the final steps of order placement:
-- Customer information confirmation and delivery details
-- Payment method selection and processing
-- Order timing and delivery scheduling
-- Final order review and confirmation
-- Payment security and validation
-- Order submission and confirmation messaging
-- Integration with payment processing systems
-
-Completes the customer ordering journey with secure payment
-processing and order confirmation.
+  Checkout Page
+  
+  Payment card selection and order confirmation interface.
 -->
+
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -23,6 +14,7 @@ processing and order confirmation.
     <title>FastFood</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/bootstrap-icons.min.css">
 
 </head>
 
@@ -30,11 +22,11 @@ processing and order confirmation.
     <div id="content">
         <div class="row g-4 justify-content-center">
             <div class="col-lg-8">
-                <h2 class="mb-4 fw-bold">Checkout</h2>
+                <h2 class="mb-4 fw-bold"><i class="bi bi-bag-check me-2"></i>Checkout</h2>
 
-                <div class="card shadow-sm border-0 mb-4">
+                <div class="card shadow-sm border-0 mb-4 no-hover">
                     <div class="card-header bg-transparent py-3">
-                        <h5 class="card-title mb-0">Payment Method</h5>
+                        <h5 class="card-title mb-0"><i class="bi bi-credit-card me-2"></i>Payment Method</h5>
                     </div>
                     <div class="card-body">
                         <p class="text-secondary small mb-3">Select a saved card to pay.</p>
@@ -46,16 +38,15 @@ processing and order confirmation.
                         </div>
 
                         <div id="cards" class="row g-3">
-                            <!-- Cards injected by JS -->
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4">
-                <div class="card shadow-sm border-0 sticky-top" style="top: 2rem;">
+                <div class="card shadow-sm border-0 sticky-top no-hover" style="top: 2rem;">
                     <div class="card-body">
-                        <h5 class="card-title mb-4">Confirm Order</h5>
+                        <h5 class="card-title mb-4"><i class="bi bi-bag me-2"></i>Confirm Order</h5>
 
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <span class="text-secondary">Total Amount</span>

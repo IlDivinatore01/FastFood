@@ -1,15 +1,9 @@
 /**
- * Dish management controller for menu item operations.
+ * Dish Controller
  * 
- * This controller manages all dish-related functionality:
- * - Menu item creation with detailed information and images
- * - Dish information updates and availability management
- * - Category-based dish organization and filtering
- * - Dish search and recommendation algorithms
- * - Nutritional information and ingredient management
- * - Pricing updates and promotional offers
- * 
- * Supports both restaurant owner dish management and customer browsing.
+ * Manages dish-related operations including searching, filtering, and creating dishes.
+ * Supports dish search by name, category, and price across all restaurants.
+ * Handles custom dish creation by restaurant owners with image uploads.
  */
 
 import Dish from '../models/Dish.js';
@@ -29,14 +23,12 @@ export const getDishes = async (req, res, next) => {
         }
         const menuDishes = restaurant.menu.map(item => item.dish);
 
-        // FIX: Only show global dishes (no restaurant) or own dishes
-        // This prevents seeing competitors' custom dishes
         const filter = {
             _id: { $nin: menuDishes },
             $or: [
-                { restaurant: null },              // Global dishes (from meals.json)
-                { restaurant: { $exists: false } }, // Dishes without restaurant field
-                { restaurant: restaurantId }        // Own custom dishes
+                { restaurant: null },
+                { restaurant: { $exists: false } },
+                { restaurant: restaurantId }
             ]
         };
 

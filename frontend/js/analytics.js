@@ -1,17 +1,9 @@
 /**
- * Business analytics and reporting dashboard for restaurant owners.
+ * Analytics Script
  * 
- * This module provides business intelligence features including:
- * - Sales performance metrics and revenue tracking
- * - Order analytics and customer behavior insights
- * - Popular menu item analysis and performance metrics
- * - Customer demographics and ordering pattern analysis
- * - Time-based trends and seasonal performance tracking
- * - Comparative analytics and benchmark reporting
- * - Data export and detailed reporting capabilities
- * 
- * Data-driven insights helping restaurant owners optimize business operations.
+ * Loads and displays restaurant analytics for a date range.
  */
+
 
 import { fetchApi } from './api.js';
 

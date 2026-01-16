@@ -1,14 +1,8 @@
 /**
- * Swagger configuration and setup for API documentation generation.
+ * Swagger Configuration
  * 
- * This module configures swagger-jsdoc to automatically generate OpenAPI
- * specification from JSDoc comments in route files. It defines:
- * - API metadata (title, version, description)
- * - Server configuration for different environments
- * - File paths to scan for API documentation
- * - Output configuration for swagger-ui-express
- * 
- * Generates the swagger-output.json file for API documentation.
+ * OpenAPI spec generator using swagger-jsdoc.
+ * Scans route files for JSDoc comments to build API documentation.
  */
 
 import swaggerJSDoc from 'swagger-jsdoc';

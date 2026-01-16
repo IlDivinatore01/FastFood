@@ -1,16 +1,9 @@
 /**
- * Main API routing module consolidating all business logic endpoints.
+ * API Routes
  * 
- * This comprehensive routing module organizes all API endpoints:
- * - User management and profile operations
- * - Restaurant CRUD operations and management
- * - Dish management and menu operations
- * - Order processing and status tracking
- * - File upload endpoints for images
- * - Search and filtering capabilities
- * 
- * Implements proper HTTP methods, middleware chains, and authorization
- * for all business logic operations.
+ * Main routing module for all business logic endpoints.
+ * Includes user, restaurant, dish, and order management.
+ * Full Swagger documentation in comments below.
  */
 
 import express from 'express';

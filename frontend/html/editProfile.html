@@ -1,18 +1,9 @@
 <!--
-User profile editing and account modification interface.
-
-This page enables users to update their account information:
-- Personal information editing forms
-- Profile picture upload and management
-- Password change and security settings
-- Contact information and preferences updates
-- Account deletion and data management options
-- Form validation and real-time feedback
-- Changes confirmation and save functionality
-
-Comprehensive profile management tool for maintaining
-accurate and up-to-date user account information.
+  Edit Profile Page
+  
+  Form for updating user info, password, profile picture, and address/restaurant details.
 -->
+
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -23,6 +14,7 @@ accurate and up-to-date user account information.
     <title>FastFood</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/bootstrap-icons.min.css">
 
 </head>
 
@@ -57,12 +49,8 @@ accurate and up-to-date user account information.
                         <h5 class="card-title mb-4">Edit Profile Information</h5>
 
                         <div class="tab-content">
-                            <!-- Profile Tab -->
                             <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel">
-                                <!-- Removed duplicate name fields -->
 
-                                <!-- RE-EVALUATING ORIGINAL STRUCTURE -->
-                                <!-- Original Lines 48-54:
                                 <div class="input-group">
                                     <input id="first-name"> ...
                                     <input id="last-name"> ...
@@ -75,7 +63,6 @@ accurate and up-to-date user account information.
                                 I should probably keep the structure logical.
                             -->
 
-                                <!-- Correcting Strategy for Name -->
                                 <div class="input-group mb-3">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="first-name"
@@ -147,7 +134,6 @@ accurate and up-to-date user account information.
                                     Changes</button>
                             </div>
 
-                            <!-- Address Tab -->
                             <div class="tab-pane fade" id="address-tab-pane" role="tabpanel">
                                 <div class="input-group mb-3">
                                     <div class="form-floating">
@@ -191,7 +177,6 @@ accurate and up-to-date user account information.
                                     Changes</button>
                             </div>
 
-                            <!-- Payment Tab -->
                             <div class="tab-pane fade" id="pay-tab-pane" role="tabpanel">
                                 <h5 class="mb-3">Add Payment Method</h5>
 
@@ -232,7 +217,6 @@ accurate and up-to-date user account information.
                                 <div id="current-cards" class="row g-3"></div>
                             </div>
 
-                            <!-- Restaurant Tab -->
                             <div class="tab-pane fade" id="restaurant-tab-pane" role="tabpanel">
                                 <div class="input-group mb-3">
                                     <div class="form-floating">
@@ -250,7 +234,6 @@ accurate and up-to-date user account information.
                                     <span class="input-group-text" id="current-restaurant-vat"></span>
                                 </div>
 
-                                <!-- Address Grouping -->
                                 <h6 class="text-secondary mt-4 mb-2">Location</h6>
                                 <div class="input-group mb-3">
                                     <div class="form-floating">

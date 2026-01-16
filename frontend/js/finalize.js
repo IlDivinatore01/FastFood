@@ -1,11 +1,14 @@
+/**
+ * Finalize Setup Script
+ * 
+ * Handles customer onboarding form submission (address + card).
+ */
 
-// modules imports assumed to be available or globally loaded if not using bundler
-// fetchApi is assumed global from layout.js or similar
+import { fetchApi } from './api.js';
 
 const form = document.getElementById('finalizeForm');
 const submitBtn = document.getElementById('finalize-btn');
 
-// Validation Logic
 const validators = {
     'addr-street': (val) => val.trim().length > 0,
     'addr-city': (val) => val.trim().length > 0,
@@ -17,23 +20,17 @@ const validators = {
     'card-cvc': (val) => /^\d{3,4}$/.test(val)
 };
 
-// Input Formatting (e.g. spaces in card number)
-document.getElementById('card-number').addEventListener('input', (e) => {
-    // Basic formatting or just leave it since pattern handles digits
-    // Ideally add space formatter here
-});
+document.getElementById('card-number').addEventListener('input', (e) => { });
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Reset errors
     document.querySelectorAll('.error-message').forEach(el => el.classList.remove('visible'));
     document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
 
     let isValid = true;
     const data = {};
 
-    // Validate fields
     for (const [id, validator] of Object.entries(validators)) {
         const input = document.getElementById(id);
         const val = input.value;
@@ -48,11 +45,9 @@ form.addEventListener('submit', async (e) => {
 
     if (!isValid) return;
 
-    // Disable button
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
 
-    // Construct Payload
     const payload = {
         address: {
             streetAddress: data['addr-street'],
@@ -70,8 +65,6 @@ form.addEventListener('submit', async (e) => {
 
     let response;
     try {
-        // Assuming fetchApi is global or available
-        // If not, use standard fetch
         response = await fetch('/api/finalize', {
             method: 'POST',
             headers: {
@@ -90,7 +83,6 @@ form.addEventListener('submit', async (e) => {
         console.error(err);
         alert('Connection error. Please try again.');
     } finally {
-        // Only reset if NOT redirecting (i.e. if error occurred)
         if (!response.ok) {
             submitBtn.disabled = false;
             submitBtn.innerText = 'Complete Setup';

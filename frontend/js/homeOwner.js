@@ -1,17 +1,10 @@
 /**
- * Restaurant owner dashboard and business overview interface.
+ * Owner Home Script
  * 
- * This module provides owner dashboard functionality including:
- * - Business performance metrics and key statistics
- * - Recent order notifications and management shortcuts
- * - Quick access to restaurant management tools
- * - Revenue summaries and sales overview
- * - Menu management and restaurant settings navigation
- * - Order fulfillment status tracking
- * - Business insights and recommended actions
- * 
- * Central command center for restaurant owners to monitor and manage their business.
+ * Manages order queue display and order state progression.
+ * Shows restaurant status and quick action buttons.
  */
+
 
 import { fetchApi } from './api.js';
 import { createCard } from './components.js';

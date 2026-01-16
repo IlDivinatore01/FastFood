@@ -1,17 +1,10 @@
 /**
- * Shopping cart management and order building functionality.
+ * Cart Page Script
  * 
- * This module handles cart operations including:
- * - Cart item display and quantity management
- * - Real-time total calculation with taxes and fees
- * - Item modification and removal capabilities
- * - Special instructions and customization handling
- * - Promotional code application and discount calculation
- * - Cart persistence across browser sessions
- * - Order summary generation and validation
- * 
- * Critical component managing the customer's order before checkout.
+ * Renders cart items, handles quantity changes and item removal.
+ * Calculates total and navigates to checkout.
  */
+
 
 import { fetchApi } from './api.js';
 import { addMessage } from './errorManager.js';
@@ -183,7 +176,7 @@ function confirmArea() {
         items.innerHTML = '';
         items.append(empty);
 
-        // Hide summary or disable
+
         if (confirm) confirm.hidden = true;
     } else {
         if (confirm) confirm.hidden = false;
@@ -197,7 +190,7 @@ function confirmArea() {
                 }
             }
         }
-        // Update just the amount text
+
         if (total) total.innerText = (totalPrice / 100).toFixed(2) + '€';
     }
 }

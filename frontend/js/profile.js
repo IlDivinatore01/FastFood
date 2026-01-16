@@ -1,16 +1,8 @@
 /**
- * User profile display and account information management.
+ * Profile Page Script
  * 
- * This module handles profile functionality including:
- * - User account information display and formatting
- * - Order history retrieval and presentation
- * - Account settings and preferences display
- * - Profile image handling and display
- * - Account security information and status
- * - User type-specific profile features
- * - Navigation to profile editing interfaces
- * 
- * Comprehensive user account overview and management interface.
+ * Loads and displays user profile, order history with pagination.
+ * Handles account deactivation confirmation.
  */
 
 import { fetchApi } from './api.js';
@@ -76,7 +68,6 @@ window.onload = async () => {
 
     fetchedProfile = await getProfile();
     if (fetchedProfile) {
-        // Check if Bootstrap is available before creating modal
         if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
             deactivateModal.modal = new bootstrap.Modal(deactivateModal.modalhtml);
         } else {
@@ -110,26 +101,22 @@ async function getProfile() {
     const data = await fetchApi('/api/profile');
     if (!data) return;
 
-    // Generic user info
     document.getElementById('profile-picture').src = data.profile.image || '/images/default-profile.png';
     document.getElementById('username-display').innerText = data.profile.username ? `@${data.profile.username}` : '';
     document.getElementById('fullname-display').innerText = `${data.profile.firstName} ${data.profile.lastName}`;
     document.getElementById('email-display').innerText = data.profile.email;
     document.getElementById('type-display').innerText = data.profile.type;
 
-    // Check type from profile object
     if (data.profile.type === 'customer') {
         const usrAddr = document.getElementById('usraddress');
         usrAddr.hidden = false;
 
-        // Populate address fields if they exist
         if (data.address) {
             document.getElementById('usrstraddress').innerText = data.address.streetAddress;
             document.getElementById('usrcity').innerText = data.address.city;
             document.getElementById('usrprov').innerText = data.address.province;
             document.getElementById('usrzip').innerText = data.address.zipCode;
         } else {
-            // Handle case with no address set yet
             usrAddr.innerHTML = '<p class="text-muted small fst-italic mt-3">No address configured.</p>';
         }
 
@@ -138,7 +125,7 @@ async function getProfile() {
         restCard.hidden = false;
 
         document.getElementById('restname').innerText = data.restaurant.name;
-        document.getElementById('restphone').innerText = data.restaurant.phoneNumber; // Use phoneNumber property
+        document.getElementById('restphone').innerText = data.restaurant.phoneNumber;
         document.getElementById('reststraddress').innerText = data.restaurant.address.streetAddress;
         document.getElementById('restcity').innerText = data.restaurant.address.city;
         document.getElementById('restprov').innerText = data.restaurant.address.province;
@@ -258,7 +245,6 @@ function addRestaurantInfo(cardBody, order) {
     restaurantText.className = 'card-text small';
     restaurantText.innerText = 'Restaurant: ';
 
-    // Handle deleted restaurants
     if (!order.restaurant) {
         const deletedText = document.createElement('span');
         deletedText.className = 'text-muted';

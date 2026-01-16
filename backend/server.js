@@ -1,17 +1,8 @@
 /**
- * Main server application entry point for the FastFood delivery platform.
+ * Server Entry Point
  * 
- * This file configures and initializes the Express.js server with all necessary middleware,
- * security features, routing, and database connections. It handles:
- * - Database connection initialization
- * - Security middleware (Helmet, CORS, rate limiting)
- * - Static file serving for frontend assets
- * - API documentation with Swagger UI
- * - Global error handling for validation and database errors
- * - Authentication rate limiting for security
- * 
- * The server supports both customer and restaurant owner user types with
- * comprehensive authentication and authorization features.
+ * Express server with security middleware, routing, and MongoDB connection.
+ * Serves API endpoints and static frontend files.
  */
 
 import express from 'express';
@@ -40,9 +31,7 @@ dotenv.config();
 
 const app = express();
 
-// Trust proxy headers (X-Forwarded-For) for correct client IP detection
-// Required for rate limiting to work correctly behind Caddy reverse proxy
-app.set('trust proxy', 2); // Trust 2 levels: main Caddy + pod Caddy sidecar
+app.set('trust proxy', 2);
 
 const startServer = async () => {
     try {
@@ -53,7 +42,6 @@ const startServer = async () => {
 
         app.use(compression());
 
-        // Logging
         if (process.env.NODE_ENV === 'development') {
             app.use(morgan('dev'));
         } else {
@@ -75,7 +63,6 @@ const startServer = async () => {
         app.use(express.json());
         app.use(cookieParser());
 
-        // Sanitize data - Express 5 compatible (only sanitize body, not query/params due to getter-only properties)
         app.use((req, res, next) => {
             if (req.body) {
                 req.body = mongoSanitize.sanitize(req.body);
@@ -83,10 +70,8 @@ const startServer = async () => {
             next();
         });
 
-        // HPP (HTTP Parameter Pollution) prevention
         app.use(hpp());
 
-        // CORS Configuration
         const allowedOrigins = process.env.ALLOWED_ORIGINS
             ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
             : [
@@ -95,7 +80,6 @@ const startServer = async () => {
                 'http://localhost:3000'
             ];
 
-        // Add environment variable origin if it exists
         if (process.env.ALLOWED_ORIGINS) {
             const envOrigins = process.env.ALLOWED_ORIGINS.split(',');
             allowedOrigins.push(...envOrigins.map(origin => origin.trim()));
@@ -103,7 +87,6 @@ const startServer = async () => {
 
         app.use(cors({
             origin: function (origin, callback) {
-                // Allow requests with no origin (like mobile apps or curl requests)
                 if (!origin) return callback(null, true);
                 if (allowedOrigins.indexOf(origin) === -1) {
                     const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
@@ -114,7 +97,6 @@ const startServer = async () => {
             credentials: true
         }));
 
-        // Apply custom sanitization middleware
         app.use(sanitizeMiddleware);
 
         app.get('/', (req, res) => {
@@ -133,7 +115,7 @@ const startServer = async () => {
 
         const authLimiter = rateLimit({
             windowMs: 15 * 60 * 1000,
-            max: process.env.NODE_ENV === 'production' ? 20 : 100, // 20 attempts in prod, 100 in dev
+            max: process.env.NODE_ENV === 'production' ? 20 : 100,
             message: { error: 'Too many attempts, please try again later.' }
         });
 
@@ -156,13 +138,11 @@ const startServer = async () => {
                 console.error(err);
             }
 
-            // Mongoose ValidationError
             if (err.name === 'ValidationError') {
                 const messages = Object.values(err.errors).map(e => e.message);
                 return res.status(400).json({ error: messages });
             }
 
-            // Duplicate key error (MongoDB)
             if (err.code === 11000) {
                 const field = Object.keys(err.keyPattern)[0];
                 let message = `The ${field} is already in use.`;
@@ -170,17 +150,14 @@ const startServer = async () => {
                 return res.status(409).json({ error: message });
             }
 
-            // Custom error with statusCode
             if (err.statusCode) {
                 return res.status(err.statusCode).json({ error: err.message });
             }
 
-            // Multer file upload errors
             if (err.name === 'MulterError') {
                 return res.status(400).json({ error: err.message });
             }
 
-            // Pre-save hook validation errors (password, etc.) or other standard Errors
             if (err.message && err.message.includes('password') ||
                 err.message && err.message.includes('Password')) {
                 return res.status(400).json({ error: err.message });

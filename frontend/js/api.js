@@ -1,32 +1,22 @@
 /**
- * Central API communication module for all HTTP requests to the backend.
+ * API Client Module
  * 
- * This module provides a unified interface for API communication with:
- * - Standardized fetch wrapper with error handling and loading states
- * - Automatic credential management for authentication
- * - Content-type handling for JSON and FormData requests
- * - Response validation and error message extraction
- * - Network error handling and user feedback
- * - Loading state management for UI buttons and forms
- * - Cache control and request optimization
- * - Auto-redirect to login on 401 (session expired)
- * - Offline detection with user-friendly message
- * 
- * Core utility used by all other modules for backend communication.
+ * Central fetch wrapper for all API communication with the backend.
+ * Handles authentication (credentials), error responses, and loading states.
+ * Auto-redirects to login on 401 (session expired).
+ * Detects offline state and shows appropriate error messages.
  */
 
 import { addMessage } from './errorManager.js';
 import { setLoadingState } from './uiUtils.js';
 import { config } from './config.js';
 
-// Pages that don't require authentication (no redirect on 401)
 const PUBLIC_PAGES = ['/login', '/register', '/landing.html', '/'];
 
 export async function fetchApi(url, options = {}, button = null) {
     if (button) setLoadingState(button, true);
 
     try {
-        // Check if offline
         if (!navigator.onLine) {
             addMessage('No internet connection. Please check your network.');
             return null;
@@ -50,14 +40,12 @@ export async function fetchApi(url, options = {}, button = null) {
 
         const res = await fetch(config.API_BASE_URL + url, fetchConfig);
 
-        // Handle 401 Unauthorized - session expired
         if (res.status === 401) {
             const currentPath = window.location.pathname;
             const isPublicPage = PUBLIC_PAGES.some(p => currentPath === p || currentPath.endsWith(p));
 
             if (!isPublicPage) {
                 addMessage('Your session has expired. Please log in again.');
-                // Small delay so user sees the message
                 setTimeout(() => {
                     window.location.href = '/login';
                 }, 1500);
@@ -65,26 +53,22 @@ export async function fetchApi(url, options = {}, button = null) {
             }
         }
 
-        // Handle 403 Forbidden
         if (res.status === 403) {
             addMessage('You do not have permission to perform this action.');
             return null;
         }
 
-        // Handle 404 Not Found
         if (res.status === 404) {
             const data = await res.json().catch(() => ({}));
             addMessage(data.error || 'The requested resource was not found.');
             return null;
         }
 
-        // Handle 429 Too Many Requests
         if (res.status === 429) {
             addMessage('Too many requests. Please wait a moment and try again.');
             return null;
         }
 
-        // Handle 500+ Server Errors
         if (res.status >= 500) {
             addMessage('Server error. Please try again later.');
             return null;
@@ -113,7 +97,6 @@ export async function fetchApi(url, options = {}, button = null) {
     } catch (err) {
         console.error('API Fetch Error:', err);
 
-        // More specific error messages
         if (err.name === 'TypeError' && err.message.includes('Failed to fetch')) {
             addMessage('Unable to connect to server. Please check your connection.');
         } else if (err.name === 'AbortError') {

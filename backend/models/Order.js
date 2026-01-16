@@ -1,15 +1,9 @@
 /**
- * Order data model for managing customer food orders.
+ * Order Model
  * 
- * This model tracks the complete order lifecycle:
- * - Customer and restaurant identification
- * - Ordered items with quantities and customizations
- * - Order status tracking (pending, confirmed, preparing, delivered)
- * - Payment information and total calculation
- * - Delivery details and timing
- * - Order timestamps for tracking and analytics
- * 
- * Central entity for order management and fulfillment workflow.
+ * Mongoose schema for customer orders.
+ * Links customer, restaurant, and dish with amount and server-calculated price.
+ * Tracks order state: received -> preparing -> ready -> completed.
  */
 
 import mongoose from 'mongoose';

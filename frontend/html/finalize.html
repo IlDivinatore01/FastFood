@@ -1,10 +1,9 @@
 <!--
-Customer profile setup completion page for new users.
-
-This page finalizes the customer onboarding process:
-- Delivery preferences and default addresses
-- Payment method setup and verification
+  Finalize Setup Page
+  
+  Customer onboarding: collect delivery address and first payment card.
 -->
+
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -15,13 +14,12 @@ This page finalizes the customer onboarding process:
     <title>FastFood - Finalize Setup</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/bootstrap-icons.min.css">
 
 </head>
 
 <body data-bs-theme="dark">
-    <!-- Hero Section Wrapper -->
     <div class="position-relative vh-100 d-flex align-items-center justify-content-center overflow-hidden">
-        <!-- Background Image/Overlay -->
         <div class="position-absolute top-0 start-0 w-100 h-100 zs-n1"
             style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/hero-bg.jpg'); background-size: cover; background-position: center;">
         </div>
@@ -37,7 +35,6 @@ This page finalizes the customer onboarding process:
                         </div>
                         <div class="card-body p-4">
                             <form id="finalizeForm" novalidate>
-                                <!-- Delivery Address -->
                                 <h5 class="mb-3 text-primary"><i class="bi bi-geo-alt-fill me-2"></i>Delivery Address
                                 </h5>
                                 <div class="form-floating mb-3">
@@ -74,7 +71,6 @@ This page finalizes the customer onboarding process:
                                     </div>
                                 </div>
 
-                                <!-- Payment Method -->
                                 <h5 class="mb-3 text-success"><i class="bi bi-credit-card-fill me-2"></i>Payment Method
                                 </h5>
                                 <div class="form-floating mb-3">

@@ -1,15 +1,10 @@
 /**
- * Order processing controller managing the complete order lifecycle.
+ * Order Controller
  * 
- * This controller orchestrates the entire ordering process:
- * - Order creation and validation from customer requests
- * - Order status updates throughout the fulfillment process
- * - Payment processing integration and verification
- * - Delivery scheduling and tracking functionality
- * - Order history retrieval for customers and restaurants
- * - Order cancellation and refund processing
- * 
- * Central component coordinating between customers, restaurants, and delivery systems.
+ * Manages the complete order lifecycle from creation to completion.
+ * Handles order placement with server-side price calculation for security.
+ * Provides queue management for restaurant owners and wait time estimation.
+ * Supports order status progression: received -> preparing -> ready -> completed.
  */
 
 import mongoose from 'mongoose';
@@ -66,13 +61,11 @@ export const newOrder = async (req, res, next) => {
         for (const key in req.body) {
             const order = req.body[key];
 
-            // SECURITY FIX: Calculate price server-side, never trust client
             const restaurant = await Restaurant.findById(order.restaurant);
             if (!restaurant) {
                 throw new Error(`Restaurant not found: ${order.restaurant}`);
             }
 
-            // Find the dish price from restaurant menu
             const menuItem = restaurant.menu.find(
                 item => item.dish.toString() === order.dish
             );
@@ -80,7 +73,6 @@ export const newOrder = async (req, res, next) => {
                 throw new Error(`Dish ${order.dish} not found in restaurant menu`);
             }
 
-            // Calculate total price server-side (price is in cents)
             const serverCalculatedPrice = menuItem.price * order.amount;
 
             const newOrder = new Order({
@@ -88,12 +80,11 @@ export const newOrder = async (req, res, next) => {
                 restaurant: order.restaurant,
                 dish: order.dish,
                 amount: order.amount,
-                price: serverCalculatedPrice, // Use server-calculated price
+                price: serverCalculatedPrice,
                 state: 'received',
                 createdAt: Date.now()
             });
 
-            // Only pass session if it exists
             const saveOptions = session ? { session } : {};
             await newOrder.save(saveOptions);
 
@@ -185,11 +176,9 @@ export const advanceQueue = async (req, res, next) => {
         const user = req.user;
         const { orderId } = req.body;
 
-        // Atomic find and verify restaurant ownership
         const restaurant = await Restaurant.findOne({ owner: user.userId }).select('_id queue');
         if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
 
-        // Determine which order to advance
         const targetOrderId = orderId || restaurant.queue[0];
         if (!targetOrderId) return res.json({ message: 'Queue is empty.' });
 
@@ -201,7 +190,6 @@ export const advanceQueue = async (req, res, next) => {
         const isHeadOfQueue = restaurant.queue[0]?.toString() === targetOrderId.toString();
 
         if (orderToAdvance.state === ORDER_STATES.RECEIVED) {
-            // Atomic update: mark as preparing
             const updated = await Order.findOneAndUpdate(
                 { _id: targetOrderId, state: ORDER_STATES.RECEIVED },
                 { $set: { state: ORDER_STATES.PREPARING } },
@@ -213,7 +201,6 @@ export const advanceQueue = async (req, res, next) => {
                 await Restaurant.findByIdAndUpdate(restaurant._id, { lastPreparationStart: Date.now() });
             }
         } else if (orderToAdvance.state === ORDER_STATES.PREPARING) {
-            // Atomic update: mark as ready and remove from queue
             const updated = await Order.findOneAndUpdate(
                 { _id: targetOrderId, state: ORDER_STATES.PREPARING },
                 { $set: { state: ORDER_STATES.READY } },
@@ -239,17 +226,13 @@ export const waitEstimation = async (req, res, next) => {
         const restaurant = await Restaurant.findById(order.restaurant);
         if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
 
-        // Find position in queue
         const queuePosition = restaurant.queue.findIndex(id => id.toString() === orderId);
         if (queuePosition === -1) {
-            // Not in queue - already completed or ready
             return res.json({ time: 0 });
         }
 
-        // Get orders ahead in queue (including current)
         const orderIdsAhead = restaurant.queue.slice(0, queuePosition + 1);
 
-        // Aggregate preparation times using MongoDB pipeline
         const result = await Order.aggregate([
             { $match: { _id: { $in: orderIdsAhead } } },
             {
@@ -276,7 +259,6 @@ export const waitEstimation = async (req, res, next) => {
 
         let waitingTime = result[0]?.totalTime || 0;
 
-        // Adjust for currently preparing order (subtract elapsed time)
         const firstOrderId = restaurant.queue[0];
         if (firstOrderId) {
             const firstOrder = await Order.findById(firstOrderId);

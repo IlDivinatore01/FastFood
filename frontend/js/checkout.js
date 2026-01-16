@@ -1,16 +1,7 @@
 /**
- * Order finalization and payment processing interface.
+ * Checkout Page Script
  * 
- * This module manages the checkout process with:
- * - Customer information validation and confirmation
- * - Delivery address and contact information management
- * - Payment method selection and processing
- * - Order review and final confirmation
- * - Payment security and validation handling
- * - Order submission and confirmation messaging
- * - Error handling for payment failures
- * 
- * Completes the customer ordering workflow with secure payment processing.
+ * Displays saved payment cards, handles card selection, and submits orders.
  */
 
 import { fetchApi } from './api.js';
@@ -73,7 +64,7 @@ function makePaymentCards(cards) {
         col.className = 'col-md-6';
 
         const cardDiv = document.createElement('div');
-        cardDiv.className = 'card h-100 cursor-pointer payment-card border-2'; // Custom class for css or just logic
+        cardDiv.className = 'card h-100 cursor-pointer payment-card border-2';
         cardDiv.style.cursor = 'pointer';
         cardDiv.style.transition = 'all 0.2s';
 
@@ -99,13 +90,10 @@ function makePaymentCards(cards) {
         cardBody.append(icon, details);
         cardDiv.append(cardBody);
 
-        // Selection Logic
         cardDiv.onclick = () => {
-            // Remove active class from all
             document.querySelectorAll('.payment-card').forEach(c => {
                 c.classList.remove('border-primary', 'bg-primary-subtle');
             });
-            // Add to current
             cardDiv.classList.add('border-primary', 'bg-primary-subtle');
             selectedCard = card;
         };

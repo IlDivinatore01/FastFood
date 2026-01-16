@@ -1,15 +1,9 @@
 /**
- * Customer-specific data model for enhanced customer profiles.
+ * CustomerData Model
  * 
- * This model extends user data with customer-specific information:
- * - Delivery preferences and default addresses
- * - Payment method preferences and history
- * - Order history and favorite items
- * - Dietary preferences and restrictions
- * - Loyalty program information and points
- * - Customer feedback and rating history
- * 
- * Enables personalized customer experience and order customization.
+ * Mongoose schema for customer-specific data (separate from base User).
+ * Stores delivery address and payment cards (numbers masked, no CVC).
+ * Created during customer setup/finalization flow.
  */
 
 import mongoose from 'mongoose';
@@ -38,7 +32,6 @@ const CustomerDataSchema = new mongoose.Schema({
             cardNumber: {
                 type: String,
                 required: true,
-                // Accept both full 16-digit (for validation before masking) and masked format
                 match: [/^(\*{12}\d{4}|\d{16})$/, 'Invalid number.'],
             },
             expiryDate: {
@@ -46,7 +39,6 @@ const CustomerDataSchema = new mongoose.Schema({
                 required: true,
                 match: [/^(0[1-9]|1[0-2])\/\d{2}$/, 'Invalid expiry date.']
             }
-            // NOTE: CVC is intentionally NOT stored - it's only used for payment validation
         }
     ]
 });

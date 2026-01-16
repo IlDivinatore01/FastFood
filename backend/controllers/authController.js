@@ -1,15 +1,9 @@
 /**
- * Authentication controller handling user registration, login, and session management.
+ * Authentication Controller
  * 
- * This controller manages all authentication-related operations:
- * - User registration with validation and password hashing
- * - User login with credential verification and JWT token generation
- * - Session management with secure HTTP-only cookies
- * - Logout functionality with token cleanup
- * - Authentication status checking for protected routes
- * - Setup completion detection for multi-step onboarding
- * 
- * Implements secure authentication using JWT tokens and bcrypt password hashing.
+ * Handles user registration, login, logout, and session verification.
+ * Uses JWT tokens stored in HTTP-only cookies for secure authentication.
+ * Supports both customer and restaurant owner account types.
  */
 
 import User from '../models/User.js';
@@ -22,7 +16,6 @@ export const registerUser = async (req, res, next) => {
     try {
         const { username, firstName, lastName, email, password, confirmPassword, type } = req.body;
 
-        // Validate password confirmation
         if (password !== confirmPassword) {
             return res.status(400).json({ error: 'Passwords do not match.' });
         }
@@ -33,7 +26,7 @@ export const registerUser = async (req, res, next) => {
             lastName,
             email,
             password,
-            confirmPassword, // Required for schema validation
+            confirmPassword,
             type,
             image: req.file ? `/images/uploads/${req.file.filename}` : undefined
         });

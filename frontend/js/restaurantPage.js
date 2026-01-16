@@ -1,17 +1,9 @@
 /**
- * Individual restaurant page functionality and menu browsing interface.
+ * Restaurant Page Script
  * 
- * This module manages the restaurant-specific page with:
- * - Restaurant information display and formatting
- * - Menu category navigation and item browsing
- * - Dish detail presentation with images and descriptions
- * - Add to cart functionality and quantity management
- * - Restaurant rating and review display
- * - Menu search and filtering capabilities
- * - Mobile-responsive menu layout and interaction
- * 
- * Enables customers to explore restaurant offerings and build their orders.
+ * Displays restaurant menu, handles dish selection and add-to-cart.
  */
+
 
 import { fetchApi } from './api.js';
 import { addToCart, showCartButton, getCart } from './cartManager.js';
@@ -43,12 +35,12 @@ let restId;
 let currentCart;
 
 window.onload = async () => {
-    // Initialize Bootstrap modal if available
+
     if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
         dishModal.modal = new bootstrap.Modal(document.getElementById('dishModal'));
     }
 
-    // Initialize currentCart from localStorage using the imported function
+
     currentCart = getCart();
 
     const path = window.location.pathname.split('/');
@@ -119,7 +111,7 @@ function showDish(dish) {
         dishModal.ingredients.append(ingredientElement);
     });
 
-    // Always reset amount to 1 when showing a new dish
+
     dishModal.amount.value = 1;
 
     dishModal.modal.show();

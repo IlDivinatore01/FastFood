@@ -1,16 +1,9 @@
 /**
- * User data model for authentication and user management.
+ * User Model
  * 
- * This Mongoose model defines the core user entity supporting both customers
- * and restaurant owners with comprehensive validation:
- * - User credentials (username, email, password) with regex validation
- * - Personal information (firstName, lastName, profile image)
- * - User type differentiation (customer/owner)
- * - Account status management (active/inactive)
- * - Password hashing and confirmation validation
- * - Pre-save middleware for password encryption using bcrypt
- * 
- * Supports user registration, authentication, and profile management.
+ * Mongoose schema for user accounts (customers and restaurant owners).
+ * Includes username/email/password with validation, profile image, and type.
+ * Password is hashed with bcrypt before saving.
  */
 
 import mongoose from 'mongoose';
@@ -18,7 +11,7 @@ import bcrypt from 'bcrypt';
 import { USER_TYPES } from '../utils/constants.js';
 
 const usernameRegex = /^\w{1,20}$/;
-const nameRegex = /^[A-Za-zÀ-ÿ'’.\-\s]{1,50}$/u;
+const nameRegex = /^[A-Za-zÀ-ÿ''.\-\s]{1,50}$/u;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+={}|\\;:"<>?,./]).{8,32}$/;
 
@@ -51,7 +44,7 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: function () {return this.active === true},
+        required: function () { return this.active === true },
         unique: true,
         sparse: true,
         maxLength: 100,

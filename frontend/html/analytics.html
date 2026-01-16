@@ -1,18 +1,9 @@
 <!--
-Business analytics and reporting dashboard for restaurant owners.
-
-This page provides comprehensive business insights:
-- Sales performance metrics and revenue tracking
-- Order volume and customer behavior analytics
-- Popular menu items and performance analysis
-- Customer demographics and ordering patterns
-- Time-based sales trends and seasonal analysis
-- Comparative performance metrics and benchmarks
-- Export capabilities for detailed reporting
-
-Data-driven business intelligence tool helping restaurant owners
-make informed decisions and optimize operations.
+  Analytics Page
+  
+  Owner dashboard with order stats, revenue, and top-selling dishes.
 -->
+
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -23,6 +14,7 @@ make informed decisions and optimize operations.
     <title>FastFood</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/bootstrap-icons.min.css">
 
 </head>
 
@@ -51,7 +43,6 @@ make informed decisions and optimize operations.
                 <div class="card-body p-4">
                     <h4 class="card-title mb-4 fw-bold">Performance Overview</h4>
 
-                    <!-- Metrics Row -->
                     <div class="row g-4 mb-4">
                         <div class="col-12 col-md-4">
                             <div
@@ -90,7 +81,6 @@ make informed decisions and optimize operations.
                         </div>
                     </div>
 
-                    <!-- Best Seller Row -->
                     <div class="card border-0 bg-dark-subtle rounded-4 overflow-hidden">
                         <div class="card-body p-4">
                             <div class="row align-items-center">
@@ -100,12 +90,12 @@ make informed decisions and optimize operations.
                                 </div>
                                 <div class="col-md-6 text-md-end mt-3 mt-md-0">
                                     <div class="d-inline-flex gap-3">
-                                        <div class="text-center px-4 py-2 bg-white rounded-3 shadow-sm">
-                                            <div class="small text-muted text-uppercase fw-bold">Sold</div>
-                                            <div id="best-selling-amount" class="fs-4 fw-bold">0</div>
+                                        <div class="text-center px-4 py-2 bg-dark rounded-3 border border-secondary">
+                                            <div class="small text-secondary text-uppercase fw-bold">Sold</div>
+                                            <div id="best-selling-amount" class="fs-4 fw-bold text-white">0</div>
                                         </div>
-                                        <div class="text-center px-4 py-2 bg-white rounded-3 shadow-sm">
-                                            <div class="small text-muted text-uppercase fw-bold">Earned</div>
+                                        <div class="text-center px-4 py-2 bg-dark rounded-3 border border-success">
+                                            <div class="small text-secondary text-uppercase fw-bold">Earned</div>
                                             <div id="best-selling-earned" class="fs-4 fw-bold text-success">0.00€</div>
                                         </div>
                                     </div>

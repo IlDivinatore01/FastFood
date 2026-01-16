@@ -1,15 +1,9 @@
 /**
- * Restaurant management controller for restaurant owners and operations.
+ * Restaurant Controller
  * 
- * This controller handles restaurant-specific business logic:
- * - Restaurant profile creation and setup for new owners
- * - Restaurant information updates and menu management
- * - Business hours and operational status management
- * - Restaurant image and branding asset uploads
- * - Menu item creation, editing, and deletion
- * - Order management and fulfillment status updates
- * 
- * Restricted to authenticated restaurant owners with proper authorization.
+ * Manages restaurant operations including creation, menu management, and analytics.
+ * Handles restaurant search, nearby restaurant lookup, and profile editing.
+ * Provides analytics data for restaurant owners (orders, revenue, top dishes).
  */
 
 import Restaurant from '../models/Restaurant.js';
@@ -97,12 +91,9 @@ export const editRestaurant = async (req, res, next) => {
         const restaurant = await Restaurant.findOne({ owner: user.userId });
         if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
 
-        // Helper to get value from either bracket format or nested JSON
         const getValue = (bracketKey, nestedPath) => {
-            // Try bracket format first (legacy: 'newRestaurant[name]')
             if (body[bracketKey] !== undefined) return body[bracketKey];
 
-            // Try nested JSON format (clean: body.newRestaurant.name)
             if (nestedPath && body.newRestaurant) {
                 const keys = nestedPath.split('.');
                 let val = body.newRestaurant;
@@ -115,11 +106,9 @@ export const editRestaurant = async (req, res, next) => {
             return undefined;
         };
 
-        // Update name
         const newName = getValue('newRestaurant[name]', 'name');
         if (newName) restaurant.name = newName;
 
-        // Update address fields
         const streetAddress = getValue('newRestaurant[address][streetAddress]', 'address.streetAddress');
         const city = getValue('newRestaurant[address][city]', 'address.city');
         const province = getValue('newRestaurant[address][province]', 'address.province');
@@ -130,18 +119,15 @@ export const editRestaurant = async (req, res, next) => {
         if (province) restaurant.address.province = province;
         if (zipCode) restaurant.address.zipCode = zipCode;
 
-        // Update phone and VAT
         const phone = getValue('newRestaurant[phoneNumber]', 'phoneNumber');
         if (phone != null) restaurant.phoneNumber = phone;
 
         const vat = getValue('newRestaurant[vatNumber]', 'vatNumber');
         if (vat) restaurant.vatNumber = vat;
 
-        // Update active status
         if (body.active !== undefined) restaurant.active = body.active;
         if (body.newRestaurant?.active !== undefined) restaurant.active = body.newRestaurant.active;
 
-        // Update image
         if (req.file) {
             restaurant.image = `/images/uploads/${req.file.filename}`;
         }

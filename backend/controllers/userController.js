@@ -1,16 +1,10 @@
 /**
- * User management controller for profile operations and user data handling.
+ * User Controller
  * 
- * This controller provides comprehensive user management functionality:
- * - User profile viewing and editing capabilities
- * - Password change and account security operations
- * - Profile image upload and management
- * - User account activation/deactivation
- * - User data retrieval for authenticated users
- * - Account deletion and data cleanup
- * 
- * Handles both customer and restaurant owner profile management with
- * appropriate authorization checks.
+ * Manages user profiles, account settings, and customer data.
+ * Handles profile viewing/editing, password changes, and account deactivation.
+ * Manages payment cards (add/remove) and delivery addresses for customers.
+ * Supports the customer setup flow (finalize with address and card).
  */
 
 import User from '../models/User.js';
@@ -40,9 +34,6 @@ export const getProfile = async (req, res, next) => {
     }
 }
 
-// @desc    Finalize user setup (address & payment)
-// @route   POST /api/finalize
-// @access  Private
 export const finalizeSetup = async (req, res, next) => {
     try {
         const existing = await CustomerData.findOne({ user: req.user.userId });
@@ -70,24 +61,19 @@ export const finalizeSetup = async (req, res, next) => {
             return res.status(400).json({ error: 'Please provide both card and address details' });
         }
 
-        // SECURITY: Validate full card number format before masking
         if (!card.cardNumber || !/^\d{16}$/.test(card.cardNumber)) {
             return res.status(400).json({ error: 'Card number must be exactly 16 digits.' });
         }
 
-        // SECURITY: Create a safe copy of card data with masked number
         const safeCardData = { ...card };
         safeCardData.cardNumber = '************' + card.cardNumber.slice(-4);
         delete safeCardData.cvc;
 
-        // Create customer data with safe card info
         await CustomerData.create({
             user: req.user.userId,
             cards: [safeCardData],
             address: address
         });
-
-        // Note: Setup completion is determined by existence of CustomerData, not a flag
 
         const token = jwt.sign({
             userId: req.user.userId,
@@ -116,15 +102,11 @@ export const addCard = async (req, res, next) => {
         const user = req.user;
         const cardData = { ...req.body.card };
 
-        // SECURITY: Validate full card number format before masking
         if (!cardData.cardNumber || !/^\d{16}$/.test(cardData.cardNumber)) {
             return res.status(400).json({ error: 'Card number must be exactly 16 digits.' });
         }
 
-        // SECURITY: Mask card number (store only last 4 digits visible)
         cardData.cardNumber = '************' + cardData.cardNumber.slice(-4);
-
-        // SECURITY: Never store CVC
         delete cardData.cvc;
 
         const customer = await CustomerData.findOne({ user: user.userId });
@@ -132,7 +114,6 @@ export const addCard = async (req, res, next) => {
             return res.status(404).json({ error: 'Customer data not found.' });
         }
 
-        // Add the new card to the array to trigger subdocument validation
         customer.cards.push(cardData);
 
         const validationError = customer.validateSync();
@@ -157,7 +138,7 @@ export const removeCard = async (req, res, next) => {
         const updatedCustomer = await CustomerData.findOneAndUpdate(
             { user: user.userId },
             { $pull: { cards: { _id: cardId } } },
-            { new: true } // Return the updated document
+            { new: true }
         );
 
         if (!updatedCustomer) {
@@ -199,14 +180,12 @@ export const deactivateAccount = async (req, res, next) => {
         if (!isMatch) return res.status(400).json({ error: 'Wrong password.' });
 
         if (profile.type === USER_TYPES.CUSTOMER) {
-            // FIX: Get order IDs first, then clean restaurant queues
             const ordersToDelete = await Order.find({
                 customer: profile._id,
                 state: { $ne: 'completed' }
             }).select('_id');
             const orderIds = ordersToDelete.map(o => o._id);
 
-            // Remove order IDs from ALL restaurant queues before deleting
             if (orderIds.length > 0) {
                 await Restaurant.updateMany(
                     { queue: { $in: orderIds } },

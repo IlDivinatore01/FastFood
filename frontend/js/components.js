@@ -1,28 +1,10 @@
 /**
- * Reusable UI component library for consistent interface elements.
+ * UI Components Module
  * 
- * This module provides standardized UI components including:
- * - Card components for restaurants, dishes, and content display
- * - Pagination controls for large data sets
- * - Modal dialogs and confirmation interfaces
- * - Form controls and input validation helpers
- * - Loading indicators and progress elements
- * - Bootstrap-compatible styling and responsive design
- * - Event handling and interaction management
- * 
- * Ensures visual consistency and reduces code duplication across pages.
+ * Reusable component factories: cards, pagination, form elements.
  */
 
-/**
- * Creates a generic card component.
- * @param {object} options - The options for the card.
- * @param {string} options.imageSrc - The source for the card image.
- * @param {string} options.title - The title text for the card.
- * @param {string} [options.bodyText] - The body text for the card.
- * @param {function} [options.onClick] - The function to call when the card is clicked.
- * @param {string} [options.colClass='col-3 my-2'] - The bootstrap column class.
- * @returns {HTMLElement} The card element.
- */
+
 export function createCard({ imageSrc, title, bodyText, onClick, colClass = 'col-12 col-md-6 col-lg-4 col-xl-3' }) {
     const col = document.createElement('div');
     col.className = colClass;

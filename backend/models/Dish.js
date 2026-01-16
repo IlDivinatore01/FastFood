@@ -1,15 +1,9 @@
 /**
- * Dish data model representing individual menu items.
+ * Dish Model
  * 
- * This model defines food items available for ordering:
- * - Dish identification (name, description, category)
- * - Pricing and availability information
- * - Nutritional data and ingredient lists
- * - Restaurant association for menu organization
- * - Image URLs for visual presentation
- * - Preparation time and dietary restrictions
- * 
- * Core component of the restaurant menu system and ordering process.
+ * Mongoose schema for menu items.
+ * Includes name, category, image, ingredients list.
+ * Optional restaurant reference (null = global dish from seed data).
  */
 
 import mongoose from 'mongoose';

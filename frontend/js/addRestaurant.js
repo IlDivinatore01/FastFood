@@ -1,17 +1,9 @@
 /**
- * Restaurant setup and onboarding functionality for new owners.
+ * Add Restaurant Script
  * 
- * This module guides restaurant setup with:
- * - Restaurant information collection and validation
- * - Business location and contact information setup
- * - Operating hours and service configuration
- * - Restaurant image upload and branding setup
- * - Initial menu category configuration
- * - Setup progress tracking and validation
- * - Onboarding completion and next steps guidance
- * 
- * Essential tool for restaurant owners to establish their platform presence.
+ * Handles restaurant registration form submission with image upload.
  */
+
 
 import { fetchApi } from './api.js';
 import { addMessage } from './errorManager.js';
