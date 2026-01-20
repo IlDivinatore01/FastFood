@@ -176,7 +176,7 @@ async function getEstimation(order) {
     }
 
     try {
-        const data = await fetchApi(`/api/estimate/${order._id}`);
+        const data = await fetchApi(`/api/eta/${order._id}`);
         if (!data) return order;
 
         return {

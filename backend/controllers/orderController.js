@@ -30,6 +30,11 @@ export const getOrders = async (req, res, next) => {
         const total = await Order.countDocuments(filter);
         const orders = await Order.find(filter).populate('dish').populate('restaurant').populate('customer').sort({ createdAt: -1 }).skip(skip).limit(limit);
 
+        console.log(`getOrders DEBUG: Found ${total} orders (page returns ${orders.length}).`);
+        if (orders.length > 0) {
+            console.log('getOrders DEBUG First Order Sample:', JSON.stringify(orders[0]));
+        }
+
         const cleanOrders = orders.map(order => {
             return {
                 _id: order._id,
@@ -220,11 +225,20 @@ export const advanceQueue = async (req, res, next) => {
 export const waitEstimation = async (req, res, next) => {
     try {
         const orderId = req.params.id;
+        console.log(`waitEstimation DEBUG: Start for OrderID=${orderId}`);
+
         const order = await Order.findById(orderId);
-        if (!order) return res.status(404).json({ error: 'Order not found.' });
+        if (!order) {
+            console.log(`waitEstimation DEBUG: Order not found ${orderId}`);
+            return res.status(404).json({ error: 'Order not found.' });
+        }
 
         const restaurant = await Restaurant.findById(order.restaurant);
-        if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
+        if (!restaurant) {
+            console.log(`waitEstimation DEBUG: Restaurant not found for order ${orderId}`);
+            return res.status(404).json({ error: 'Restaurant not found.' });
+        }
+        console.log(`waitEstimation DEBUG: Restaurant found: ${restaurant._id}, Queue: ${restaurant.queue.length}`);
 
         const queuePosition = restaurant.queue.findIndex(id => id.toString() === orderId);
         if (queuePosition === -1) {

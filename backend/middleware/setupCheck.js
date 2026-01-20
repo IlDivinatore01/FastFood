@@ -8,6 +8,9 @@
 
 export default function setupCheck(req, res, next) {
     if (!req.user?.setupComplete) {
+        if (req.accepts('html')) {
+            return res.redirect('/finalize');
+        }
         return res.status(403).json({ error: 'Please complete your profile setup first.', setupRequired: true });
     }
     next();

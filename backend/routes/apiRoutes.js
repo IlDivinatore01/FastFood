@@ -189,7 +189,7 @@ router.get('/queue', authMiddleware, onlyOwners, getQueue);
  *       '200':
  *         description: The estimated completion time.
  */
-router.get('/estimate/:id', authMiddleware, waitEstimation);
+router.get('/eta/:id', authMiddleware, waitEstimation);
 
 /**
  * @swagger
