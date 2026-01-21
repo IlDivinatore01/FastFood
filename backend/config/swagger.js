@@ -20,12 +20,12 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:5000',
-        description: 'Development server',
-      },
-      {
         url: 'https://fastfood.simonemiglio.eu',
         description: 'Production server',
+      },
+      {
+        url: 'http://localhost:5000',
+        description: 'Development server (localhost)',
       },
     ],
     components: {
