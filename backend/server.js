@@ -127,7 +127,6 @@ const startServer = async () => {
             message: { error: 'Too many requests from this IP, please try again after 15 minutes' }
         });
 
-        // Swagger UI with credentials support for cookie-based auth
         const swaggerOptions = {
             swaggerOptions: {
                 withCredentials: true,
