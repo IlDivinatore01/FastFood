@@ -127,7 +127,17 @@ const startServer = async () => {
             message: { error: 'Too many requests from this IP, please try again after 15 minutes' }
         });
 
-        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+        // Swagger UI with credentials support for cookie-based auth
+        const swaggerOptions = {
+            swaggerOptions: {
+                withCredentials: true,
+                requestInterceptor: (req) => {
+                    req.credentials = 'include';
+                    return req;
+                }
+            }
+        };
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));
 
         app.use('/auth', authLimiter, authRoutes);
         app.use('/', pagesRoutes);
