@@ -78,7 +78,9 @@ function makePaymentCards(cards) {
         icon.style.objectFit = 'contain';
 
         const details = document.createElement('div');
+        const numberEl = document.createElement('div');
         numberEl.className = 'fw-bold';
+        numberEl.innerText = maskedNumber;
 
         const expiry = document.createElement('div');
         expiry.className = 'small text-muted';

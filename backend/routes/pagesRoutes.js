@@ -32,11 +32,11 @@ router.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/public/register.html'));
 });
 
-router.get('/finalize', authMiddleware, (req, res) => {
+router.get('/finalize', authMiddleware, onlyCustomers, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/html/finalize.html'));
 })
 
-router.get('/restaurant/add', authMiddleware, (req, res) => {
+router.get('/restaurant/add', authMiddleware, onlyOwners, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/html/addRestaurant.html'));
 })
 

@@ -10,7 +10,20 @@ import { addMessage } from './errorManager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addRestaurantForm')?.addEventListener('submit', newRestaurant);
+    document.getElementById('logout-btn')?.addEventListener('click', window.logout);
 });
+
+window.logout = async () => {
+    try {
+        const res = await fetch('/auth/logout');
+        if (res.ok || res.status === 401) {
+            localStorage.clear();
+            window.location.href = '/';
+        }
+    } catch (e) {
+        window.location.href = '/';
+    }
+};
 
 function sanitizeInput(value) {
     return value.trim().replace(/[<>]/g, '');

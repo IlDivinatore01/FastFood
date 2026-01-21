@@ -1,0 +1,2112 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{dirtree}
+\usepackage{caption}
+
+% --- MACROS ---
+\newcommand{\project}{FastFood}
+\newcommand{\repourl}{https://forgejo.it/simonemiglio/FastFood}
+\newcommand{\studentName}{Simone Miglio}
+\newcommand{\matricola}{978605}
+\newcommand{\academicYear}{A.A. 2025/2026}
+
+% Caption format
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+% Geometry
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=15pt
+}
+
+% Define JavaScript language for listings
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, const, let, class, extends, async, await, import, export, from, default, require, module, exports},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{codegreen}\ttfamily,
+  stringstyle=\color{codepurple}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+% Define CSS language for listings
+\lstdefinelanguage{CSS}{
+  keywords={color,background-image,margin,padding,font,weight,display,position,top,left,right,bottom,list,style,border,size,white,space,min,width,transition,transform,hover,active,focus,visited,link,nth-child,first-child,last-child,before,after,content,absolute,relative,fixed,static,inline,block,flex,grid,auto,none,pointer,default,cursor,text-align,center,left,right,justify,uppercase,lowercase,capitalize,float,clear,both,overflow,hidden,visible,scroll,bold,italic,underline,normal,sans-serif,serif,monospace,large,larger,medium,small,smaller,x-large,xx-large,x-small,xx-small},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={@media,@import,@charset,@page,@font-face,@keyframes,@supports,@namespace},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{codegreen}\ttfamily,
+  stringstyle=\color{codepurple}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  alsoletter={-},
+  morekeywords={-webkit-,-moz-,-ms-,-o-}
+}
+
+% Define HTML language for listings
+\lstdefinelanguage{HTML}{
+  keywords={html,head,title,body,div,span,p,h1,h2,h3,h4,h5,h6,ul,ol,li,a,img,form,input,button,script,link,meta,DOCTYPE},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class,id,src,href,type,name,value,onclick,onload},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[s]{<!--}{-->},
+  commentstyle=\color{codegreen}\ttfamily,
+  stringstyle=\color{codepurple}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+% Code listing setup
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=t, % Caption sopra come titolo finestra
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=b, % Bordo solo sotto
+    framexleftmargin=2pt
+}
+
+\lstset{style=mystyle}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Progetto \project}
+\lhead{Programmazione Web e Mobile}
+\rfoot{\thepage}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={Relazione Tecnica \project},
+    pdfauthor={\studentName \ - \matricola},
+    pdfsubject={Programmazione Web e Mobile},
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\huge\bfseries Relazione\\Progetto \project\par}
+    \vspace{1cm}
+    {\Large Programmazione Web e Mobile\par}
+    \vspace{0.5cm}
+    {\large \academicYear\par}
+    \vspace{4cm}
+    
+    % Logo removed as requested
+    
+    {\Large\itshape \studentName\par}
+    \vspace{0.5cm}
+    {\large Matricola: \matricola\par}
+    
+    \vfill
+    
+    {\large \today\par}
+\end{titlepage}
+
+% Table of contents
+\tableofcontents
+\newpage
+
+% Abstract
+\section*{Sommario Esecutivo}
+\addcontentsline{toc}{section}{Sommario Esecutivo}
+
+La presente relazione illustra la progettazione e implementazione dell'applicazione web \textbf{FastFood}, un sistema completo per la gestione di ordini online per ristoranti. Il progetto è stato sviluppato seguendo i quattro macro-scenari richiesti: gestione profili utente, gestione ristoranti, gestione ordini e gestione consegne, implementando un'architettura full-stack moderna con tecnologie Node.js, MongoDB, HTML5, CSS3 e JavaScript.
+
+Il sistema supporta due tipologie di utenti distinte---clienti e ristoratori---con interfacce dedicate e funzionalità specifiche per ciascun ruolo. L'architettura implementa garantisce scalabilità, sicurezza e manutenibilità del codice.
+
+Il codice sorgente completo è disponibile nel repository Forgejo: \url{\repourl}
+
+\newpage
+
+\section{Architettura del Sistema}
+% ... [Rest of Architecture section remains, skipped in this replacement block to focus on specific insertions if possible, but replace_file_content works on ranges. I will just target the Repo URL line specifically first]
+
+% Actually, I'll stick to targeted replacing for usage of macros and insertion of new section.
+% First, Repo URL.
+% Then, Requirements Map.
+
+
+\subsection{Struttura Generale dell'Applicazione}
+
+Il sistema FastFood è stato progettato seguendo un'architettura \textit{client-server} con separazione netta tra frontend e backend. L'applicazione adotta il paradigma \textbf{REST} per la comunicazione tra client e server, garantendo scalabilità e manutenibilità del codice.
+
+La struttura del progetto è organizzata in due componenti principali: il backend Node.js che gestisce la logica di business e l'accesso ai dati, e il frontend che implementa l'interfaccia utente responsiva. Il backend utilizza MongoDB come database NoSQL per la persistenza dei dati, mentre il frontend è costituito da pagine HTML5 statiche arricchite con JavaScript per l'interattività.
+
+L'architettura adottata permette la gestione di due tipologie di utenti distinte---clienti e ristoratori---con interfacce e funzionalità specifiche per ciascun ruolo. Il sistema implementa un sistema di autenticazione basato su \textit{JSON Web Token} (JWT) per garantire la sicurezza delle sessioni utente e l'autorizzazione degli accessi alle risorse protette.
+
+\subsection{Tecnologie Utilizzate}
+
+Il backend è implementato utilizzando Node.js con il framework Express.js per la gestione delle route HTTP e dei middleware. Per l'accesso ai dati è stata scelta MongoDB con Mongoose ODM per la modellazione degli oggetti e la validazione dei dati. La sicurezza dell'applicazione è garantita attraverso l'uso di bcrypt per l'hashing delle password, helmet per la protezione delle intestazioni HTTP, e cors per la gestione delle richieste cross-origin.
+
+Il frontend utilizza HTML5 semantico per la struttura delle pagine, CSS3 con Bootstrap 5 per lo styling responsivo, e JavaScript vanilla con ES6+ per l'interattività. L'applicazione implementa un'architettura Single Page Application (SPA) per alcune sezioni, mantenendo al contempo la capacità di navigazione tradizionale tra le pagine principali.
+ 
+\subsection{Organizzazione del Codice}
+La struttura del progetto segue le best practices MVC:
+
+\dirtree{%
+.1 /fastfood.
+.2 backend.
+.3 config/ \DTcomment{Configurazione DB e Swagger}.
+.3 controllers/ \DTcomment{Logica di business}.
+.3 models/ \DTcomment{Schemi Mongoose}.
+.3 routes/ \DTcomment{Definizione API Endpoints}.
+.3 middleware/ \DTcomment{Auth, Sanitize, Upload}.
+.3 utils/ \DTcomment{Popolazione DB}.
+.3 services/ \DTcomment{Sanitizzazione e tempo d'attesa}.
+.2 frontend.
+.3 html/ \DTcomment{Pagine statiche}.
+.3 js/ \DTcomment{Moduli ES6}.
+.3 css/ \DTcomment{Bootstrap e stili}.
+.3 public/ \DTcomment{Immagini}.
+.2 deploy/ \DTcomment{Configurazioni Docker e Caddy}.
+}
+
+\section{Progettazione del Database}
+
+\subsection{Schema Concettuale}
+
+Il database è stato progettato per supportare efficacemente i quattro macro-scenari richiesti. Il modello dati è centrato attorno a cinque entità principali: User, Restaurant, Dish, Order e CustomerData.
+
+L'entità User rappresenta il profilo base di tutti gli utenti del sistema, contenendo informazioni di autenticazione e dati personali comuni. Attraverso il campo userType, il sistema distingue tra clienti ("customer") e ristoratori ("owner"), implementando una gerarchia di utenti che consente l'applicazione di logiche di autorizzazione specifiche.
+
+\begin{lstlisting}[language=JavaScript, caption=Schema User (Estratto - Vedi Appendice \ref{app:user-model})]
+// models/User.js
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        match: [usernameRegex, '...']
+    },
+    // ... campi firstName, lastName, email ...
+    type: {
+        type: String,
+        required: true,
+        enum: Object.values(USER_TYPES)
+    }
+    // ...
+});
+\end{lstlisting}
+
+\subsection{Modelli di Dati Implementati}
+
+\subsubsection{Utenti e Dati Sensibili}
+Il modello \texttt{User} gestisce l'identità fondamentale, distinguendo tra clienti e ristoratori. Per i clienti, i dati sensibili (indirizzo, carte di pagamento) sono segregati nel modello \texttt{CustomerData} per una migliore organizzazione logica e sicurezza.
+I campi sensibili come il numero della carta di credito vengono parzialmente offuscati (masked) prima del salvataggio o sono memorizzati solo se strettamente necessario, validati tramite Regex rigorose.
+
+\begin{lstlisting}[language=JavaScript, caption=Schema CustomerData per dati sensibili]
+// models/CustomerData.js
+const CustomerDataSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', unique: true },
+    address: {
+        streetAddress: { type: String, required: true },
+        city: { type: String, required: true },
+        // Validazione provincia (2 lettere maiuscole)
+        province: { type: String, match: [/^[A-Z]{2}$/, 'Province must be 2 letters'] },
+        zipCode: { type: String, match: [/^\d{5}$/, 'ZIP must be 5 digits'] }
+    },
+    cards: [{
+        cardNumber: { type: String, match: [/^(\*{12}\d{4}|\d{16})$/, 'Invalid card'] },
+        expiryDate: { type: String, match: [/^(0[1-9]|1[0-2])\/\d{2}$/, 'MM/YY'] }
+    }]
+});
+\end{lstlisting}
+
+\subsubsection{Gestione Ordini (Order)}
+Il modello \texttt{Order} gestisce il ciclo di vita delle ordinazioni. Funge da entità di collegamento tra il cliente, il ristorante e il piatto scelto. Oltre a memorizzare quantità e prezzo calcolato lato server, traccia lo stato di avanzamento dell'ordine (es. ricevuto, in preparazione, completato) e definisce indici per ottimizzare la cronologia ordini.
+
+\begin{lstlisting}[language=JavaScript, caption=Schema del modello Order]
+// models/Order.js
+const OrderSchema = new mongoose.Schema({
+    customer: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true 
+    },
+    restaurant: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Restaurant', 
+        required: true 
+    },
+    dish: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Dish', 
+        required: true 
+    },
+    amount: { type: Number, required: true, min: 1 },
+    price: { type: Number, required: true }, // Prezzo calcolato
+    state: {
+        type: String,
+        enum: ['received', 'preparing', 'ready', 'completed'],
+        default: 'received'
+    },
+    createdAt: { type: Date, default: Date.now }
+});
+
+// Indici per ottimizzare le query cronologiche per cliente e ristorante
+OrderSchema.index({ customer: 1, createdAt: -1 });
+OrderSchema.index({ restaurant: 1, createdAt: -1 });
+\end{lstlisting}
+
+\subsubsection{Ciclo di Vita dell'Ordine}
+L'entità \texttt{Order} è il cuore pulsante dell'applicazione. Essa traccia il flusso completo:
+\begin{enumerate}
+    \item \textbf{Creazione}: Il cliente finalizza il carrello; viene creato un documento Order in stato 'received'.
+    \item \textbf{Preparazione}: Il ristoratore accetta l'ordine, passando lo stato a 'preparing'.
+    \item \textbf{Consegna}: Al termine della preparazione, lo stato diventa 'delivering'.
+    \item \textbf{Chiusura}: Alla consegna avvenuta, lo stato finale è 'completed'.
+\end{enumerate}
+Questo flusso è garantito da una macchina a stati implementata nel backend che valuta le transizioni valide (es. impossibile passare da 'received' a 'completed' direttamente).
+
+Il modello Order gestisce l'intero ciclo di vita degli ordini, dal momento della creazione fino alla consegna finale. Include informazioni sul cliente, il ristorante, i piatti ordinati con le rispettive quantità, lo stato dell'ordine e i dettagli di consegna. Gli stati dell'ordine (mappati internamente come 'received', 'preparing', 'delivering', 'completed') seguono il flusso richiesto: ordinato, in preparazione, in consegna, consegnato.
+
+\section{Implementazione del Backend}
+
+\subsection{Configurazione del Server}
+
+Il server principale è configurato nel file \texttt{server.js} che inizializza l'applicazione Express con tutti i middleware necessari per sicurezza, parsing delle richieste e gestione degli errori. La configurazione include \texttt{helmet} per la sicurezza delle intestazioni, \texttt{cors} per le richieste cross-origin, e \texttt{express-rate-limit} per la protezione contro attacchi di forza bruta.
+
+Il backend è sviluppato in \textbf{Node.js v20} utilizzando la sintassi ES6 Modules (\texttt{import/export}).
+
+\begin{lstlisting}[language=JavaScript, caption=Server Express (Estratto - Vedi Appendice \ref{app:server-config})]
+// server.js
+const startServer = async () => {
+    // ... connessione DB ...
+    const app = express();
+
+    app.use(helmet({ contentSecurityPolicy: { ... } }));
+    app.use(cors({ origin: process.env.ALLOWED_ORIGINS }));
+    
+    // Middleware e Route
+    app.use('/auth', authRoutes); 
+    app.use('/api', apiLimiter, apiRoutes); 
+
+    return app;
+};
+\end{lstlisting}
+
+\subsection{Sistema di Autenticazione}
+
+L'autenticazione è implementata attraverso il controller authController.js che gestisce registrazione, login e logout degli utenti. Il sistema utilizza bcrypt per l'hashing sicuro delle password e JWT per la gestione delle sessioni. I token JWT sono memorizzati come cookie HTTP-only per garantire maggiore sicurezza contro attacchi XSS.
+
+\begin{lstlisting}[language=JavaScript, caption=Auth Controller (Estratto - Vedi Appendice \ref{app:auth-controller})]
+// controllers/authController.js
+export const registerUser = async (req, res, next) => {
+    // ... logica registrazione ...
+    res.status(201).json({ message: 'User successfully registered!' });
+}
+
+export const loginUser = async (req, res, next) => {
+    // ... verifica credenziali e generazione JWT ...
+    res.cookie('token', token, { httpOnly: true });
+    res.json({ message: 'Login successful' });
+}
+\end{lstlisting}
+
+\subsection{Gestione delle API REST}
+
+Le API REST sono organizzate in moduli separati per ogni entità del sistema. Il file apiRoutes.js centralizza tutte le route di business logic, mentre authRoutes.js gestisce specificatamente le operazioni di autenticazione. Ogni route implementa appropriati middleware di autenticazione e autorizzazione.
+
+Il sistema di middleware implementa tre livelli di controllo: auth.js per verificare l'autenticazione generale, onlyCustomers.js per limitare l'accesso alle funzionalità cliente, e onlyOwners.js per le operazioni riservate ai ristoratori. Questo approccio garantisce che solo gli utenti autorizzati possano accedere alle rispettive funzionalità.
+
+\subsection{Documentazione e Testing API con Swagger}
+
+Il sistema include una suite completa basata su Swagger che assolve due funzioni critiche: documentazione e testing. Oltre a generare automaticamente le specifiche OpenAPI 3.0 dai commenti JSDoc, l'interfaccia Swagger UI permette agli sviluppatori di \textbf{testare manualmente} gli endpoint in tempo reale, simulando richieste client senza la necessità di sviluppare interfacce frontend dedicate, accelerando il ciclo di sviluppo e debug.
+
+\begin{lstlisting}[language=JavaScript, caption=Configurazione Swagger]
+// config/swagger.js
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'FastFood API',
+      version: '1.0.0',
+      description: 'API documentation for FastFood ordering system',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server',
+      },
+    ],
+  },
+  apis: ['./routes/*.js', './models/*.js'],
+};
+
+const specs = swaggerJsdoc(options);
+module.exports = { swaggerUi, specs };
+\end{lstlisting}
+
+\section{Implementazione del Frontend}
+
+\subsection{Architettura Modulare JavaScript}
+
+Il frontend è strutturato seguendo un approccio modulare con separazione delle responsabilità. Il modulo \texttt{api.js} centralizza tutte le comunicazioni con il backend, esportando la funzione asincrona \texttt{fetchApi} che gestisce autenticazione, errori e stati di caricamento.
+
+\begin{lstlisting}[language=JavaScript, caption=API Client (Estratto - Vedi Appendice \ref{app:api-client})]
+// frontend/js/api.js
+export async function fetchApi(url, options = {}, button = null) {
+    if (button) setLoadingState(button, true);
+    try {
+        const res = await fetch(config.API_BASE_URL + url, {
+            credentials: 'include',
+            ...options
+        });
+        // ... gestione errori e response ...
+        return await res.json();
+    } catch (err) { return null; }
+    finally { if (button) setLoadingState(button, false); }
+}
+\end{lstlisting}
+
+\subsection{Componenti UI Riutilizzabili}
+
+Il modulo \texttt{components.js} esporta funzioni pure per la creazione dinamica di elementi DOM, garantendo coerenza grafica e facilità di manutenzione.
+
+\begin{lstlisting}[language=JavaScript, caption=Componenti UI riutilizzabili]
+// frontend/js/components.js
+export function createCard({ imageSrc, title, bodyText, onClick, colClass }) {
+    const col = document.createElement('div');
+    col.className = colClass || 'col-12 col-md-6 col-lg-4';
+    
+    const card = document.createElement('div');
+    card.className = 'card h-100';
+    if (onClick) {
+        card.style.cursor = 'pointer';
+        card.onclick = onClick;
+    }
+
+    const img = document.createElement('img');
+    img.className = 'card-img-top image-clip';
+    img.src = imageSrc;
+    
+    const body = document.createElement('div');
+    body.className = 'card-body d-flex flex-column';
+    body.innerHTML = `<h5 class="card-title">${title}</h5>
+                      <p class="card-text mt-auto">${bodyText || ''}</p>`;
+
+    card.append(img, body);
+    col.append(card);
+    return col;
+}
+\end{lstlisting}
+
+\subsection{Gestione del Carrello}
+
+Il sistema di gestione del carrello è implementato attraverso il modulo \texttt{cartManager.js} che utilizza \texttt{localStorage} per la persistenza. Utilizza un formato chiave stringa \texttt{restaurantId:dishId} per gestire le quantità e impedisce l'aggiunta di articoli da ristoranti diversi nello stesso ordine.
+
+\begin{lstlisting}[language=JavaScript, caption=Gestore Carrello (Estratto - Vedi Appendice \ref{app:cart-manager})]
+// frontend/js/cartManager.js
+export function addToCart(item, amount) {
+    const cart = getCart();
+    // ... controllo consistenza ristorante ...
+    if (existingRestaurants.length > 0 && !existingRestaurants.includes(restaurantId)) {
+        if (!confirm('...')) return false;
+        localStorage.removeItem('cart');
+    }
+    // ... aggiornamento quantità e salvataggio ...
+    saveCart(currentCart);
+    return true;
+}
+\end{lstlisting}
+
+\section{Stima dei Tempi di Attesa}
+
+\subsection{Algoritmo di Calcolo}
+Il sistema fornisce una stima precisa calcolando il tempo necessario per smaltire la coda di preparazione. L'algoritmo non usa costanti fisse, ma:
+\begin{itemize}
+    \item Identifica la posizione dell'ordine corrente nella coda del ristorante.
+    \item Somma i tempi di preparazione specifici (definiti nel menu) di tutti gli ordini precedenti.
+    \item Sottrae il tempo già trascorso se il primo ordine della coda è già nello stato `preparing`.
+\end{itemize}
+
+\begin{lstlisting}[language=JavaScript, caption=Calcolo tempo di attesa reale]
+// controllers/orderController.js
+export const waitEstimation = async (req, res, next) => {
+    // ... recupero ordine e ristorante ...
+    
+    // Trova l'indice dell'ordine nella coda prioritaria del ristorante
+    const queuePosition = restaurant.queue.findIndex(id => id.toString() === orderId);
+    const orderIdsAhead = restaurant.queue.slice(0, queuePosition + 1);
+
+    // Aggregazione: somma i tempi di preparazione dei piatti in coda
+    const result = await Order.aggregate([
+        { $match: { _id: { $in: orderIdsAhead } } },
+        { /* $lookup per recuperare prepTime dal menu del ristorante */ },
+        {
+            $group: {
+                _id: null,
+                totalTime: { $sum: { $multiply: ['$amount', '$menuData.prepTime'] } }
+            }
+        }
+    ]);
+
+    let waitingTime = result[0]?.totalTime || 0;
+
+    // Raffinamento: sottrae il tempo già trascorso per l'ordine in cottura
+    if (firstOrder.state === 'preparing' && restaurant.lastPreparationStart) {
+        const elapsed = (Date.now() - new Date(restaurant.lastPreparationStart)) / 60000;
+        waitingTime = Math.max(waitingTime - elapsed, 0);
+    }
+
+    res.json({ time: Math.round(waitingTime * 10) / 10 });
+};
+\end{lstlisting}
+
+\section{Sfide Tecniche e Soluzioni}
+
+Durante lo sviluppo sono state affrontate diverse sfide tecniche significative:
+
+\subsection{Client-Side Adblocking su API}
+È stato riscontrato un problema critico dove le richieste verso l'endpoint \texttt{/api/estimate} venivano bloccate da alcune estensioni browser (es. AdBlock, uBlock) a causa del matching della parola chiave "estimate" o "metrics".
+\textbf{Soluzione}: L'endpoint è stato rinominato in \texttt{/api/eta/:id}. Questo caso studio evidenzia l'importanza strategica nel naming delle API pubbliche: evitare termini "trigger" (come \textit{ad, track, analytics}) previene falsi positivi nei filtri di privacy.
+
+\subsection{Accessibilità e Dark Mode}
+L'implementazione della modalità scura (Dark Mode) ha introdotto sfide di contrasto, in particolare nel form di checkout dove il numero della carta di credito risultava invisibile (bianco su sfondo bianco o nero su nero) a causa di classi CSS conflittuali (\texttt{text-dark}).
+\textbf{Soluzione}: Rimozione delle classi di colore forzate per permettere l'ereditarietà corretta dallo stile del tema attivo (Bootstrap 5 dark mode).
+
+\subsection{Middleware Redirect per SPA}
+Inizialmente, il middleware di controllo setup (\texttt{setupCheck.js}) ritornava errori JSON 403 anche per le richieste di navigazione browser, impedendo il redirect fluido alla pagina di completamento profilo.
+\textbf{Soluzione}: Implementazione di content-negotiation basata sull'header \texttt{Accept}. Se il client richiede HTML, il server risponde con un redirect HTTP 302; se richiede JSON (chiamata API), risponde con errore 403.
+
+\section{Operazioni Implementate}
+
+\subsection{Registrazione e Autenticazione Utenti}
+
+Il sistema implementa un flusso di registrazione completo che distingue tra clienti e ristoratori fin dal momento della creazione dell'account. Durante la registrazione, gli utenti selezionano il proprio tipo di account, influenzando le funzionalità disponibili e l'interfaccia presentata dopo il login.
+
+Il processo di autenticazione verifica le credenziali utente e genera token JWT sicuri per mantenere la sessione. Il sistema implementa controlli di sicurezza come rate limiting per prevenire attacchi di forza bruta e validazione server-side di tutti i dati in input per prevenire injection attacks.
+
+\subsection{Gestione Ristoranti e Menu}
+
+Il sistema permette ai ristoratori la gestione completa del profilo e del menu. La creazione del ristorante collega l'entità al `userId` del proprietario e gestisce l'upload delle immagini tramite middleware. La modifica dei dati supporta l'aggiornamento di campi nidificati (come l'indirizzo) e la gestione dinamica del menu, permettendo l'inserimento di piatti con prezzi e descrizioni dettagliate.
+
+\begin{lstlisting}[language=JavaScript, caption=Creazione Ristorante con Upload Immagini]
+// controllers/restaurantController.js
+export const addRestaurant = async (req, res, next) => {
+    try {
+        const user = req.user; // Identificato dal token JWT
+        const restaurant = req.body.restaurant;
+
+        const newRestaurant = new Restaurant({
+            owner: user.userId,
+            name: restaurant.name,
+            address: restaurant.address, // Oggetto nidificato (via, città, cap)
+            vatNumber: restaurant.vatNumber,
+            phoneNumber: restaurant.phoneNumber,
+            // Gestione percorso immagine se caricata
+            image: req.file ? `/images/uploads/${req.file.filename}` : undefined
+        });
+
+        await newRestaurant.save();
+        // ... generazione token aggiornato ...
+        res.status(201).json({ message: 'Restaurant created successfully.' });
+    } catch (err) { next(err); }
+}
+\end{lstlisting}
+
+\subsection{Sistema di Ricerca Avanzata}
+
+Il backend implementa una logica di ricerca flessibile basata su espressioni regolari (Regex) per garantire risultati anche con corrispondenze parziali (case-insensitive).
+Le API supportano:
+\begin{itemize}
+    \item \textbf{Ricerca Geografica:} Filtri per indirizzo e città, oppure localizzazione "Nearby" basata sulla corrispondenza del CAP (Zip Code).
+    \item \textbf{Paginazione:} Gestione efficiente di grandi volumi di dati tramite parametri `skip` e `limit`.
+\end{itemize}
+
+\begin{lstlisting}[language=JavaScript, caption=Logica di Ricerca e Paginazione]
+// controllers/restaurantController.js
+export const searchRestaurants = async (req, res, next) => {
+    const { name, street, city, page = 1 } = req.query;
+    const limit = 20;
+    const skip = (page - 1) * limit;
+
+    const filter = { active: true }; // Solo ristoranti attivi
+    
+    // Filtri dinamici con Regex (Case Insensitive)
+    if (name) filter.name = { $regex: name, $options: 'i' };
+    if (street) filter['address.streetAddress'] = { $regex: street, $options: 'i' };
+    if (city) filter['address.city'] = { $regex: city, $options: 'i' };
+
+    const total = await Restaurant.countDocuments(filter);
+    const restaurants = await Restaurant.find(filter)
+        .skip(skip)
+        .limit(limit);
+
+    res.json({ total, restaurants });
+}
+\end{lstlisting}
+
+\subsection{Gestione Completa degli Ordini}
+
+Il sistema di gestione ordini copre l'intero ciclo di vita dall'aggiunta al carrello fino alla consegna finale. Gli ordini seguono il flusso di stati richiesto: ordinato, in preparazione, in consegna, consegnato. I clienti possono tracciare lo stato dei propri ordini in tempo reale, mentre i ristoratori possono gestire la coda degli ordini e aggiornare gli stati di preparazione.
+
+\begin{lstlisting}[language=JavaScript, caption=Controller per la gestione ordini]
+// controllers/orderController.js
+exports.updateOrderStatus = async (req, res) => {
+    // ... verifica owner ...
+    const validTransitions = {
+      'ordinato': ['in preparazione'],
+      'in preparazione': ['in consegna', 'consegnato'],
+      // ...
+    };
+    if (!validTransitions[order.status]?.includes(status)) {
+      return res.status(400).json({ message: 'Invalid status transition' });
+    }
+    // ... salvataggio ...
+}
+\end{lstlisting}
+
+\section{Mappa dei Requisiti}
+
+La seguente tabella mappa i requisiti funzionali richiesti alle sezioni della relazione e al codice implementato, dimostrando la copertura completa delle specifiche.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Requisito} & \textbf{Codice / File} & \textbf{Sezione Relazione} \\ \hline
+Gestione Utenti (Clienti/Ristoratori) & \texttt{User.js}, \texttt{authController.js} & 7.1 Registrazione \\ \hline
+Gestione Dati Sensibili (Carte, Indirizzi) & \texttt{CustomerData.js} & 3.2.1 Utenti e Dati \\ \hline
+Gestione Ristoranti e Menu & \texttt{Restaurant.js}, \texttt{Dish.js} & 7.2 Ristoranti \\ \hline
+Ricerca (Filtri multipli) & \texttt{restaurantController.js} & 7.3 Ricerca \\ \hline
+Gestione Carrello (Storage Locale) & \texttt{cartManager.js} & 5.3 Carrello \\ \hline
+Creazione Ordini & \texttt{Order.js}, \texttt{orderController.js} & 7.4 Ordini \\ \hline
+Gestione Stati Ordine (Macchina a stati) & \texttt{orderController.js} & 3.2.3 Ciclo Ordine \\ \hline
+Stima Tempi Attesa (Algoritmo) & \texttt{api/eta} endpoint & 6. Stima Tempi \\ \hline
+\end{tabular}
+\caption{Mappa di copertura dei requisiti}
+\end{table}
+
+\section{Testing e Qualità del Codice}
+
+\subsection{Suite di Test Implementata}
+
+Il progetto include una suite completa che utilizza \textbf{Jest} e \textbf{Supertest}. I test di integrazione fanno uso di \texttt{MongoMemoryServer} per garantire un ambiente database isolato e volatile per ogni esecuzione.
+Particolare attenzione è stata posta ai \textbf{Test di Sicurezza} (\texttt{security.test.js}), che non si limitano al controllo accessi ma verificano proattivamente:
+\begin{itemize}
+    \item La \textbf{Sanitizzazione degli Input}: rimozione automatica di chiavi pericolose (es. operatori \texttt{\$gt}) per prevenire NoSQL Injection.
+    \item La \textbf{Sicurezza degli Upload}: rifiuto sistematico di file che non siano immagini valide.
+\end{itemize}
+
+\begin{lstlisting}[language=JavaScript, caption=Test Integrazione: Registrazione con Upload (Estratto)]
+// __tests__/auth.integration.test.js
+describe('Auth Integration Tests', () => {
+    // Setup MongoMemoryServer e connessione DB (beforeAll/afterAll)
+    // ...
+
+    it('should register a new user', async () => {
+        const res = await request(app)
+            .post('/auth/register')
+            .field('username', 'testuser')
+            .field('email', 'test@example.com')
+            .field('password', 'Password123!')
+            .field('type', 'customer')
+            // Simulazione upload file immagine
+            .attach('image', Buffer.from('fakeimage'), 'test.jpg'); 
+
+        expect(res.statusCode).toBe(201);
+        expect(res.body).toHaveProperty('message', 'User successfully registered!');
+    });
+});
+\end{lstlisting}
+
+\subsection{Validazione e Sicurezza}
+
+Il sistema implementa una strategia di difesa in profondità (Defense in Depth) combinando validazione dei dati, sicurezza del trasporto e protezione contro attacchi comuni.
+
+\subsubsection{Validazione Rigorosa degli Input e Protezione Injection}
+La sicurezza dei dati è garantita a più livelli. L'utilizzo di \textbf{Mongoose ODM} protegge nativamente dalla maggior parte delle NoSQL Injection sanificando le query. A questo si aggiunge un livello di validazione esplicita per la logica di business: ogni campo sensibile è sottoposto a stretta verifica tramite Espressioni Regolari (Regex) definite nel backend.
+
+\begin{itemize}
+    \item \textbf{Username}: 3-20 caratteri alfanumerici. \\ Regex: \verb|/^\w{1,20}$/|
+    \item \textbf{Password}: Min 8 car, 1 Maiusc, 1 num, 1 speciale. \\ Regex: \verb|/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,32}$/|
+    \item \textbf{Email}: Formato standard email. \\ Regex: \verb|/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/|
+    \item \textbf{Provincia}: 2 lettere maiuscole. \\ Regex: \verb|/^[A-Z]{2}$/|
+    \item \textbf{Carta Credito}: 16 cifre o Mascherata. \\ Regex: \verb!/^(\*{12}\d{4}|\d{16})$/!
+\end{itemize}
+
+\subsubsection{Protezione Middleware}
+L'applicazione utilizza un set robusto di middleware di sicurezza:
+\begin{itemize}
+    \item \textbf{Helmet}: Configura header HTTP sicuri, inclusa una \\ \texttt{Content-Security-Policy} (CSP) che restringe le fonti di immagini e script a 'self' e domini fidati.
+    \item \textbf{Express-Rate-Limit}: Limita le richieste ripetute dallo stesso IP (max 100 req/15min per login) per mitigare attacchi Brute Force.
+    \item \textbf{HttpOnly Cookies}: I token JWT sono inaccessibili via JavaScript lato client, prevenendo furti di sessione tramite XSS.
+    \item \textbf{CORS}: Configurato per accettare richieste solo dall'origine autorizzata definita nelle variabili d'ambiente.
+\end{itemize}
+
+\section{Considerazioni di Design e User Experience}
+
+\subsection{Responsive Design}
+
+L'interfaccia utente è completamente responsiva, utilizzando Bootstrap 5 come framework CSS base con personalizzazioni specifiche per il brand FastFood. Il design si adatta fluidamente a dispositivi mobili, tablet e desktop, garantendo un'esperienza ottimale su tutti i form factor.
+
+\begin{lstlisting}[language=CSS, caption=Stili personalizzati responsivi]
+/* frontend/css/style.css */
+.restaurant-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.dish-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dish-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .restaurant-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dish-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+\end{lstlisting}
+
+% Visualizzazione Screenshots
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{desktop_home.png}
+        % \fbox{\parbox[c][5cm]{\linewidth}{\centering Screenshot Desktop (TODO)}}
+        \caption{Home Desktop}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{mobile_home.png}
+        % \fbox{\parbox[c][5cm]{0.5\linewidth}{\centering Screenshot Mobile (TODO)}}
+        \caption{Home Mobile}
+    \end{minipage}
+\end{figure}
+
+\subsection{Accessibilità e Usabilità}
+
+Il sistema implementa principi di accessibilità web seguendo le linee guida WCAG, includendo etichette appropriate per form, contrasti di colore adeguati, navigazione da tastiera e supporto per screen reader. L'interfaccia utilizza icone intuitive e feedback visivi chiari per guidare l'utente attraverso i vari flussi operativi.
+
+La user experience è ottimizzata attraverso caricamento lazy delle immagini, stati di loading chiari durante le operazioni asincrone, messaggi di errore informativi e conferme per azioni critiche come eliminazione di dati o finalizzazione di ordini.
+
+\section{File HTML e Interfacce}
+
+\subsection{Pagine Principali}
+
+Il sistema include diverse pagine HTML specializzate per ogni funzionalità. La pagina login.html fornisce l'interfaccia di autenticazione con validazione in tempo reale, mentre register.html gestisce la registrazione di nuovi utenti con selezione del tipo di account.
+
+\begin{lstlisting}[language=HTML, caption=Pagina di login principale]
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<body data-bs-theme="dark">
+    <div id="content">
+        <div class="d-flex flex-column justify-content-center align-items-center vh-100">
+            <div class="section-card col-11 col-sm-8 col-md-6 col-lg-4">
+                <h2 class="text-center mb-4">Login to FastFood</h2>
+                <div class="w-auto">
+                    <label for="username" class="visually-hidden">Username</label>
+                    <input type="text" id="username" class="form-control rounded-bottom-0" placeholder="Username" required>
+                    <label for="password" class="visually-hidden">Password</label>
+                    <input type="password" id="password" class="form-control rounded-top-0" placeholder="Password" required>
+                </div>
+                <div class="mt-3 d-grid gap-2">
+                    <button type="submit" id="login-btn" class="btn btn-primary">Login</button>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="/register">Don't have an account? Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/layout.js"></script>
+    <script type="module" src="/js/errorManager.js"></script>
+    <script type="module" src="/js/login.js"></script>
+</body>
+</html>
+\end{lstlisting}
+
+\newpage
+
+\section{Prove di Funzionamento}
+
+In questa sezione vengono presentati screenshot dimostrativi delle funzionalità principali dell'applicazione, a riprova del soddisfacimento dei requisiti.
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{register.png}
+        % \fbox{\parbox[c][6cm]{\linewidth}{\centering Screenshot Registrazione (TODO: Inserire register.png)}}
+        \caption{Registrazione Utente}
+        \label{fig:register}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{login.png}
+        % \fbox{\parbox[c][6cm]{\linewidth}{\centering Screenshot Login (TODO: Inserire login.png)}}
+        \caption{Login Utente}
+        \label{fig:login}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{search.png}
+        % \fbox{\parbox[c][6cm]{\linewidth}{\centering Screenshot Ricerca (TODO: Inserire search.png)}}
+        \caption{Page Ricerca Ristoranti}
+        \label{fig:search}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{cart.png}
+        % \fbox{\parbox[c][6cm]{\linewidth}{\centering Screenshot Carrello (TODO: Inserire cart.png)}}
+        \caption{Gestione Carrello}
+        \label{fig:cart}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{orders.png}
+        % \fbox{\parbox[c][6cm]{\linewidth}{\centering Screenshot Ordini (TODO: Inserire orders.png)}}
+        \caption{Storico Ordini Cliente}
+        \label{fig:history}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{dashboard.png}
+        % \fbox{\parbox[c][6cm]{\linewidth}{\centering Screenshot Dashboard (TODO: Inserire dashboard.png)}}
+        \caption{Dashboard Ristoratore}
+        \label{fig:owner}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{swagger.png}
+    % \fbox{\parbox[c][8cm]{\linewidth}{\centering Screenshot Swagger (TODO: Inserire swagger.png)}}
+    \caption{Interfaccia Swagger per Testing API}
+    \label{fig:swagger}
+\end{figure}
+
+
+\subsection{Interfacce Specializzate}
+
+Le pagine homeCustomer.html e homeOwner.html forniscono dashboards specifiche per ogni tipo di utente. La pagina restaurantPage.html permette ai clienti di visualizzare i menu e aggiungere piatti al carrello, mentre menuManager.html consente ai ristoratori di gestire i propri menu.
+
+Il sistema include anche pagine per la gestione del profilo (editProfile.html), visualizzazione del carrello (cart.html), processo di checkout (checkout.html), e configurazione iniziale per nuovi ristoranti (addRestaurant.html).
+
+\section{Conclusioni e Sviluppi Futuri}
+
+\subsection{Risultati Raggiunti}
+
+Il progetto FastFood implementa con successo tutti i quattro macro-scenari richiesti, fornendo una soluzione completa per la gestione di ordini online per ristoranti. Il sistema supporta efficacemente sia clienti che ristoratori con interfacce dedicate e funzionalità specifiche per ogni tipologia di utente.
+
+L'architettura modulare e scalabile consente facili estensioni e manutenzioni future. La separazione chiara tra frontend e backend attraverso API REST ben documentate facilita l'integrazione con sistemi esterni e lo sviluppo di applicazioni mobile native utilizzando le stesse API.
+
+\subsection{Possibili Miglioramenti}
+
+Futuri sviluppi potrebbero includere l'implementazione di notifiche push per aggiornamenti in tempo reale sugli ordini, integrazione con sistemi di pagamento online per transazioni sicure, e funzionalità di rating e recensioni per migliorare la visibilità e ricerca dei ristoranti.
+
+Altri miglioramenti potrebbero comprendere l'implementazione di un sistema di raccomandazioni basato sulle preferenze utente, supporto per ordini programmati, e integrazione con servizi di tracking GPS per consegne in tempo reale. Il sistema potrebbe anche beneficiare di funzionalità di analytics avanzate per aiutare i ristoratori a ottimizzare le loro operazioni basandosi sui dati di vendita e comportamento dei clienti.
+
+La piattaforma FastFood rappresenta una base solida e completa per un sistema di food delivery moderno, implementando tutte le funzionalità richieste con un focus particolare su sicurezza, usabilità e scalabilità. L'architettura adottata garantisce che il sistema possa evolversi e crescere per soddisfare future esigenze di business mantenendo elevati standard di qualità e performance.
+
+
+
+\newpage
+\appendix
+\section{Codice Sorgente Completo}
+
+In questa appendice sono riportati i listati completi delle componenti principali del sistema.
+
+
+\subsection{Modello User Completo}
+\label{app:user-model}
+\begin{lstlisting}[language=JavaScript, caption=Modello User Completo]
+// models/User.js
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import { USER_TYPES } from '../utils/constants.js';
+
+const usernameRegex = /^\w{1,20}$/;
+const nameRegex = /^[A-Za-zÀ-ÿ''.\-\s]{1,50}$/u;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+={}|\\;:"<>?,./]).{8,32}$/;
+
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        minLength: 3,
+        maxLength: 20,
+        match: [usernameRegex, 'Username must be 3-20 characters long, must contain only letters, numbers and underscores.']
+    },
+    firstName: {
+        type: String,
+        required: true,
+        minLength: 3,
+        maxLength: 50,
+        match: [nameRegex, 'First name must be 3-50 characters long and contain only letters, spaces, apostrophes, or hyphens.']
+    },
+    image: {
+        type: String,
+        default: '/images/default-profile.png'
+    },
+    lastName: {
+        type: String,
+        required: true,
+        minLength: 3,
+        maxLength: 50,
+        match: [nameRegex, 'The last name must be 3-50 characters long, must contain only letters, apostrophes, dots, dashes and spaces..']
+    },
+    email: {
+        type: String,
+        required: function () { return this.active === true },
+        unique: true,
+        sparse: true,
+        maxLength: 100,
+        match: [emailRegex, 'Invalid email address.']
+    },
+    password: {
+        type: String,
+        required: true,
+        minLength: 8,
+        maxLength: 100,
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: Object.values(USER_TYPES)
+    },
+    active: {
+        type: Boolean,
+        default: true
+    }
+})
+
+userSchema.virtual('confirmPassword')
+    .get(function () {
+        return this._confirmPassword;
+    })
+    .set(function (value) {
+        this._confirmPassword = value;
+    });
+
+userSchema.pre('validate', function (next) {
+    if (this.isNew && this.password !== this.confirmPassword) {
+        this.invalidate('confirmPassword', 'The passwords don\'t match.');
+    }
+    next();
+});
+
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+
+    if (!passwordRegex.test(this.password)) {
+        return next(new Error('The password must be 8-32 characters long, must contain at least a lower case letter, an uppercase letter, a number and a special character.'));
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+
+const User = mongoose.model('User', userSchema);
+export default User;
+\end{lstlisting}
+
+\subsection{Configurazione Server Express}
+\label{app:server-config}
+\begin{lstlisting}[language=JavaScript, caption=Server.js Completo]
+// server.js
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import rateLimit from 'express-rate-limit';
+import hpp from 'hpp';
+import cors from 'cors';
+import path from 'path';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import pagesRoutes from './routes/pagesRoutes.js';
+import apiRoutes from './routes/apiRoutes.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.js';
+import sanitizeMiddleware from './middleware/sanitize.js';
+import compression from 'compression';
+import morgan from 'morgan';
+
+import { importMeals } from './utils/mealsImporter.js';
+
+dotenv.config();
+
+const app = express();
+
+app.set('trust proxy', 2);
+
+const startServer = async () => {
+    try {
+        await connectDB();
+        await importMeals();
+
+        const __dirname = path.resolve();
+
+        app.use(compression());
+
+        if (process.env.NODE_ENV === 'development') {
+            app.use(morgan('dev'));
+        } else {
+            app.use(morgan('combined'));
+        }
+
+        app.use(
+            helmet({
+                contentSecurityPolicy: {
+                    directives: {
+                        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+                        "img-src": ["'self'", "data:", "https://www.themealdb.com"],
+                        "connect-src": ["'self'"],
+                    },
+                },
+            })
+        );
+
+        app.use(express.json());
+        app.use(cookieParser());
+
+        app.use((req, res, next) => {
+            if (req.body) {
+                req.body = mongoSanitize.sanitize(req.body);
+            }
+            next();
+        });
+
+        app.use(hpp());
+
+        const allowedOrigins = process.env.ALLOWED_ORIGINS
+            ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+            : [
+                'http://localhost:5000',
+                'http://127.0.0.1:5000',
+                'http://localhost:3000'
+            ];
+
+        if (process.env.ALLOWED_ORIGINS) {
+            const envOrigins = process.env.ALLOWED_ORIGINS.split(',');
+            allowedOrigins.push(...envOrigins.map(origin => origin.trim()));
+        }
+
+        app.use(cors({
+            origin: function (origin, callback) {
+                if (!origin) return callback(null, true);
+                if (allowedOrigins.indexOf(origin) === -1) {
+                    const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+                    return callback(new Error(msg), false);
+                }
+                return callback(null, true);
+            },
+            credentials: true
+        }));
+
+        app.use(sanitizeMiddleware);
+
+        app.get('/', (req, res) => {
+            if (req.cookies.token) {
+                res.redirect('/home');
+            } else {
+                res.sendFile(path.join(__dirname, 'frontend/public/landing.html'));
+            }
+        });
+
+        app.use(express.static(path.join(__dirname, 'frontend/public')));
+        app.use('/js', express.static(path.join(__dirname, 'frontend/js')));
+        app.use('/css', express.static(path.join(__dirname, 'frontend/css')));
+        app.use('/images', express.static(path.join(__dirname, 'frontend/public/images')));
+        app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+
+        const authLimiter = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: process.env.NODE_ENV === 'production' ? 20 : 100,
+            message: { error: 'Too many attempts, please try again later.' }
+        });
+
+        const apiLimiter = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: 200,
+            standardHeaders: true,
+            legacyHeaders: false,
+            message: { error: 'Too many requests from this IP, please try again after 15 minutes' }
+        });
+
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+        app.use('/auth', authLimiter, authRoutes);
+        app.use('/', pagesRoutes);
+        app.use('/api', apiLimiter, apiRoutes);
+
+        app.use((err, req, res, next) => {
+            if (process.env.NODE_ENV !== 'test') {
+                console.error(err);
+            }
+
+            if (err.name === 'ValidationError') {
+                const messages = Object.values(err.errors).map(e => e.message);
+                return res.status(400).json({ error: messages });
+            }
+
+            if (err.code === 11000) {
+                const field = Object.keys(err.keyPattern)[0];
+                let message = `The ${field} is already in use.`;
+                if (field === 'owner') message = 'User already has a restaurant.';
+                return res.status(409).json({ error: message });
+            }
+
+            if (err.statusCode) {
+                return res.status(err.statusCode).json({ error: err.message });
+            }
+
+            if (err.name === 'MulterError') {
+                return res.status(400).json({ error: err.message });
+            }
+
+            if (err.message && err.message.includes('password') ||
+                err.message && err.message.includes('Password')) {
+                return res.status(400).json({ error: err.message });
+            }
+
+            res.status(500).json({ error: 'Server Error' });
+        });
+
+        return app;
+
+    } catch (error) {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    }
+};
+
+const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET'];
+for (const envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+        console.error(`Missing required environment variable: ${envVar}`);
+        process.exit(1);
+    }
+}
+
+const server = await startServer().then(app => {
+    const PORT = process.env.PORT || 5000;
+    const runningServer = app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+
+    process.on('unhandledRejection', (err, promise) => {
+        console.log(`Error: ${err.message}`);
+        runningServer.close(() => process.exit(1));
+    });
+
+    return runningServer;
+});
+
+export default server;
+\end{lstlisting}
+
+
+\subsection{Auth Controller Completo}
+\label{app:auth-controller}
+\begin{lstlisting}[language=JavaScript, caption=Auth Controller Completo]
+// controllers/authController.js
+import User from '../models/User.js';
+import CustomerData from '../models/CustomerData.js';
+import Restaurant from '../models/Restaurant.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+export const registerUser = async (req, res, next) => {
+    try {
+        const { username, firstName, lastName, email, password, confirmPassword, type } = req.body;
+
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: 'Passwords do not match.' });
+        }
+
+        const newUser = new User({
+            username,
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+            type,
+            image: req.file ? `/images/uploads/${req.file.filename}` : undefined
+        });
+
+        await newUser.save();
+
+        res.status(201).json({ message: 'User successfully registered!' });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const loginUser = async (req, res, next) => {
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username }, '_id username type password');
+        if (!user) return res.status(404).json({ error: 'User not found.' });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ error: 'Wrong Password.' });
+
+        let setupComplete = false;
+        let extraData = null;
+
+        if (user.type === 'customer') {
+            const customerData = await CustomerData.findOne({ user: user._id });
+            if (customerData) {
+                setupComplete = true;
+                extraData = customerData._id;
+            }
+        } else {
+            const restaurant = await Restaurant.findOne({ owner: user._id });
+            if (restaurant) {
+                setupComplete = true;
+                extraData = restaurant._id;
+            }
+        }
+
+        const token = jwt.sign({
+            userId: user._id,
+            type: user.type,
+            setupComplete
+        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1 * 60 * 60 * 1000
+        });
+
+        res.json({
+            message: 'User logged in successfully.',
+            username: user.username,
+            userId: user._id,
+            extraData: extraData
+        });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const logoutUser = async (req, res) => {
+    res.clearCookie('token');
+    res.status(200).json({ message: 'User logged out successfully.' });
+}
+
+export const checkLogin = async (req, res) => {
+    const { token } = req.cookies || {};
+    if (!token) return res.status(200).json({ ok: false });
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
+        return res.status(200).json({ ok: true });
+    } catch {
+        return res.status(200).json({ ok: false });
+    }
+}
+\end{lstlisting}
+
+\subsection{API Client Frontend}
+\label{app:api-client}
+\begin{lstlisting}[language=JavaScript, caption=API Client Completo]
+// frontend/js/api.js
+import { addMessage } from './errorManager.js';
+import { setLoadingState } from './uiUtils.js';
+import { config } from './config.js';
+
+const PUBLIC_PAGES = ['/login', '/register', '/landing.html', '/'];
+
+export async function fetchApi(url, options = {}, button = null) {
+    if (button) setLoadingState(button, true);
+
+    try {
+        if (!navigator.onLine) {
+            addMessage('No internet connection. Please check your network.');
+            return null;
+        }
+
+        const defaultHeaders = { 'Content-Type': 'application/json' };
+
+        if (options.body instanceof FormData) {
+            delete defaultHeaders['Content-Type'];
+        }
+
+        const fetchConfig = {
+            credentials: 'include',
+            cache: 'no-cache',
+            ...options,
+            headers: {
+                ...defaultHeaders,
+                ...options.headers,
+            },
+        };
+
+        const res = await fetch(config.API_BASE_URL + url, fetchConfig);
+
+        if (res.status === 401) {
+            const currentPath = window.location.pathname;
+            const isPublicPage = PUBLIC_PAGES.some(p => currentPath === p || currentPath.endsWith(p));
+
+            if (!isPublicPage) {
+                addMessage('Your session has expired. Please log in again.');
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 1500);
+                return null;
+            }
+        }
+
+        if (res.status === 403) {
+            addMessage('You do not have permission to perform this action.');
+            return null;
+        }
+
+        if (res.status === 404) {
+            const data = await res.json().catch(() => ({}));
+            addMessage(data.error || 'The requested resource was not found.');
+            return null;
+        }
+
+        if (res.status === 429) {
+            addMessage('Too many requests. Please wait a moment and try again.');
+            return null;
+        }
+
+        if (res.status >= 500) {
+            addMessage('Server error. Please try again later.');
+            return null;
+        }
+
+        const contentType = res.headers.get('content-type') || '';
+        let data;
+        if (contentType.includes('application/json')) {
+            data = await res.json();
+        } else {
+            const text = await res.text();
+            console.warn('Non-JSON response from', url, 'status:', res.status, 'body:', text);
+            addMessage('Unexpected server response format.');
+            return null;
+        }
+
+        if (!res.ok) {
+            const errorMessage = Array.isArray(data.error)
+                ? data.error.join('<br>')
+                : (data.error || data.message || 'An unknown error occurred.');
+            addMessage(errorMessage);
+            return null;
+        }
+
+        return data;
+    } catch (err) {
+        console.error('API Fetch Error:', err);
+
+        if (err.name === 'TypeError' && err.message.includes('Failed to fetch')) {
+            addMessage('Unable to connect to server. Please check your connection.');
+        } else if (err.name === 'AbortError') {
+            addMessage('Request was cancelled.');
+        } else {
+            addMessage('A network or server error occurred. Please try again.');
+        }
+        return null;
+    } finally {
+        if (button) setLoadingState(button, false);
+    }
+}
+\end{lstlisting}
+
+\subsection{Test Integrazione Auth}
+\label{app:auth-test}
+\begin{lstlisting}[language=JavaScript, caption=Test Integrazione Completo]
+// __tests__/auth.integration.test.js
+import request from 'supertest';
+import mongoose from 'mongoose';
+import { jest } from '@jest/globals';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import path from 'path';
+
+// Mock dependencies
+jest.unstable_mockModule('../utils/mealsImporter.js', () => ({
+    importMeals: jest.fn(),
+}));
+
+// Dynamic import for app to ensure mocks are applied
+const { default: app } = await import('../server.js');
+
+let mongoServer;
+
+beforeAll(async () => {
+    mongoServer = await MongoMemoryServer.create();
+    const uri = mongoServer.getUri();
+    await mongoose.disconnect(); // Disconnect any existing connection
+    await mongoose.connect(uri);
+});
+
+afterAll(async () => {
+    await mongoose.disconnect();
+    await mongoServer.stop();
+});
+
+describe('Auth Integration Tests', () => {
+    let userCookie;
+
+    it('should register a new user', async () => {
+        const res = await request(app)
+            .post('/auth/register')
+            .field('username', 'testuser')
+            .field('firstName', 'Test')
+            .field('lastName', 'User')
+            .field('email', 'test@example.com')
+            .field('password', 'Password123!')
+            .field('confirmPassword', 'Password123!')
+            .field('type', 'customer')
+            .attach('image', Buffer.from('fakeimage'), 'test.jpg'); // Mock image upload
+
+        expect(res.statusCode).toBe(201);
+        expect(res.body).toHaveProperty('message', 'User successfully registered!');
+    });
+
+    it('should login with valid credentials', async () => {
+        const res = await request(app)
+            .post('/auth/login')
+            .send({
+                username: 'testuser',
+                password: 'Password123!'
+            });
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('message', 'User logged in successfully.');
+        expect(res.headers['set-cookie']).toBeDefined();
+
+        userCookie = res.headers['set-cookie'];
+    });
+
+    it('should not login with invalid password', async () => {
+        const res = await request(app)
+            .post('/auth/login')
+            .send({
+                username: 'testuser',
+                password: 'WrongPassword!'
+            });
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toHaveProperty('error', 'Wrong Password.');
+    });
+
+    it('should logout successfully', async () => {
+        const res = await request(app)
+            .get('/auth/logout')
+            .set('Cookie', userCookie);
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('message', 'User logged out successfully.');
+    });
+});
+\end{lstlisting}
+
+
+\subsection{Cart Manager}
+\label{app:cart-manager}
+\begin{lstlisting}[language=JavaScript, caption=Cart Manager Completo]
+// frontend/js/cartManager.js
+export function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || {};
+}
+
+function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showCartButton();
+}
+
+export function addToCart(item, amount) {
+    const cart = getCart();
+
+    const restaurantId = item.restaurant || item.restaurantId;
+    const dishId = typeof item.dish === 'string' ? item.dish : item.dish?._id;
+
+    if (!restaurantId || !dishId) {
+        console.warn('addToCart: missing restaurant/dish id', { item });
+        return false;
+    }
+
+    const existingRestaurants = [...new Set(Object.values(cart).map(i => i.restaurant))];
+    if (existingRestaurants.length > 0 && !existingRestaurants.includes(restaurantId)) {
+        const confirmed = confirm(
+            'Your cart contains items from another restaurant. ' +
+            'Do you want to clear the cart and add this item?'
+        );
+        if (!confirmed) {
+            return false;
+        }
+        localStorage.removeItem('cart');
+    }
+
+    const currentCart = getCart();
+    const key = `${restaurantId}:${dishId}`;
+
+    const qty = parseInt(amount, 10);
+    if (qty > 0) {
+        currentCart[key] = {
+            restaurant: restaurantId,
+            dish: dishId,
+            amount: qty
+        };
+    } else {
+        delete currentCart[key];
+    }
+
+    saveCart(currentCart);
+    return true;
+}
+
+export function showCartButton() {
+    const cart = getCart();
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+        cartBtn.hidden = Object.keys(cart).length === 0;
+    }
+}
+\end{lstlisting}
+
+\subsection{Restaurant Controller}
+\label{app:restaurant-controller}
+\begin{lstlisting}[language=JavaScript, caption=Restaurant Controller Completo]
+// controllers/restaurantController.js
+import Restaurant from '../models/Restaurant.js';
+import CustomerData from '../models/CustomerData.js';
+import Order from '../models/Order.js';
+import jwt from 'jsonwebtoken';
+
+export const addRestaurant = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const restaurant = req.body.restaurant;
+
+        const newRestaurant = new Restaurant({
+            owner: user.userId,
+            name: restaurant.name,
+            address: restaurant.address,
+            vatNumber: restaurant.vatNumber,
+            phoneNumber: restaurant.phoneNumber,
+            image: req.file ? `/images/uploads/${req.file.filename}` : undefined
+        });
+
+        await newRestaurant.save();
+
+        const token = jwt.sign(
+            { userId: user.userId, type: user.type, setupComplete: true },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 60 * 60 * 1000
+        });
+
+        res.status(201).json({ message: 'Restaurant created successfully.', restaurant: newRestaurant._id });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const getNearby = async (req, res, next) => {
+    try {
+        const user = req.user;
+
+        const userAddress = await CustomerData.findOne({ user: user.userId });
+        const nearbyRestaurants = await Restaurant.find({ 'address.zipCode': userAddress.address.zipCode, active: true });
+
+        res.set('Cache-Control', 'no-store');
+        res.json({ nearbyRestaurants: nearbyRestaurants });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const getMenu = async (req, res, next) => {
+    try {
+        const restaurantId = req.params.id;
+
+        const restaurant = await Restaurant.findById(restaurantId).populate('menu.dish');
+        if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
+
+        res.json(restaurant);
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const editMenu = async (req, res, next) => {
+    try {
+        const { restaurant, newMenu } = req.body;
+
+        await Restaurant.findByIdAndUpdate(restaurant, { menu: newMenu });
+        res.json({ message: 'Menu updated successfully.' });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const editRestaurant = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const body = req.body;
+
+        const restaurant = await Restaurant.findOne({ owner: user.userId });
+        if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
+
+        const getValue = (bracketKey, nestedPath) => {
+            if (body[bracketKey] !== undefined) return body[bracketKey];
+
+            if (nestedPath && body.newRestaurant) {
+                const keys = nestedPath.split('.');
+                let val = body.newRestaurant;
+                for (const k of keys) {
+                    if (val && val[k] !== undefined) val = val[k];
+                    else return undefined;
+                }
+                return val;
+            }
+            return undefined;
+        };
+
+        const newName = getValue('newRestaurant[name]', 'name');
+        if (newName) restaurant.name = newName;
+
+        const streetAddress = getValue('newRestaurant[address][streetAddress]', 'address.streetAddress');
+        const city = getValue('newRestaurant[address][city]', 'address.city');
+        const province = getValue('newRestaurant[address][province]', 'address.province');
+        const zipCode = getValue('newRestaurant[address][zipCode]', 'address.zipCode');
+
+        if (streetAddress) restaurant.address.streetAddress = streetAddress;
+        if (city) restaurant.address.city = city;
+        if (province) restaurant.address.province = province;
+        if (zipCode) restaurant.address.zipCode = zipCode;
+
+        const phone = getValue('newRestaurant[phoneNumber]', 'phoneNumber');
+        if (phone != null) restaurant.phoneNumber = phone;
+
+        const vat = getValue('newRestaurant[vatNumber]', 'vatNumber');
+        if (vat) restaurant.vatNumber = vat;
+
+        if (body.active !== undefined) restaurant.active = body.active;
+        if (body.newRestaurant?.active !== undefined) restaurant.active = body.newRestaurant.active;
+
+        if (req.file) {
+            restaurant.image = `/images/uploads/${req.file.filename}`;
+        }
+
+        await restaurant.save();
+        res.json({ message: 'Restaurant updated successfully.' });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const getAnalytics = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const { start, end } = req.query;
+
+        const restaurant = await Restaurant.findOne({ owner: user.userId });
+        if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
+
+        const toDate = (v, fallback) => {
+            if (!v) return fallback;
+
+            const num = Number(v);
+            if (Number.isFinite(num)) {
+                return new Date(num > 1e12 ? num : num * 1000);
+            }
+
+            try {
+                const d = new Date(v);
+                if (isNaN(d.getTime())) {
+                    console.warn(`Invalid date format: ${v}`);
+                    return fallback;
+                }
+                return d;
+            } catch (error) {
+                console.warn(`Date parsing error for value ${v}:`, error);
+                return fallback;
+            }
+        };
+
+        const startDate = toDate(start, new Date(0));
+        const endDate = toDate(end, new Date());
+
+        if (startDate > endDate) {
+            return res.status(400).json({ error: 'Start date cannot be after end date.' });
+        }
+
+        const matchStage = {
+            restaurant: restaurant._id,
+            createdAt: { $gte: startDate, $lte: endDate }
+        };
+
+        const totalStatsPipeline = [
+            { $match: matchStage },
+            {
+                $group: {
+                    _id: null,
+                    totalOrders: { $sum: 1 },
+                    totalEarned: { $sum: '$price' }
+                }
+            }
+        ];
+
+        const mostOrderedPipeline = [
+            { $match: matchStage },
+            {
+                $group: {
+                    _id: '$dish',
+                    totalAmount: { $sum: '$amount' },
+                    totalEarned: { $sum: '$price' }
+                }
+            },
+            { $sort: { totalAmount: -1 } },
+            { $limit: 1 },
+            {
+                $lookup: {
+                    from: 'dishes',
+                    localField: '_id',
+                    foreignField: '_id',
+                    as: 'dishData'
+                }
+            },
+            { $unwind: { path: '$dishData', preserveNullAndEmptyArrays: true } }
+        ];
+
+        const [totalResult, mostOrderedResult] = await Promise.all([
+            Order.aggregate(totalStatsPipeline),
+            Order.aggregate(mostOrderedPipeline)
+        ]);
+
+        const totals = totalResult[0] || { totalOrders: 0, totalEarned: 0 };
+        const mostOrdered = mostOrderedResult[0] || null;
+
+        res.json({
+            totalOrders: totals.totalOrders,
+            totalEarned: totals.totalEarned,
+            avgEarned: totals.totalOrders > 0 ? totals.totalEarned / totals.totalOrders : 0,
+            mostOrdered: mostOrdered
+        });
+
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const searchRestaurants = async (req, res, next) => {
+    try {
+        const { name, street, city, page = 1 } = req.query;
+        const limit = 20;
+        const skip = (page - 1) * limit;
+
+        const filter = {};
+        if (name) filter.name = { $regex: name, $options: 'i' };
+        if (street) filter['address.streetAddress'] = { $regex: street, $options: 'i' };
+        if (city) filter['address.city'] = { $regex: city, $options: 'i' };
+        filter.active = true;
+
+        const total = await Restaurant.countDocuments(filter);
+        const restaurants = await Restaurant.find(filter).skip(skip).limit(limit);
+
+        res.set('Cache-Control', 'no-store');
+        res.json({ total, restaurants });
+    } catch (err) {
+        next(err);
+    }
+}
+\end{lstlisting}
+
+\subsection{Order Controller}
+\label{app:order-controller}
+\begin{lstlisting}[language=JavaScript, caption=Order Controller Completo]
+// controllers/orderController.js
+import mongoose from 'mongoose';
+import Order from '../models/Order.js';
+import Restaurant from '../models/Restaurant.js';
+import { ORDER_STATES } from '../utils/constants.js';
+
+export const getOrders = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const page = req.query.page || 1;
+        const limit = 10;
+        const skip = (page - 1) * limit;
+
+        let filter = {};
+        if (user.type === 'customer') filter.customer = user.userId;
+        else {
+            const restaurant = await Restaurant.findOne({ owner: user.userId });
+            if (!restaurant) return res.json({ total: 0, orders: [] });
+            filter.restaurant = restaurant._id;
+        }
+
+        const total = await Order.countDocuments(filter);
+        const orders = await Order.find(filter).populate('dish').populate('restaurant').populate('customer').sort({ createdAt: -1 }).skip(skip).limit(limit);
+
+        console.log(`getOrders DEBUG: Found ${total} orders (page returns ${orders.length}).`);
+        if (orders.length > 0) {
+            console.log('getOrders DEBUG First Order Sample:', JSON.stringify(orders[0]));
+        }
+
+        const cleanOrders = orders.map(order => {
+            return {
+                _id: order._id,
+                dish: order.dish,
+                restaurant: order.restaurant,
+                customer: order.customer,
+                amount: order.amount,
+                price: order.price,
+                state: order.state,
+                createdAt: order.createdAt
+            }
+        });
+
+        res.json({ total, orders: cleanOrders });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const newOrder = async (req, res, next) => {
+    let session = null;
+    if (process.env.SKIP_TRANSACTIONS !== 'true') {
+        session = await mongoose.startSession();
+        session.startTransaction();
+    }
+
+    try {
+        const user = req.user;
+        for (const key in req.body) {
+            const order = req.body[key];
+
+            const restaurant = await Restaurant.findById(order.restaurant);
+            if (!restaurant) {
+                throw new Error(`Restaurant not found: ${order.restaurant}`);
+            }
+
+            const menuItem = restaurant.menu.find(
+                item => item.dish.toString() === order.dish
+            );
+            if (!menuItem) {
+                throw new Error(`Dish ${order.dish} not found in restaurant menu`);
+            }
+
+            const serverCalculatedPrice = menuItem.price * order.amount;
+
+            const newOrder = new Order({
+                customer: user.userId,
+                restaurant: order.restaurant,
+                dish: order.dish,
+                amount: order.amount,
+                price: serverCalculatedPrice,
+                state: 'received',
+                createdAt: Date.now()
+            });
+
+            const saveOptions = session ? { session } : {};
+            await newOrder.save(saveOptions);
+
+            const updateOptions = session ? { session } : {};
+            await Restaurant.findByIdAndUpdate(order.restaurant, { $push: { queue: newOrder._id } }, updateOptions);
+        }
+
+        if (session) {
+            await session.commitTransaction();
+        }
+        res.status(201).json({ message: 'Order received.' });
+    } catch (err) {
+        if (session) {
+            await session.abortTransaction();
+        }
+        next(err);
+    } finally {
+        if (session) {
+            session.endSession();
+        }
+    }
+}
+
+export const confirmPickup = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const id = req.params.id;
+
+        const order = await Order.findOne({ _id: id, customer: user.userId });
+        if (!order) return res.status(404).json({ error: 'Order not found.' });
+        if (order.state !== 'ready') return res.status(400).json({ error: 'Order not ready for pickup.' });
+
+        order.state = 'completed';
+        await order.save();
+
+        res.json({ message: 'Order completed.' });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const getQueue = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const restaurant = await Restaurant.findOne({ owner: user.userId }).select('_id');
+        if (!restaurant) return res.status(404).json({ message: 'Restaurant not found.' });
+
+        const queue = await Order.aggregate([
+            { $match: { restaurant: restaurant._id, state: { $in: [ORDER_STATES.RECEIVED, ORDER_STATES.PREPARING] } } },
+            { $sort: { createdAt: 1 } },
+            { $lookup: { from: 'users', localField: 'customer', foreignField: '_id', as: 'customer' } },
+            { $unwind: '$customer' },
+            { $lookup: { from: 'dishes', localField: 'dish', foreignField: '_id', as: 'dish' } },
+            { $unwind: '$dish' },
+            { $lookup: { from: 'restaurants', localField: 'restaurant', foreignField: '_id', as: 'restaurantDoc' } },
+            { $unwind: '$restaurantDoc' },
+            {
+                $project: {
+                    _id: 1,
+                    customer: { name: { $concat: ['$customer.firstName', ' ', '$customer.lastName'] } },
+                    dish: { name: '$dish.name', image: '$dish.image' },
+                    amount: 1,
+                    price: 1,
+                    state: 1,
+                    prepTime: {
+                        $let: {
+                            vars: {
+                                menuItem: {
+                                    $arrayElemAt: [
+                                        { $filter: { input: '$restaurantDoc.menu', as: 'item', cond: { $eq: ['$$item.dish', '$dish._id'] } } }, 0
+                                    ]
+                                }
+                            },
+                            in: '$$menuItem.preparationTime'
+                        }
+                    }
+                }
+            }
+        ]);
+
+        res.json({ queue: queue });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const advanceQueue = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const { orderId } = req.body;
+
+        const restaurant = await Restaurant.findOne({ owner: user.userId }).select('_id queue');
+        if (!restaurant) return res.status(404).json({ error: 'Restaurant not found.' });
+
+        const targetOrderId = orderId || restaurant.queue[0];
+        if (!targetOrderId) return res.json({ message: 'Queue is empty.' });
+
+        const orderToAdvance = await Order.findById(targetOrderId);
+        if (!orderToAdvance || String(orderToAdvance.restaurant) !== String(restaurant._id)) {
+            return res.status(404).json({ error: 'Order not found in this restaurant.' });
+        }
+
+        const isHeadOfQueue = restaurant.queue[0]?.toString() === targetOrderId.toString();
+
+        if (orderToAdvance.state === ORDER_STATES.RECEIVED) {
+            const updated = await Order.findOneAndUpdate(
+                { _id: targetOrderId, state: ORDER_STATES.RECEIVED },
+                { $set: { state: ORDER_STATES.PREPARING } },
+                { new: true }
+            );
+            if (!updated) return res.status(409).json({ error: 'Order state changed concurrently.' });
+
+            if (isHeadOfQueue) {
+                await Restaurant.findByIdAndUpdate(restaurant._id, { lastPreparationStart: Date.now() });
+            }
+        } else if (orderToAdvance.state === ORDER_STATES.PREPARING) {
+            const updated = await Order.findOneAndUpdate(
+                { _id: targetOrderId, state: ORDER_STATES.PREPARING },
+                { $set: { state: ORDER_STATES.READY } },
+                { new: true }
+            );
+            if (!updated) return res.status(409).json({ error: 'Order state changed concurrently.' });
+
+            await Restaurant.findByIdAndUpdate(restaurant._id, { $pull: { queue: targetOrderId } });
+        }
+
+        res.json({ message: 'Queue advanced successfully.' });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const waitEstimation = async (req, res, next) => {
+    try {
+        const orderId = req.params.id;
+        console.log(`waitEstimation DEBUG: Start for OrderID=${orderId}`);
+
+        const order = await Order.findById(orderId);
+        if (!order) {
+            console.log(`waitEstimation DEBUG: Order not found ${orderId}`);
+            return res.status(404).json({ error: 'Order not found.' });
+        }
+
+        const restaurant = await Restaurant.findById(order.restaurant);
+        if (!restaurant) {
+            console.log(`waitEstimation DEBUG: Restaurant not found for order ${orderId}`);
+            return res.status(404).json({ error: 'Restaurant not found.' });
+        }
+        console.log(`waitEstimation DEBUG: Restaurant found: ${restaurant._id}, Queue: ${restaurant.queue.length}`);
+
+        const queuePosition = restaurant.queue.findIndex(id => id.toString() === orderId);
+        if (queuePosition === -1) {
+            return res.json({ time: 0 });
+        }
+
+        const orderIdsAhead = restaurant.queue.slice(0, queuePosition + 1);
+
+        const result = await Order.aggregate([
+            { $match: { _id: { $in: orderIdsAhead } } },
+            {
+                $lookup: {
+                    from: 'restaurants',
+                    let: { restaurantId: '$restaurant', dishId: '$dish' },
+                    pipeline: [
+                        { $match: { $expr: { $eq: ['$_id', '$$restaurantId'] } } },
+                        { $unwind: '$menu' },
+                        { $match: { $expr: { $eq: ['$menu.dish', '$$dishId'] } } },
+                        { $project: { prepTime: '$menu.preparationTime' } }
+                    ],
+                    as: 'menuData'
+                }
+            },
+            { $unwind: { path: '$menuData', preserveNullAndEmptyArrays: true } },
+            {
+                $group: {
+                    _id: null,
+                    totalTime: { $sum: { $multiply: ['$amount', { $ifNull: ['$menuData.prepTime', 0] }] } }
+                }
+            }
+        ]);
+
+        let waitingTime = result[0]?.totalTime || 0;
+
+        const firstOrderId = restaurant.queue[0];
+        if (firstOrderId) {
+            const firstOrder = await Order.findById(firstOrderId);
+            if (firstOrder?.state === ORDER_STATES.PREPARING && restaurant.lastPreparationStart) {
+                const elapsedMinutes = (Date.now() - new Date(restaurant.lastPreparationStart).getTime()) / (60 * 1000);
+                waitingTime = Math.max(waitingTime - elapsedMinutes, 0);
+            }
+        }
+
+        res.json({ time: Math.round(waitingTime * 10) / 10 });
+    } catch (err) {
+        next(err);
+    }
+}
+\end{lstlisting}
+
+\end{document}

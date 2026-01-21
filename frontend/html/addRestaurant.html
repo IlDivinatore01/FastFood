@@ -12,89 +12,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FastFood</title>
-    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap-icons.min.css">
 
 </head>
 
 <body data-bs-theme="dark">
-    <div id="content" class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8">
-                <div class="card shadow-sm">
-                    <div class="card-body p-4">
-                        <h1 class="mb-3 text-center">Finalize Setup</h1>
-                        <p class="mb-4 text-center text-secondary">Add your restaurant details to complete your account.
-                        </p>
+    <div class="position-relative vh-100 d-flex align-items-center justify-content-center overflow-hidden z-0">
+        <div class="position-absolute top-0 start-0 w-100 h-100 z-n1"
+            style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/hero-bg.jpg'); background-size: cover; background-position: center;">
+        </div>
 
-                        <form id="addRestaurantForm">
-                            <h4 class="mb-3 border-bottom pb-2">Restaurant Data</h4>
+        <div id="content" class="container position-relative z-1 h-100 d-flex flex-column justify-content-center">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    <div class="card shadow-lg border-0 bg-dark-subtle text-light"
+                        style="backdrop-filter: blur(10px); background: rgba(33, 37, 41, 0.9) !important; max-height: 90vh; overflow-y: auto;">
+                        <div class="card-header bg-transparent border-0 text-center pt-4 pb-2 position-relative">
+                            <button type="button" id="logout-btn"
+                                class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-3" title="Logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                            </button>
+                            <h1 class="mb-3 text-center">Finalize Setup</h1>
+                            <p class="mb-4 text-center text-secondary">Add your restaurant details to complete your
+                                account.
+                            </p>
+                        </div>
+                        <div class="card-body p-4">
 
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="name" placeholder="Restaurant Name"
-                                    required>
-                                <label for="name">Restaurant Name</label>
-                            </div>
+                            <form id="addRestaurantForm">
+                                <h4 class="mb-3 border-bottom pb-2">Restaurant Data</h4>
 
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="vat" placeholder="VAT Number"
-                                            required>
-                                        <label for="vat">VAT Number</label>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control bg-dark border-secondary text-light"
+                                        id="name" placeholder="Restaurant Name" required>
+                                    <label for="name" class="text-secondary">Restaurant Name</label>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control bg-dark border-secondary text-light"
+                                                id="vat" placeholder="VAT Number" required>
+                                            <label for="vat" class="text-secondary">VAT Number</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control bg-dark border-secondary text-light"
+                                                id="phone" placeholder="Phone Number" required>
+                                            <label for="phone" class="text-secondary">Phone Number</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="phone" placeholder="Phone Number"
-                                            required>
-                                        <label for="phone">Phone Number</label>
+
+                                <div class="mb-4">
+                                    <label for="image" class="form-label text-secondary small">Restaurant Picture
+                                        (Optional)</label>
+                                    <input type="file" id="image"
+                                        class="form-control bg-dark border-secondary text-light" accept="image/*">
+                                </div>
+
+                                <h4 class="mb-3 border-bottom pb-2">Address</h4>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control bg-dark border-secondary text-light"
+                                        id="streetaddress" placeholder="Street Address" required>
+                                    <label for="streetaddress" class="text-secondary">Street Address</label>
+                                </div>
+
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-5">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control bg-dark border-secondary text-light"
+                                                id="city" placeholder="City" required>
+                                            <label for="city" class="text-secondary">City</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control bg-dark border-secondary text-light"
+                                                id="province" placeholder="Prov" required>
+                                            <label for="province" class="text-secondary">Province</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control bg-dark border-secondary text-light"
+                                                id="zip" placeholder="ZIP" required>
+                                            <label for="zip" class="text-secondary">ZIP Code</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="mb-4">
-                                <label for="image" class="form-label text-secondary small">Restaurant Picture
-                                    (Optional)</label>
-                                <input type="file" id="image" class="form-control" accept="image/*">
-                            </div>
-
-                            <h4 class="mb-3 border-bottom pb-2">Address</h4>
-
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="streetaddress" placeholder="Street Address"
-                                    required>
-                                <label for="streetaddress">Street Address</label>
-                            </div>
-
-                            <div class="row g-3 mb-4">
-                                <div class="col-md-5">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="city" placeholder="City" required>
-                                        <label for="city">City</label>
-                                    </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" id="add-restaurant-btn"
+                                        class="btn btn-primary btn-lg rounded-pill shadow-sm">Submit</button>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="province" placeholder="Prov"
-                                            required>
-                                        <label for="province">Province</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="zip" placeholder="ZIP" required>
-                                        <label for="zip">ZIP Code</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" id="add-restaurant-btn"
-                                    class="btn btn-primary btn-lg">Submit</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

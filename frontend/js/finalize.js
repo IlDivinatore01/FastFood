@@ -1,13 +1,33 @@
 /**
  * Finalize Setup Script
  * 
- * Handles customer onboarding form submission (address + card).
+ * Handles * Customer onboarding: collect delivery address and first payment card.
  */
 
 import { fetchApi } from './api.js';
+import { addMessage } from './errorManager.js';
 
 const form = document.getElementById('finalizeForm');
 const submitBtn = document.getElementById('finalize-btn');
+const logoutBtn = document.getElementById('logout-btn');
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        window.logout();
+    });
+}
+
+window.logout = async () => {
+    try {
+        const res = await fetch('/auth/logout');
+        if (res.ok || res.status === 401) {
+            localStorage.clear();
+            window.location.href = '/';
+        }
+    } catch (e) {
+        window.location.href = '/';
+    }
+};
 
 const validators = {
     'addr-street': (val) => val.trim().length > 0,

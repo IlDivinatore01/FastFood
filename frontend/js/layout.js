@@ -122,7 +122,7 @@ async function logout() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname === '/' || window.location.pathname === '/login' || window.location.pathname === '/register') {
+    if (window.location.pathname === '/' || window.location.pathname === '/login' || window.location.pathname === '/register' || window.location.pathname === '/finalize' || window.location.pathname === '/restaurant/add') {
         return;
     }
     applyLayout();

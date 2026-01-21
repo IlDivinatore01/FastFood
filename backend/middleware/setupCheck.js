@@ -9,7 +9,11 @@
 export default function setupCheck(req, res, next) {
     if (!req.user?.setupComplete) {
         if (req.accepts('html')) {
-            return res.redirect('/finalize');
+            if (req.user.type === 'customer') {
+                return res.redirect('/finalize');
+            } else {
+                return res.redirect('/restaurant/add');
+            }
         }
         return res.status(403).json({ error: 'Please complete your profile setup first.', setupRequired: true });
     }

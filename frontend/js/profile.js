@@ -195,7 +195,7 @@ async function showOrders() {
 
     const receivedOrders = await getOrders(currentPage);
 
-    if (totalOrders === 0) {
+    if (!receivedOrders || totalOrders === 0) {
         ordersElement.innerText = 'No orders yet.';
         return;
     }
